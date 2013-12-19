@@ -49,14 +49,14 @@ namespace itk
 {
 
 template <class TInputImage, class TOutputImage>
-class ITK_EXPORT PhaseSymmetryImageFilter : public ImageToImageFilter<TInputImage,TOutputImage>
+class PhaseSymmetryImageFilter : public ImageToImageFilter<TInputImage,TOutputImage>
 {
 public:
   /** Standard class typedefs. */
-  typedef PhaseSymmetryImageFilter                           Self;
-  typedef ImageToImageFilter<TInputImage,TOutputImage>  Superclass;
-  typedef SmartPointer<Self>                            Pointer;
-  typedef SmartPointer<const Self>                      ConstPointer;
+  typedef PhaseSymmetryImageFilter                     Self;
+  typedef ImageToImageFilter<TInputImage,TOutputImage> Superclass;
+  typedef SmartPointer<Self>                           Pointer;
+  typedef SmartPointer<const Self>                     ConstPointer;
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
@@ -75,18 +75,18 @@ public:
   typedef typename     OutputImageType::RegionType  OutputImageRegionType;
   typedef typename     OutputImageType::PixelType   OutputImagePixelType;
 
-  typedef OutputImagePixelType ComplexPixelComponentType;
-  typedef OutputImagePixelType ImagePixelType;
-  typedef std::complex< ComplexPixelComponentType >      ComplexPixelType;
+  typedef OutputImagePixelType                      ComplexPixelComponentType;
+  typedef OutputImagePixelType                      ImagePixelType;
+  typedef std::complex< ComplexPixelComponentType > ComplexPixelType;
 
-  typedef FixedArray<double,TInputImage::ImageDimension> ArrayType;
+  typedef FixedArray<double,TInputImage::ImageDimension>   ArrayType;
   typedef FixedArray<double,TInputImage::ImageDimension-1> DimMinusOneDoubleArrayType;
-  typedef Array2D<double> MatrixType;
+  typedef Array2D<double>                                  MatrixType;
 
-  typedef itk::Image<ImagePixelType,TInputImage::ImageDimension> FloatImageType;
+  typedef Image<ImagePixelType,TInputImage::ImageDimension> FloatImageType;
 
   typedef std::vector< typename FloatImageType::Pointer > FloatImageStack;
-  typedef std::vector<FloatImageStack> FloatImageBank;
+  typedef std::vector< FloatImageStack >                  FloatImageBank;
 
   itkSetMacro(Wavelengths, MatrixType );
   itkSetMacro(Orientations, MatrixType );
@@ -130,41 +130,41 @@ protected:
   static const int   FFT_FORWARD = -1;
   static const int   FFT_BACKWARD = 1;
 
-  typedef itk::VnlFFTRealToComplexConjugateImageFilter <ImagePixelType,TInputImage::ImageDimension> FFTFilterType;
-  typedef itk::FFTComplexToComplexImageFilter <ImagePixelType,TInputImage::ImageDimension> IFFTFilterType;
+  typedef VnlFFTRealToComplexConjugateImageFilter <ImagePixelType,TInputImage::ImageDimension> FFTFilterType;
+  typedef FFTComplexToComplexImageFilter <ImagePixelType,TInputImage::ImageDimension>          IFFTFilterType;
 
   typedef typename FFTFilterType::OutputImageType ComplexImageType;
 
   typedef std::vector< typename FloatImageType::Pointer > FloatImageStack;
-  typedef std::vector<FloatImageStack> FloatImageBank;
+  typedef std::vector<FloatImageStack>                    FloatImageBank;
 
-  typedef itk::MultiplyImageFilter <FloatImageType,FloatImageType> MultiplyImageFilterType;
-  typedef itk::MultiplyImageFilter <ComplexImageType,ComplexImageType> ComplexMultiplyImageFilterType;
-  typedef itk::DivideImageFilter <FloatImageType,FloatImageType,FloatImageType> DivideImageFilterType;
-  typedef itk::AddImageFilter <FloatImageType,FloatImageType> AddImageFilterType;
-  typedef itk::SqrtImageFilter <FloatImageType,FloatImageType> SqrtImageFilterType;
-  typedef itk::SquareImageFilter <FloatImageType,FloatImageType> SquareImageFilterType;
-  typedef itk::MaximumImageFilter <FloatImageType,FloatImageType> MaxImageFilterType;
-  typedef itk::ExpImageFilter <FloatImageType,FloatImageType> ExpImageFilterType;
-  typedef itk::BoundedReciprocalImageFilter <FloatImageType,FloatImageType> BoundedReciprocalImageFilterType;
-  typedef itk::Atan2ImageFilter <FloatImageType,FloatImageType,FloatImageType> Atan2ImageFilterType;
-  typedef itk::AcosImageFilter <FloatImageType,FloatImageType> AcosImageFilterType;
+  typedef MultiplyImageFilter <FloatImageType,FloatImageType>              MultiplyImageFilterType;
+  typedef MultiplyImageFilter <ComplexImageType,ComplexImageType>          ComplexMultiplyImageFilterType;
+  typedef DivideImageFilter <FloatImageType,FloatImageType,FloatImageType> DivideImageFilterType;
+  typedef AddImageFilter <FloatImageType,FloatImageType>                   AddImageFilterType;
+  typedef SqrtImageFilter <FloatImageType,FloatImageType>                  SqrtImageFilterType;
+  typedef SquareImageFilter <FloatImageType,FloatImageType>                SquareImageFilterType;
+  typedef MaximumImageFilter <FloatImageType,FloatImageType>               MaxImageFilterType;
+  typedef ExpImageFilter <FloatImageType,FloatImageType>                   ExpImageFilterType;
+  typedef BoundedReciprocalImageFilter <FloatImageType,FloatImageType>     BoundedReciprocalImageFilterType;
+  typedef Atan2ImageFilter <FloatImageType,FloatImageType,FloatImageType>  Atan2ImageFilterType;
+  typedef AcosImageFilter <FloatImageType,FloatImageType>                  AcosImageFilterType;
 
 
-  typedef itk::LogGaborFreqImageSource <FloatImageType> LogGaborFreqImageSourceType;
-  typedef itk::SteerableFilterFreqImageSource <FloatImageType> SteerableFiltersFreqImageSourceType;
-  typedef itk::ButterworthFilterFreqImageSource <FloatImageType> ButterworthKernelFreqImageSourceType;
-  typedef itk::ShiftScaleImageFilter<FloatImageType,FloatImageType> ShiftScaleImageFilterType;
-  typedef itk::AcosImageFilter<FloatImageType,FloatImageType> AcosImageFilterType;;
-  typedef itk::ComplexToRealImageFilter<ComplexImageType , FloatImageType> ComplexToRealFilterType;
-  typedef itk::ComplexToImaginaryImageFilter<ComplexImageType , FloatImageType> ComplexToImaginaryFilterType;
-  typedef itk::ComplexToModulusImageFilter<ComplexImageType , FloatImageType> ComplexToModulusFilterType;
-  typedef itk::ComplexToPhaseImageFilter<ComplexImageType , FloatImageType> ComplexToPhaseFilterType;
-  typedef itk::RealAndImaginaryToComplexImageFilter<ImagePixelType, ImagePixelType,ImagePixelType,TInputImage::ImageDimension> RealAndImaginaryToComplexFilterType;
-  typedef itk::MagnitudeAndPhaseToComplexImageFilter<ImagePixelType, ImagePixelType,ImagePixelType,TInputImage::ImageDimension> MagnitudeAndPhaseToComplexFilterType;
-  typedef itk::FFTShiftImageFilter<ComplexImageType,ComplexImageType> ComplexFFTShiftImageFilterType;
-  typedef itk::FFTShiftImageFilter<FloatImageType,FloatImageType> DoubleFFTShiftImageFilterType;
-  typedef itk::AbsImageFilter<FloatImageType,FloatImageType> AbsImageFilterType;
+  typedef LogGaborFreqImageSource <FloatImageType>                                                                         LogGaborFreqImageSourceType;
+  typedef SteerableFilterFreqImageSource <FloatImageType>                                                                  SteerableFiltersFreqImageSourceType;
+  typedef ButterworthFilterFreqImageSource <FloatImageType>                                                                ButterworthKernelFreqImageSourceType;
+  typedef ShiftScaleImageFilter<FloatImageType,FloatImageType>                                                             ShiftScaleImageFilterType;
+  typedef AcosImageFilter<FloatImageType,FloatImageType>                                                                   AcosImageFilterType;;
+  typedef ComplexToRealImageFilter<ComplexImageType , FloatImageType>                                                      ComplexToRealFilterType;
+  typedef ComplexToImaginaryImageFilter<ComplexImageType , FloatImageType>                                                 ComplexToImaginaryFilterType;
+  typedef ComplexToModulusImageFilter<ComplexImageType , FloatImageType>                                                   ComplexToModulusFilterType;
+  typedef ComplexToPhaseImageFilter<ComplexImageType , FloatImageType>                                                     ComplexToPhaseFilterType;
+  typedef RealAndImaginaryToComplexImageFilter<ImagePixelType, ImagePixelType,ImagePixelType,TInputImage::ImageDimension>  RealAndImaginaryToComplexFilterType;
+  typedef MagnitudeAndPhaseToComplexImageFilter<ImagePixelType, ImagePixelType,ImagePixelType,TInputImage::ImageDimension> MagnitudeAndPhaseToComplexFilterType;
+  typedef FFTShiftImageFilter<ComplexImageType,ComplexImageType>                                                           ComplexFFTShiftImageFilterType;
+  typedef FFTShiftImageFilter<FloatImageType,FloatImageType>                                                               DoubleFFTShiftImageFilterType;
+  typedef AbsImageFilter<FloatImageType,FloatImageType>                                                                    AbsImageFilterType;
 
 private:
   PhaseSymmetryImageFilter(const Self&); //purposely not implemented
@@ -176,28 +176,28 @@ private:
   double m_AngleBandwidth;
   double m_Sigma;
   double m_T;
-  int m_Polarity;
+  int    m_Polarity;
 
   typename MultiplyImageFilterType::Pointer m_MultiplyImageFilter;
-  typename DivideImageFilterType::Pointer m_DivideImageFilter;
-  typename AddImageFilterType::Pointer m_AddImageFilter;
-  typename AddImageFilterType::Pointer m_AddImageFilter2;
-  typename MaxImageFilterType::Pointer m_MaxImageFilter;
-  typename Atan2ImageFilterType::Pointer m_AtanImageFilter;
-  typename AcosImageFilterType::Pointer m_AcosImageFilter;
+  typename DivideImageFilterType::Pointer   m_DivideImageFilter;
+  typename AddImageFilterType::Pointer      m_AddImageFilter;
+  typename AddImageFilterType::Pointer      m_AddImageFilter2;
+  typename MaxImageFilterType::Pointer      m_MaxImageFilter;
+  typename Atan2ImageFilterType::Pointer    m_AtanImageFilter;
+  typename AcosImageFilterType::Pointer     m_AcosImageFilter;
 
-  typename FFTFilterType::Pointer m_FFTFilter;
+  typename FFTFilterType::Pointer  m_FFTFilter;
   typename IFFTFilterType::Pointer m_IFFTFilter;
 
-  typename ShiftScaleImageFilterType::Pointer m_SSFilter;
-  typename ShiftScaleImageFilterType::Pointer m_NegateFilter;
-  typename ShiftScaleImageFilterType::Pointer m_NegateFilter2;
-  typename ComplexToRealFilterType::Pointer m_C2RFilter;
-  typename ComplexToImaginaryFilterType::Pointer m_C2IFilter;
-  typename ComplexToModulusFilterType::Pointer m_C2MFilter;
-  typename ComplexToPhaseFilterType::Pointer m_C2AFilter;
-  typename AbsImageFilterType::Pointer m_AbsImageFilter;
-  typename AbsImageFilterType::Pointer m_AbsImageFilter2;
+  typename ShiftScaleImageFilterType::Pointer            m_SSFilter;
+  typename ShiftScaleImageFilterType::Pointer            m_NegateFilter;
+  typename ShiftScaleImageFilterType::Pointer            m_NegateFilter2;
+  typename ComplexToRealFilterType::Pointer              m_C2RFilter;
+  typename ComplexToImaginaryFilterType::Pointer         m_C2IFilter;
+  typename ComplexToModulusFilterType::Pointer           m_C2MFilter;
+  typename ComplexToPhaseFilterType::Pointer             m_C2AFilter;
+  typename AbsImageFilterType::Pointer                   m_AbsImageFilter;
+  typename AbsImageFilterType::Pointer                   m_AbsImageFilter2;
   typename MagnitudeAndPhaseToComplexFilterType::Pointer m_MP2CFilter;
 
   typename FloatImageType::Pointer m_PhaseSymmetry;
