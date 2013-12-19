@@ -26,8 +26,7 @@ See Peter Kovesi's site for details on the filter
 #include "itkRealAndImaginaryToComplexImageFilter.h"
 #include "itkMagnitudeAndPhaseToComplexImageFilter.h"
 #include "itkImageAdaptor.h"
-#include "itkVnlForwardFFTImageFilter.h"
-#include "itkVnlInverseFFTImageFilter.h"
+#include "itkForwardFFTImageFilter.h"
 #include "itkFFTComplexToComplexImageFilter.h"
 #include "itkComplexToRealImageFilter.h"
 #include "itkComplexToPhaseImageFilter.h"
@@ -119,7 +118,7 @@ protected:
   static const int   FFT_FORWARD = -1;
   static const int   FFT_BACKWARD = 1;
 
-  typedef VnlForwardFFTImageFilter< InputImageType >         FFTFilterType;
+  typedef ForwardFFTImageFilter< InputImageType >            FFTFilterType;
   typedef typename FFTFilterType::OutputImageType            ComplexImageType;
   typedef FFTComplexToComplexImageFilter< ComplexImageType > IFFTFilterType;
 
