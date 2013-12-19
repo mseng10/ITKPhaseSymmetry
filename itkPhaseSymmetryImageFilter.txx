@@ -235,8 +235,7 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
   m_AbsImageFilter2->ReleaseDataFlagOn();
 
   for( int o = 0; o < m_Orientations.rows(); ++o )
-  {
-
+    {
     //Reset the energy value
     m_SSFilter->SetScale( 0.0 );
     m_SSFilter->SetShift( 0.0 );
