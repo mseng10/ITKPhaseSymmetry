@@ -119,10 +119,10 @@ protected:
   static const int   FFT_FORWARD = -1;
   static const int   FFT_BACKWARD = 1;
 
-  typedef VnlForwardFFTImageFilter< InputImageType >       FFTFilterType;
-  typedef FFTComplexToComplexImageFilter< InputImageType > IFFTFilterType;
+  typedef VnlForwardFFTImageFilter< InputImageType >         FFTFilterType;
+  typedef typename FFTFilterType::OutputImageType            ComplexImageType;
+  typedef FFTComplexToComplexImageFilter< ComplexImageType > IFFTFilterType;
 
-  typedef typename FFTFilterType::OutputImageType ComplexImageType;
 
   typedef std::vector< typename FloatImageType::Pointer > FloatImageStack;
   typedef std::vector< FloatImageStack >                  FloatImageBank;

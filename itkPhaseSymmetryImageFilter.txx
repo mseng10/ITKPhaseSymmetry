@@ -234,21 +234,18 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
   m_AbsImageFilter->ReleaseDataFlagOn();
   m_AbsImageFilter2->ReleaseDataFlagOn();
 
-  for( int o=0; o < m_Orientations.rows(); o++)
+  for( int o = 0; o < m_Orientations.rows(); ++o )
   {
 
     //Reset the energy value
-    m_SSFilter->SetScale(0.0);
-    m_SSFilter->SetShift(0.0);
+    m_SSFilter->SetScale( 0.0 );
+    m_SSFilter->SetShift( 0.0 );
     m_SSFilter->Update();
     EnergyThisOrient = m_SSFilter->GetOutput();
     EnergyThisOrient->DisconnectPipeline();
 
-    for( int w=0; w < m_Wavelengths.rows(); w++)
-    {
-
-      
-
+    for( int w = 0; w < m_Wavelengths.rows(); ++w )
+      {
       //Multiply filters by the input image in fourier domain
       m_C2MFilter->SetInput(finput);
       m_C2AFilter->SetInput(finput);
@@ -256,18 +253,18 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
       m_SSFilter->SetShift(0.0);
       //Normalize the magnitude by the number of pixels
       m_SSFilter->SetInput(m_C2MFilter->GetOutput());
-  
+
       m_MultiplyImageFilter->SetInput1( m_SSFilter->GetOutput() );
       m_MultiplyImageFilter->SetInput2( m_FilterBank[w][o] );
-      
-      m_MultiplyImageFilter->Update();////////////////
-      
-      m_MP2CFilter->SetInput1(m_MultiplyImageFilter->GetOutput());
-      m_MP2CFilter->SetInput2(m_C2AFilter->GetOutput());
-      
-      m_IFFTFilter->SetInput(m_MP2CFilter->GetOutput());
+
+      m_MultiplyImageFilter->Update();
+
+      m_MP2CFilter->SetInput1( m_MultiplyImageFilter->GetOutput() );
+      m_MP2CFilter->SetInput2( m_C2AFilter->GetOutput() );
+
+      m_IFFTFilter->SetInput( m_MP2CFilter->GetOutput() );
       m_IFFTFilter->Update();
-      bpinput=m_IFFTFilter->GetOutput();
+      bpinput = m_IFFTFilter->GetOutput();
       bpinput->DisconnectPipeline();
 
       //Get mag, real and imag of the band passed images
@@ -282,10 +279,9 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
       totalAmplitude = m_AddImageFilter->GetOutput();
       totalAmplitude->DisconnectPipeline();
 
-      
       //Use appropraite equation depending on polarity
-      if(m_Polarity==0)
-      {
+      if( m_Polarity == 0 )
+        {
         m_AbsImageFilter->SetInput(m_C2RFilter->GetOutput());
         m_AbsImageFilter2->SetInput(m_C2IFilter->GetOutput());
 
@@ -296,14 +292,13 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
 
         m_AddImageFilter2->SetInput1(m_AddImageFilter->GetOutput());
         m_AddImageFilter2->SetInput2(EnergyThisOrient);
-        
+
         m_AddImageFilter2->Update();
         EnergyThisOrient = m_AddImageFilter2->GetOutput();
         EnergyThisOrient->DisconnectPipeline();
-      }
-      else if(m_Polarity==1)
-      {
-        
+        }
+      else if( m_Polarity == 1 )
+        {
         m_AbsImageFilter->SetInput(m_C2IFilter->GetOutput());
         m_NegateFilter->SetInput(m_AbsImageFilter->GetOutput());
 
@@ -316,10 +311,9 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
         m_AddImageFilter2->Update();
         EnergyThisOrient = m_AddImageFilter2->GetOutput();
         EnergyThisOrient->DisconnectPipeline();
-        
-      }
-      else if(m_Polarity==-1)
-      {
+        }
+      else if( m_Polarity == -1 )
+        {
         m_AbsImageFilter->SetInput(m_C2IFilter->GetOutput());
         m_NegateFilter->SetInput(m_C2RFilter->GetOutput());
         m_NegateFilter2->SetInput(m_AbsImageFilter->GetOutput());
@@ -333,10 +327,9 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
         m_AddImageFilter2->Update();
         EnergyThisOrient = m_AddImageFilter2->GetOutput();
         EnergyThisOrient->DisconnectPipeline();
+        }
       }
-    }
 
-    
     //Subtract the values below the noise threshold
     m_SSFilter->SetInput(EnergyThisOrient);
     m_SSFilter->SetScale(1.0);
@@ -345,12 +338,11 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
     m_AddImageFilter->SetInput1(m_SSFilter->GetOutput());
     m_AddImageFilter->SetInput2(totalEnergy);
     m_AddImageFilter->Update();
-    
+
     totalEnergy = m_AddImageFilter->GetOutput();
     totalEnergy->DisconnectPipeline();
-  }
+    }
 
-  
   //Set negative values to zero
   m_SSFilter->SetScale(0.0);
   m_SSFilter->SetShift(0.0);
@@ -365,9 +357,6 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
   m_DivideImageFilter->Update();
   m_PhaseSymmetry = m_DivideImageFilter->GetOutput();
   this->GraftOutput( m_PhaseSymmetry );
-
-
-  itkDebugMacro("GenerateOutputInformation End");
 }
 
 
@@ -468,7 +457,6 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::PrintSelf(std::ostream&
   Superclass::PrintSelf(os,indent);
 
   //  os << indent << " Integral Filter Normalize By: " << m_Cutoff << std::endl;
-
 }
 
 } // end namespace itk
