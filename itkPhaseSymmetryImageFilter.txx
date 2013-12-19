@@ -39,19 +39,18 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>::PhaseSymmetryImageFilter()
   m_NegateFilter2->SetShift(0.0);
 
   //Create 2 initialze wavelengths
-  m_Wavelengths.SetSize(2,TInputImage::ImageDimension);
-  for( int i=0; i < TInputImage::ImageDimension; i++)
+  m_Wavelengths.SetSize(2, InputImageDimension);
+  for( int i=0; i < InputImageDimension; i++)
   {
     m_Wavelengths(0,i) = 10.0;
     m_Wavelengths(1,i) = 20.0;
-
   }
 
   //Set basic orientations
-  m_Orientations.SetSize(TInputImage::ImageDimension,TInputImage::ImageDimension);
-  for( int i=0; i < TInputImage::ImageDimension; i++)
+  m_Orientations.SetSize(InputImageDimension, InputImageDimension);
+  for( int i=0; i < InputImageDimension; i++)
   {
-    for( int j=0; j < TInputImage::ImageDimension; j++)
+    for( int j=0; j < InputImageDimension; j++)
     {
       if(i==j)
       {
@@ -61,7 +60,6 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>::PhaseSymmetryImageFilter()
       {
         m_Orientations(i,j) = 0.0;
       }
-      
     }
 
   }
@@ -71,17 +69,12 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>::PhaseSymmetryImageFilter()
   m_Sigma=0.55;
   m_T=10.0;
   m_Polarity=0;
-
-
 }
+
 
 template <class TInputImage, class TOutputImage>
 void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::Initialize( void )
 {
-
-  //typedef itk::ImageFileWriter< FloatImageType> WriterType;
-  //WriterType::Pointer writer= WriterType::New();
-
   typename TInputImage::SizeType  inputSize;
   typename TInputImage::IndexType inputIndex;
   typename Superclass::OutputImagePointer output = this->GetOutput();
@@ -94,7 +87,6 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::Initialize( void )
   m_SSFilter->SetInput(input);
   m_SSFilter->SetScale(0.0);
   m_SSFilter->SetShift(0.0);
-
 
   typename LogGaborFreqImageSourceType::Pointer LogGaborKernel =  LogGaborFreqImageSourceType::New();
   typename SteerableFiltersFreqImageSourceType::Pointer SteerableFilterKernel =  SteerableFiltersFreqImageSourceType::New();
@@ -129,11 +121,11 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::Initialize( void )
 
   //Create log gabor kernels
   for( unsigned int w=0; w < m_Wavelengths.rows(); w++)
-  {
+    {
     for(int i=0; i < ndims;i++)
-    {  
+      {
       wv[i]=m_Wavelengths.get(w,i);
-    }
+      }
     LogGaborKernel->SetWavelengths(wv);
     LogGaborKernel->SetSigma(m_Sigma);
     m_MultiplyImageFilter->SetInput1(LogGaborKernel->GetOutput());
@@ -141,51 +133,45 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::Initialize( void )
     m_MultiplyImageFilter->Update();
     lgStack.push_back(m_MultiplyImageFilter->GetOutput());
     lgStack[w]->DisconnectPipeline();
-  }
+    }
 
   //Create directionality kernels
   for( unsigned int o=0; o < m_Orientations.rows(); o++)
-  {
-    for( int d=0; d<ndims; d++)
     {
+    for( int d=0; d<ndims; d++)
+      {
       orientation[d] = m_Orientations.get(o,d);
-      
-    }
+      }
     SteerableFilterKernel->SetOrientation(orientation);
     SteerableFilterKernel->SetAngularBandwidth(m_AngleBandwidth);
      SteerableFilterKernel->Update();
     sfStack.push_back(SteerableFilterKernel->GetOutput());
     sfStack[o]->DisconnectPipeline();
-  }
+    }
 
   //Create filter bank by multiplying log gabor filters with directional filters
-  DoubleFFTShiftImageFilterType::Pointer FFTShiftFilter = DoubleFFTShiftImageFilterType::New();
+  typename DoubleFFTShiftImageFilterType::Pointer FFTShiftFilter = DoubleFFTShiftImageFilterType::New();
 
   for( unsigned int w=0; w < m_Wavelengths.rows(); w++)
-  {
+    {
     tempStack.clear();
     for( int o=0; o<m_Orientations.rows(); o++)
-    {
+      {
       m_MultiplyImageFilter->SetInput1(lgStack[w]);
       m_MultiplyImageFilter->SetInput2(sfStack[o]);
       FFTShiftFilter->SetInput(m_MultiplyImageFilter->GetOutput());
       FFTShiftFilter->Update();
       tempStack.push_back(FFTShiftFilter->GetOutput());
       tempStack[o]->DisconnectPipeline();
-    }
+      }
     m_FilterBank.push_back(tempStack);
-  }
-  
+    }
 }
 
 
 template <class TInputImage, class TOutputImage>
 void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
 {
-  
-  //typedef itk::ImageFileWriter< FloatImageType> WriterType;
-  //WriterType::Pointer writer= WriterType::New();
-  
   typename TInputImage::SizeType  inputSize;
   typename TInputImage::IndexType inputIndex;
   typename Superclass::OutputImagePointer output = this->GetOutput();
@@ -198,8 +184,8 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
   double initialPoint=0;
   double epsilon = 0.0001;
 
-  ComplexImageType::Pointer finput = ComplexImageType::New();
-  ComplexImageType::Pointer bpinput = ComplexImageType::New();
+  typename ComplexImageType::Pointer finput = ComplexImageType::New();
+  typename ComplexImageType::Pointer bpinput = ComplexImageType::New();
 
 
   m_FFTFilter->SetInput(input);
