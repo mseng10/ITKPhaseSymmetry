@@ -69,8 +69,9 @@ void LogGaborFreqImageSource<TOutputImage>::ThreadedGenerateData(const OutputIma
   //outputPtr->SetBufferedRegion( outputPtr->GetRequestedRegion() );
   //outputPtr->Allocate();
 
-  typedef ImageRegionIterator<TOutputImage> OutputIterator;
-  OutputIterator outIt = OutputIterator(outputPtr,outputRegionForThread);
+  typedef ImageRegionIteratorWithIndex<TOutputImage> OutputIteratorType;
+  OutputIteratorType outIt = OutputIteratorType(outputPtr,
+    outputRegionForThread);
 
   int ndims = TOutputImage::ImageDimension;
 
@@ -110,7 +111,7 @@ void LogGaborFreqImageSource<TOutputImage>::ThreadedGenerateData(const OutputIma
     logGaborValue  =vcl_exp(-radius/sigma);
 
     // Set the pixel value to the function value
-    outIt.Set( (typename TOutputImage::PixelType) logGaborValue);
+    outIt.Set( static_cast<typename TOutputImage::PixelType>(logGaborValue) );
   }
 }
 
