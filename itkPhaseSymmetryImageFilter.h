@@ -61,6 +61,9 @@ public:
   /** Run-time type information (and related methods). */
   itkTypeMacro(PhaseSymmetryImageFilter, ImageToImageFilter);
 
+  itkStaticConstMacro(InputImageDimension, unsigned int, TInputImage::ImageDimension);
+  itkStaticConstMacro(OutputImageDimension, unsigned int, TOutputImage::ImageDimension);
+
   /** Some convenient typedefs. */
   typedef TInputImage                            InputImageType;
   typedef typename    InputImageType::Pointer    InputImagePointer;
@@ -76,11 +79,11 @@ public:
   typedef OutputImagePixelType                      ImagePixelType;
   typedef std::complex< ComplexPixelComponentType > ComplexPixelType;
 
-  typedef FixedArray<double,TInputImage::ImageDimension>   ArrayType;
-  typedef FixedArray<double,TInputImage::ImageDimension-1> DimMinusOneDoubleArrayType;
-  typedef Array2D<double>                                  MatrixType;
+  typedef FixedArray< double, InputImageDimension >   ArrayType;
+  typedef FixedArray< double, InputImageDimension-1 > DimMinusOneDoubleArrayType;
+  typedef Array2D< double >                           MatrixType;
 
-  typedef Image<ImagePixelType,TInputImage::ImageDimension> FloatImageType;
+  typedef Image< ImagePixelType, InputImageDimension > FloatImageType;
 
   typedef std::vector< typename FloatImageType::Pointer > FloatImageStack;
   typedef std::vector< FloatImageStack >                  FloatImageBank;
@@ -99,8 +102,7 @@ public:
 #ifdef ITK_USE_CONCEPT_CHECKING
   /** Begin concept checking */
   itkConceptMacro(ImageDimensionCheck,
-    (Concept::SameDimension<itkGetStaticConstMacro(InputImageDimension),
-    itkGetStaticConstMacro(OutputImageDimension)>));
+    (Concept::SameDimension<InputImageDimension, OutputImageDimension>));
   /** End concept checking */
 #endif
 
@@ -121,8 +123,8 @@ protected:
   static const int   FFT_FORWARD = -1;
   static const int   FFT_BACKWARD = 1;
 
-  typedef VnlForwardFFTImageFilter <ImagePixelType,TInputImage::ImageDimension>       FFTFilterType;
-  typedef FFTComplexToComplexImageFilter <ImagePixelType,TInputImage::ImageDimension> IFFTFilterType;
+  typedef VnlForwardFFTImageFilter< InputImageType >       FFTFilterType;
+  typedef FFTComplexToComplexImageFilter< InputImageType > IFFTFilterType;
 
   typedef typename FFTFilterType::OutputImageType ComplexImageType;
 
