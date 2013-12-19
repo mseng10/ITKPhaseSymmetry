@@ -45,7 +45,7 @@ public:
    * cosines of the image. */
   typedef typename TOutputImage::DirectionType DirectionType;
 
-  typedef std::vector<std::vector<double>> RangeType;
+  typedef std::vector< std::vector< double > > RangeType;
 
   /** Dimensionality of the output image */
   itkStaticConstMacro(NDimensions, unsigned int, TOutputImage::ImageDimension);
