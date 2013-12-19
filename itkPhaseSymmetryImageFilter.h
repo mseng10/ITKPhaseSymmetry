@@ -35,7 +35,6 @@ See Peter Kovesi's site for details on the filter
 #include "itkComplexToImaginaryImageFilter.h"
 #include "itkComplexToModulusImageFilter.h"
 #include "itkRealAndImaginaryToComplexImageFilter.h"
-#include "itkAcosImageFilter.h"
 #include "itkShiftScaleImageFilter.h"
 #include "itkAbsImageFilter.h"
 
@@ -128,24 +127,23 @@ protected:
   typedef std::vector< typename FloatImageType::Pointer > FloatImageStack;
   typedef std::vector< FloatImageStack >                  FloatImageBank;
 
-  typedef MultiplyImageFilter <FloatImageType,FloatImageType>              MultiplyImageFilterType;
-  typedef MultiplyImageFilter <ComplexImageType,ComplexImageType>          ComplexMultiplyImageFilterType;
-  typedef DivideImageFilter <FloatImageType,FloatImageType,FloatImageType> DivideImageFilterType;
-  typedef AddImageFilter <FloatImageType,FloatImageType>                   AddImageFilterType;
-  typedef SqrtImageFilter <FloatImageType,FloatImageType>                  SqrtImageFilterType;
-  typedef SquareImageFilter <FloatImageType,FloatImageType>                SquareImageFilterType;
-  typedef MaximumImageFilter <FloatImageType,FloatImageType>               MaxImageFilterType;
-  typedef ExpImageFilter <FloatImageType,FloatImageType>                   ExpImageFilterType;
-  typedef BoundedReciprocalImageFilter <FloatImageType,FloatImageType>     BoundedReciprocalImageFilterType;
-  typedef Atan2ImageFilter <FloatImageType,FloatImageType,FloatImageType>  Atan2ImageFilterType;
-  typedef AcosImageFilter <FloatImageType,FloatImageType>                  AcosImageFilterType;
+  typedef MultiplyImageFilter< FloatImageType, FloatImageType >               MultiplyImageFilterType;
+  typedef MultiplyImageFilter< ComplexImageType, ComplexImageType >           ComplexMultiplyImageFilterType;
+  typedef DivideImageFilter< FloatImageType, FloatImageType, FloatImageType > DivideImageFilterType;
+  typedef AddImageFilter< FloatImageType, FloatImageType >                    AddImageFilterType;
+  typedef SqrtImageFilter< FloatImageType, FloatImageType >                   SqrtImageFilterType;
+  typedef SquareImageFilter< FloatImageType, FloatImageType >                 SquareImageFilterType;
+  typedef MaximumImageFilter< FloatImageType, FloatImageType >                MaxImageFilterType;
+  typedef ExpImageFilter< FloatImageType, FloatImageType >                    ExpImageFilterType;
+  typedef BoundedReciprocalImageFilter< FloatImageType, FloatImageType >      BoundedReciprocalImageFilterType;
+  typedef Atan2ImageFilter< FloatImageType, FloatImageType, FloatImageType >  Atan2ImageFilterType;
+  typedef AcosImageFilter< FloatImageType, FloatImageType >                   AcosImageFilterType;
 
 
   typedef LogGaborFreqImageSource <FloatImageType>                                                                         LogGaborFreqImageSourceType;
   typedef SteerableFilterFreqImageSource <FloatImageType>                                                                  SteerableFiltersFreqImageSourceType;
   typedef ButterworthFilterFreqImageSource <FloatImageType>                                                                ButterworthKernelFreqImageSourceType;
   typedef ShiftScaleImageFilter<FloatImageType,FloatImageType>                                                             ShiftScaleImageFilterType;
-  typedef AcosImageFilter<FloatImageType,FloatImageType>                                                                   AcosImageFilterType;;
   typedef ComplexToRealImageFilter<ComplexImageType , FloatImageType>                                                      ComplexToRealFilterType;
   typedef ComplexToImaginaryImageFilter<ComplexImageType , FloatImageType>                                                 ComplexToImaginaryFilterType;
   typedef ComplexToModulusImageFilter<ComplexImageType , FloatImageType>                                                   ComplexToModulusFilterType;
