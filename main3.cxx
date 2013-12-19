@@ -12,7 +12,7 @@
 #include <ctime>
 #include <exception>
 
-std::vector<std::string> parse(std::string l, char delim) 
+std::vector<std::string> parse(std::string l, char delim)
 {
   std::replace(l.begin(), l.end(), delim, ' ');
   std::istringstream stm(l);
@@ -37,13 +37,13 @@ int main(int argc, char* argv[])
   std::string angular_bandwidthS;
   std::string polarityS;
   std::string ntS;
-  
+
   double pi = 3.1416;
 /*
   if (argc < 3)
   {
-    std::cerr << "Usage: PhaseSymmetryFilter3D.exe infile outfile wavelengths orientations sigma angular_bandwidth polarity noise_threshhold" << std::endl;
-    std::cerr << "Example: PhaseSymmetryFilter3D.exe i.mhd o.mhd 3,3,3,6,6,6,12,12,12 1,0,0,0,1,0,0,0,1 0.55 3.14 0 10.0" << std::endl;
+    std::cerr << "Usage: PhaseSymmetryFilter3D infile outfile wavelengths orientations sigma angular_bandwidth polarity noise_threshhold" << std::endl;
+    std::cerr << "Example: PhaseSymmetryFilter3D i.mhd o.mhd 3,3,3,6,6,6,12,12,12 1,0,0,0,1,0,0,0,1 0.55 3.14 0 10.0" << std::endl;
     return EXIT_FAILURE;
   }*/
   if(argc < 3)
@@ -336,21 +336,18 @@ int main(int argc, char* argv[])
   double noiseT=0;
   noiseT = atof( ntS.c_str() ) ;
 
-  //std::cerr << infile.c_str() << std::endl;
-  //std::cerr << outfile.c_str() << std::endl;
-
   reader->SetFileName(infile.c_str());
   try
-  {
+    {
     reader->Update();
     inImg = reader->GetOutput();
     inImg->DisconnectPipeline();
-  }
+    }
   catch ( itk::ExceptionObject & excp )
-  {
+    {
     std::cerr << excp << std::endl;
     return EXIT_FAILURE;
-  }
+    }
 
   psfilter->SetInput(inImg);
   psfilter->SetWavelengths(wavelengths);
@@ -361,18 +358,17 @@ int main(int argc, char* argv[])
   psfilter->SetT(noiseT);
   psfilter->Initialize();
 
-
   try
-  {
+    {
     writer->SetFileName(outfile.c_str());
     writer->SetInput(psfilter->GetOutput());
     writer->Update();
-  }
+    }
   catch ( itk::ExceptionObject & excp )
-  {
+    {
     std::cerr << excp << std::endl;
     return EXIT_FAILURE;
-  }
+    }
 
 
   return EXIT_SUCCESS;

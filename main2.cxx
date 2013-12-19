@@ -12,7 +12,7 @@
 #include <ctime>
 #include <exception>
 
-std::vector<std::string> parse(std::string l, char delim) 
+std::vector<std::string> parse(std::string l, char delim)
 {
   std::replace(l.begin(), l.end(), delim, ' ');
   std::istringstream stm(l);
@@ -27,7 +27,6 @@ std::vector<std::string> parse(std::string l, char delim)
 
 int main(int argc, char* argv[])
 {
-
   std::stringstream ss;
   std::string infile;
   std::string outfile;
@@ -37,17 +36,17 @@ int main(int argc, char* argv[])
   std::string angular_bandwidthS;
   std::string polarityS;
   std::string ntS;
-  
+
   double pi = 3.1416;
 
   if (argc < 3)
-  {
+    {
     std::cerr << "Usage: PhaseSymmetryFilter3D.exe infile outfile wavelengths orientations sigma angular_bandwidth polarity noise_threshhold" << std::endl;
     std::cerr << "Example: PhaseSymmetryFilter3D.exe i.mhd o.mhd 3,3,3,6,6,6,12,12,12 1,0,0,0,1,0,0,0,1 0.55 3.14 0 10.0" << std::endl;
     return EXIT_FAILURE;
-  }
+    }
   else if(argc < 4)
-  {
+    {
     ss << argv[1];
     infile = ss.str();
     ss.str("");
@@ -72,9 +71,9 @@ int main(int argc, char* argv[])
     ss << "10.0";
     ntS = ss.str();
     ss.str("");
-  }
+    }
   else if(argc < 5)
-  {
+    {
     ss << argv[1];
     infile = ss.str();
     ss.str("");
@@ -99,9 +98,9 @@ int main(int argc, char* argv[])
     ss << "10.0";
     ntS = ss.str();
     ss.str("");
-  }
+    }
   else if(argc < 6)
-  {
+    {
     ss << argv[1];
     infile = ss.str();
     ss.str("");
@@ -126,9 +125,9 @@ int main(int argc, char* argv[])
     ss << "10.0";
     ntS = ss.str();
     ss.str("");
-  }
+    }
   else if(argc < 7)
-  {
+    {
     ss << argv[1];
     infile = ss.str();
     ss.str("");
@@ -153,9 +152,9 @@ int main(int argc, char* argv[])
     ss << "10.0";
     ntS = ss.str();
     ss.str("");
-  }
+    }
   else if(argc < 8)
-  {
+    {
     ss << argv[1];
     infile = ss.str();
     ss.str("");
@@ -180,9 +179,9 @@ int main(int argc, char* argv[])
     ss << "10.0";
     ntS = ss.str();
     ss.str("");
-  }
+    }
   else if(argc < 9)
-  {
+    {
     ss << argv[1];
     infile = ss.str();
     ss.str("");
@@ -207,9 +206,9 @@ int main(int argc, char* argv[])
     ss << "10.0";
     ntS = ss.str();
     ss.str("");
-  }
+    }
   else
-  {
+    {
     ss << argv[1];
     infile = ss.str();
     ss.str("");
@@ -234,8 +233,7 @@ int main(int argc, char* argv[])
     ss << argv[8];
     ntS = ss.str();
     ss.str("");
-  }
-
+    }
 
   typedef float ImagePixelType;
   int ndims = 2;
@@ -255,75 +253,67 @@ int main(int argc, char* argv[])
   //3 wavelengths, 3 dimensions
   std::vector<std::string> wavelengthsVS = parse(wavelengthsS,',');
   if(wavelengthsVS.size()%2!=0)
-  {
+    {
     std::cerr << "wavelengths must be a comma seperated string of numbers with number of elements divisible by 3" << std::endl;
     return EXIT_FAILURE;
-  }
+    }
 
   std::vector<std::string> orientationsVS = parse(orientationsS,',');
   if(orientationsVS.size()%2!=0)
-  {
+    {
     std::cerr << "orientations must be a comma seperated string of numbers with number of elements divisible by 3" << std::endl;
     return EXIT_FAILURE;
-  }
+    }
 
-  int wvCount = int(double(wavelengthsVS.size())/2.0); 
+  int wvCount = int(double(wavelengthsVS.size())/2.0);
   DoubleMatrix wavelengths(wvCount,2);
-  int orCount = int(double(orientationsVS.size())/2.0); 
+  int orCount = int(double(orientationsVS.size())/2.0);
   DoubleMatrix orientations(orCount,2);
 
   int idx=0;
   for(int i=0; i < wvCount; i++)
-  {
-    for(int j=0; j < 2; j++)
     {
+    for(int j=0; j < 2; j++)
+      {
       wavelengths(i,j) = atof(wavelengthsVS[idx].c_str());
       idx++;
+      }
     }
-  }
-  
 
   idx=0;
   for(int i=0; i < orCount; i++)
-  {
-    for(int j=0; j < 2; j++)
     {
+    for(int j=0; j < 2; j++)
+      {
       orientations(i,j) = atof(orientationsVS[idx].c_str());
       idx++;
+      }
     }
-  }
-  
 
   double sigma=0;
   sigma = atof( sigmaS.c_str() ) ;
 
-
-  double anglebandwidth=0;
+  double anglebandwidth = 0;
   anglebandwidth = atof( angular_bandwidthS.c_str() ) ;
 
-
-  int polarity=0;
+  int polarity = 0;
   polarity =int( atof( polarityS.c_str() ) );
 
-
-  double noiseT=0;
+  double noiseT = 0;
   noiseT = atof( ntS.c_str() ) ;
-
-  //std::cerr << infile.c_str() << std::endl;
-  //std::cerr << outfile.c_str() << std::endl;
 
   reader->SetFileName(infile.c_str());
   try
-  {
+    {
     reader->Update();
     inImg = reader->GetOutput();
     inImg->DisconnectPipeline();
-  }
+    }
   catch ( itk::ExceptionObject & excp )
-  {
+    {
     std::cerr << excp << std::endl;
     return EXIT_FAILURE;
-  }
+    }
 
   psfilter->SetInput(inImg);
   psfilter->SetWavelengths(wavelengths);
@@ -335,17 +325,16 @@ int main(int argc, char* argv[])
   psfilter->Initialize();
 
   try
-  {
+    {
     writer->SetFileName(outfile.c_str());
     writer->SetInput(psfilter->GetOutput());
     writer->Update();
-  }
+    }
   catch ( itk::ExceptionObject & excp )
-  {
+    {
     std::cerr << excp << std::endl;
     return EXIT_FAILURE;
-  }
-
+    }
 
   return EXIT_SUCCESS;
 }
