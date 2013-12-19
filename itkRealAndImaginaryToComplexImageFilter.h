@@ -9,8 +9,8 @@
   Copyright (c) Insight Software Consortium. All rights reserved.
   See ITKCopyright.txt or http://www.itk.org/HTML/Copyright.htm for details.
 
-     This software is distributed WITHOUT ANY WARRANTY; without even 
-     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR 
+     This software is distributed WITHOUT ANY WARRANTY; without even
+     the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
      PURPOSE.  See the above copyright notices for more information.
 
 =========================================================================*/
@@ -21,7 +21,7 @@
 
 namespace itk
 {
-  
+
 /** \class RealAndImaginaryToComplexImageFilter
  * \brief Implements pixel-wise conversion of real and imaginar data into
  * complex voxels.
@@ -38,7 +38,7 @@ namespace itk
  *
  * \author Simon K. Warfield simon.warfield@childrens.harvard.edu
  *
- * \note Attribution Notice. This research work was made possible by Grant 
+ * \note Attribution Notice. This research work was made possible by Grant
  * Number R01 RR021885 (PI Simon K. Warfield, Ph.D.) from
  * the National Center for Research Resources (NCRR), a component of the
  * National Institutes of Health (NIH).  Its contents are solely the
@@ -51,8 +51,8 @@ namespace itk
  * \sa MagnitudeAndPhaseToComplexImageFilter
  */
 
-namespace Functor {  
-  
+namespace Functor {
+
 template< class TInput1, class TInput2, class TOutput>
 class RealAndImaginaryToComplex
 {
@@ -71,7 +71,7 @@ public:
     {
     return std::complex<TOutput>( static_cast<TOutput>(A), static_cast<TOutput>(B));
     }
-}; 
+};
 }
 
 template <class TInputPixel1, class TInputPixel2, class TOutputPixel, unsigned int NDimension = 3>
@@ -79,9 +79,9 @@ class ITK_EXPORT RealAndImaginaryToComplexImageFilter :
     public BinaryFunctorImageFilter<
        Image < TInputPixel1, NDimension >,
        Image < TInputPixel2, NDimension >,
-       Image < std::complex<TOutputPixel>, NDimension >, 
-         Functor::RealAndImaginaryToComplex< 
-            TInputPixel1, 
+       Image < std::complex<TOutputPixel>, NDimension >,
+         Functor::RealAndImaginaryToComplex<
+            TInputPixel1,
             TInputPixel2,
             TOutputPixel
                  > >
@@ -92,9 +92,9 @@ public:
   typedef BinaryFunctorImageFilter<
     Image < TInputPixel1, NDimension >,
     Image < TInputPixel2, NDimension >,
-    Image < std::complex<TOutputPixel>, NDimension >, 
-      Functor::RealAndImaginaryToComplex< 
-            TInputPixel1, 
+    Image < std::complex<TOutputPixel>, NDimension >,
+      Functor::RealAndImaginaryToComplex<
+            TInputPixel1,
             TInputPixel2,
             TOutputPixel > >                        Superclass;
 

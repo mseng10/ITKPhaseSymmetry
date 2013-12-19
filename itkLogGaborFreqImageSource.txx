@@ -71,7 +71,7 @@ namespace itk
 
 		typedef ImageRegionIterator<TOutputImage> OutputIterator;
 		OutputIterator outIt = OutputIterator(outputPtr,outputRegionForThread);
-		
+
 		int ndims = TOutputImage::ImageDimension;
 
 		const double pi = 3.1415926;
@@ -84,7 +84,7 @@ namespace itk
 			centerPoint[i] = double(m_Size[i])/2.0;
 		}
 
-		double radius = 0; 
+		double radius = 0;
 		double cfradius = 0;
 		double sigma = 0;
 		double logGaborValue=0;
@@ -117,16 +117,16 @@ namespace itk
 	template<typename TOutputImage>
 	void LogGaborFreqImageSource<TOutputImage>::SetSpacing(const float* spacing)
 	{
-		unsigned int i; 
+		unsigned int i;
 		for (i=0; i<TOutputImage::ImageDimension; i++)
 		{
 			if ( (double)spacing[i] != m_Spacing[i] )
 			{
 				break;
 			}
-		} 
-		if ( i < TOutputImage::ImageDimension ) 
-		{ 
+		}
+		if ( i < TOutputImage::ImageDimension )
+		{
 			for (i=0; i<TOutputImage::ImageDimension; i++)
 			{
 				m_Spacing[i] = spacing[i];
@@ -138,16 +138,16 @@ namespace itk
 	template<typename TOutputImage>
 	void LogGaborFreqImageSource<TOutputImage>::SetSpacing(const double* spacing)
 	{
-		unsigned int i; 
+		unsigned int i;
 		for (i=0; i<TOutputImage::ImageDimension; i++)
 		{
 			if ( spacing[i] != m_Spacing[i] )
 			{
 				break;
 			}
-		} 
-		if ( i < TOutputImage::ImageDimension ) 
-		{ 
+		}
+		if ( i < TOutputImage::ImageDimension )
+		{
 			for (i=0; i<TOutputImage::ImageDimension; i++)
 			{
 				m_Spacing[i] = spacing[i];
@@ -159,16 +159,16 @@ namespace itk
 	template<typename TOutputImage>
 	void LogGaborFreqImageSource<TOutputImage>::SetOrigin(const float* origin)
 	{
-		unsigned int i; 
+		unsigned int i;
 		for (i=0; i<TOutputImage::ImageDimension; i++)
 		{
 			if ( (double)origin[i] != m_Origin[i] )
 			{
 				break;
 			}
-		} 
-		if ( i < TOutputImage::ImageDimension ) 
-		{ 
+		}
+		if ( i < TOutputImage::ImageDimension )
+		{
 			for (i=0; i<TOutputImage::ImageDimension; i++)
 			{
 				m_Origin[i] = origin[i];
@@ -180,16 +180,16 @@ namespace itk
 	template<typename TOutputImage>
 	void LogGaborFreqImageSource<TOutputImage>::SetOrigin(const double* origin)
 	{
-		unsigned int i; 
+		unsigned int i;
 		for (i=0; i<TOutputImage::ImageDimension; i++)
 		{
 			if ( origin[i] != m_Origin[i] )
 			{
 				break;
 			}
-		} 
-		if ( i < TOutputImage::ImageDimension ) 
-		{ 
+		}
+		if ( i < TOutputImage::ImageDimension )
+		{
 			for (i=0; i<TOutputImage::ImageDimension; i++)
 			{
 				m_Origin[i] = origin[i];
@@ -201,16 +201,16 @@ namespace itk
 	template<typename TOutputImage>
 	void LogGaborFreqImageSource<TOutputImage>::SetSize(const SizeValueType * size)
 	{
-		unsigned int i; 
+		unsigned int i;
 		for (i=0; i<TOutputImage::ImageDimension; i++)
 		{
 			if ( size[i] != m_Size[i] )
 			{
 				break;
 			}
-		} 
-		if ( i < TOutputImage::ImageDimension ) 
-		{ 
+		}
+		if ( i < TOutputImage::ImageDimension )
+		{
 			for (i=0; i<TOutputImage::ImageDimension; i++)
 			{
 				m_Size[i] = size[i];
@@ -222,16 +222,16 @@ namespace itk
 	template<typename TOutputImage>
 	void LogGaborFreqImageSource<TOutputImage>::SetSize(const SizeType size )
 	{
-		unsigned int i; 
+		unsigned int i;
 		for (i=0; i<TOutputImage::ImageDimension; i++)
 		{
 			if ( size[i] != m_Size[i] )
 			{
 				break;
 			}
-		} 
-		if ( i < TOutputImage::ImageDimension ) 
-		{ 
+		}
+		if ( i < TOutputImage::ImageDimension )
+		{
 			for (i=0; i<TOutputImage::ImageDimension; i++)
 			{
 				m_Size[i] = size[i];
