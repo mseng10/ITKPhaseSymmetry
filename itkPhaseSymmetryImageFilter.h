@@ -85,9 +85,6 @@ public:
 
   typedef Image< ImagePixelType, InputImageDimension > FloatImageType;
 
-  typedef std::vector< typename FloatImageType::Pointer > FloatImageStack;
-  typedef std::vector< FloatImageStack >                  FloatImageBank;
-
   itkSetMacro(Wavelengths, MatrixType );
   itkSetMacro(Orientations, MatrixType );
   itkSetMacro(AngleBandwidth, double );
@@ -129,7 +126,7 @@ protected:
   typedef typename FFTFilterType::OutputImageType ComplexImageType;
 
   typedef std::vector< typename FloatImageType::Pointer > FloatImageStack;
-  typedef std::vector<FloatImageStack>                    FloatImageBank;
+  typedef std::vector< FloatImageStack >                  FloatImageBank;
 
   typedef MultiplyImageFilter <FloatImageType,FloatImageType>              MultiplyImageFilterType;
   typedef MultiplyImageFilter <ComplexImageType,ComplexImageType>          ComplexMultiplyImageFilterType;
