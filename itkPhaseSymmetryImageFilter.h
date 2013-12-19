@@ -74,9 +74,9 @@ public:
   typedef typename     OutputImageType::RegionType  OutputImageRegionType;
   typedef typename     OutputImageType::PixelType   OutputImagePixelType;
 
-  typedef OutputImagePixelType                      ComplexPixelComponentType;
-  typedef OutputImagePixelType                      ImagePixelType;
-  typedef std::complex< ComplexPixelComponentType > ComplexPixelType;
+  typedef OutputImagePixelType                           ComplexPixelComponentType;
+  typedef OutputImagePixelType                           ImagePixelType;
+  typedef std::complex< ComplexPixelComponentType >      ComplexPixelType;
 
   typedef FixedArray< double, InputImageDimension >   ArrayType;
   typedef FixedArray< double, InputImageDimension-1 > DimMinusOneDoubleArrayType;
@@ -140,19 +140,20 @@ protected:
   typedef AcosImageFilter< FloatImageType, FloatImageType >                   AcosImageFilterType;
 
 
-  typedef LogGaborFreqImageSource <FloatImageType>                                                                         LogGaborFreqImageSourceType;
-  typedef SteerableFilterFreqImageSource <FloatImageType>                                                                  SteerableFiltersFreqImageSourceType;
-  typedef ButterworthFilterFreqImageSource <FloatImageType>                                                                ButterworthKernelFreqImageSourceType;
-  typedef ShiftScaleImageFilter<FloatImageType,FloatImageType>                                                             ShiftScaleImageFilterType;
-  typedef ComplexToRealImageFilter<ComplexImageType , FloatImageType>                                                      ComplexToRealFilterType;
-  typedef ComplexToImaginaryImageFilter<ComplexImageType , FloatImageType>                                                 ComplexToImaginaryFilterType;
-  typedef ComplexToModulusImageFilter<ComplexImageType , FloatImageType>                                                   ComplexToModulusFilterType;
-  typedef ComplexToPhaseImageFilter<ComplexImageType , FloatImageType>                                                     ComplexToPhaseFilterType;
-  typedef RealAndImaginaryToComplexImageFilter<ImagePixelType, ImagePixelType,ImagePixelType,TInputImage::ImageDimension>  RealAndImaginaryToComplexFilterType;
-  typedef MagnitudeAndPhaseToComplexImageFilter<ImagePixelType, ImagePixelType,ImagePixelType,TInputImage::ImageDimension> MagnitudeAndPhaseToComplexFilterType;
-  typedef FFTShiftImageFilter<ComplexImageType,ComplexImageType>                                                           ComplexFFTShiftImageFilterType;
-  typedef FFTShiftImageFilter<FloatImageType,FloatImageType>                                                               DoubleFFTShiftImageFilterType;
-  typedef AbsImageFilter<FloatImageType,FloatImageType>                                                                    AbsImageFilterType;
+  typedef LogGaborFreqImageSource< FloatImageType >          LogGaborFreqImageSourceType;
+  typedef SteerableFilterFreqImageSource< FloatImageType >   SteerableFiltersFreqImageSourceType;
+  typedef ButterworthFilterFreqImageSource< FloatImageType > ButterworthKernelFreqImageSourceType;
+
+  typedef ShiftScaleImageFilter< FloatImageType, FloatImageType >                                                     ShiftScaleImageFilterType;
+  typedef ComplexToRealImageFilter< ComplexImageType, FloatImageType >                                                ComplexToRealFilterType;
+  typedef ComplexToImaginaryImageFilter< ComplexImageType, FloatImageType >                                           ComplexToImaginaryFilterType;
+  typedef ComplexToModulusImageFilter< ComplexImageType, FloatImageType >                                             ComplexToModulusFilterType;
+  typedef ComplexToPhaseImageFilter< ComplexImageType, FloatImageType >                                               ComplexToPhaseFilterType;
+  typedef RealAndImaginaryToComplexImageFilter< ImagePixelType, ImagePixelType, ImagePixelType, InputImageDimension > RealAndImaginaryToComplexFilterType;
+  typedef MagnitudeAndPhaseToComplexImageFilter< InputImageType, InputImageType, ComplexImageType >                   MagnitudeAndPhaseToComplexFilterType;
+  typedef FFTShiftImageFilter< ComplexImageType, ComplexImageType >                                                   ComplexFFTShiftImageFilterType;
+  typedef FFTShiftImageFilter< FloatImageType, FloatImageType >                                                       DoubleFFTShiftImageFilterType;
+  typedef AbsImageFilter< FloatImageType, FloatImageType >                                                            AbsImageFilterType;
 
 private:
   PhaseSymmetryImageFilter(const Self&); //purposely not implemented
