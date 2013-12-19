@@ -26,8 +26,8 @@ See Peter Kovesi's site for details on the filter
 #include "itkRealAndImaginaryToComplexImageFilter.h"
 #include "itkMagnitudeAndPhaseToComplexImageFilter.h"
 #include "itkImageAdaptor.h"
-#include "itkVnlFFTRealToComplexConjugateImageFilter.h"
-#include "itkVnlFFTComplexConjugateToRealImageFilter.h"
+#include "itkVnlForwardFFTImageFilter.h"
+#include "itkVnlInverseFFTImageFilter.h"
 #include "itkFFTWRealToComplexConjugateImageFilter.h"
 #include "itkFFTWComplexConjugateToRealImageFilter.h"
 #include "itkFFTWComplexToComplexImageFilter.h"
@@ -121,17 +121,11 @@ protected:
 
   void GenerateData(void);
 
-
-  //typedef itk::VnlFFTRealToComplexConjugateImageFilter <ImagePixelType, TInputImage::ImageDimension>  ForwardFFTFilterType;
-  //typedef itk::VnlFFTComplexConjugateToRealImageFilter <ImagePixelType, TInputImage::ImageDimension>  InverseFFTFilterType;
-  //typedef itk::FFTWRealToComplexConjugateImageFilter <ImagePixelType, TInputImage::ImageDimension>  ForwardFFTFilterType;
-  //typedef itk::FFTWComplexConjugateToRealImageFilter <ImagePixelType, TInputImage::ImageDimension>  InverseFFTFilterType;
-
   static const int   FFT_FORWARD = -1;
   static const int   FFT_BACKWARD = 1;
 
-  typedef VnlFFTRealToComplexConjugateImageFilter <ImagePixelType,TInputImage::ImageDimension> FFTFilterType;
-  typedef FFTComplexToComplexImageFilter <ImagePixelType,TInputImage::ImageDimension>          IFFTFilterType;
+  typedef VnlForwardFFTImageFilter <ImagePixelType,TInputImage::ImageDimension>       FFTFilterType;
+  typedef FFTComplexToComplexImageFilter <ImagePixelType,TInputImage::ImageDimension> IFFTFilterType;
 
   typedef typename FFTFilterType::OutputImageType ComplexImageType;
 
