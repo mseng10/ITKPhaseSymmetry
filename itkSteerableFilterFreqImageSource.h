@@ -110,7 +110,7 @@ protected:
   SteerableFilterFreqImageSource();
   ~SteerableFilterFreqImageSource();
   void PrintSelf(std::ostream& os, Indent indent) const;
-  void ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread,int tid);
+  void ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid);
   virtual void GenerateOutputInformation();
 
 private:

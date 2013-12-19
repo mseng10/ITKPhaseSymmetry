@@ -83,7 +83,7 @@ namespace itk
     typedef FixedArray<double,TInputImage::ImageDimension> ArrayType;
     typedef FixedArray<double,TInputImage::ImageDimension-1> DimMinusOneDoubleArrayType;
     typedef Array2D<double> MatrixType;
-    
+
     typedef itk::Image<ImagePixelType,TInputImage::ImageDimension> FloatImageType;
 
     typedef std::vector< typename FloatImageType::Pointer > FloatImageStack;
@@ -133,7 +133,7 @@ namespace itk
 
     typedef itk::VnlFFTRealToComplexConjugateImageFilter <ImagePixelType,TInputImage::ImageDimension> FFTFilterType;
     typedef itk::FFTComplexToComplexImageFilter <ImagePixelType,TInputImage::ImageDimension> IFFTFilterType;
-  
+
     typedef typename FFTFilterType::OutputImageType ComplexImageType;
 
     typedef std::vector< typename FloatImageType::Pointer > FloatImageStack;
@@ -151,7 +151,7 @@ namespace itk
     typedef itk::Atan2ImageFilter <FloatImageType,FloatImageType,FloatImageType> Atan2ImageFilterType;
     typedef itk::AcosImageFilter <FloatImageType,FloatImageType> AcosImageFilterType;
 
-                                                          
+
     typedef itk::LogGaborFreqImageSource <FloatImageType> LogGaborFreqImageSourceType;
     typedef itk::SteerableFilterFreqImageSource <FloatImageType> SteerableFiltersFreqImageSourceType;
     typedef itk::ButterworthFilterFreqImageSource <FloatImageType> ButterworthKernelFreqImageSourceType;
