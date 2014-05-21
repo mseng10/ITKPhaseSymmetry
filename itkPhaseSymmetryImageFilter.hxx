@@ -1,5 +1,5 @@
-#ifndef __itkPhaseSymmetryImageFilter_txx
-#define __itkPhaseSymmetryImageFilter_txx
+#ifndef __itkPhaseSymmetryImageFilter_hxx
+#define __itkPhaseSymmetryImageFilter_hxx
 
 #include "itkPhaseSymmetryImageFilter.h"
 #include <string>

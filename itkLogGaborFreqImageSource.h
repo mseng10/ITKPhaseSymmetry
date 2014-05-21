@@ -149,7 +149,7 @@ private:
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkLogGaborFreqImageSource.txx"
+#include "itkLogGaborFreqImageSource.hxx"
 #endif
 
 #endif

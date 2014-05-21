@@ -1,6 +1,6 @@
 
-#ifndef __itkLogGaborFreqImageSource_txx
-#define __itkLogGaborFreqImageSource_txx
+#ifndef __itkLogGaborFreqImageSource_hxx
+#define __itkLogGaborFreqImageSource_hxx
 
 #include "itkLogGaborFreqImageSource.h"
 #include "itkImageRegionIteratorWithIndex.h"

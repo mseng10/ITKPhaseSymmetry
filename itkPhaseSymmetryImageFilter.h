@@ -196,7 +196,7 @@ private:
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkPhaseSymmetryImageFilter.txx"
+#include "itkPhaseSymmetryImageFilter.hxx"
 #endif
 
 #endif

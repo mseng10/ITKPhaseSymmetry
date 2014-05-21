@@ -1,18 +1,16 @@
 
-#ifndef __itkSteerableFilterFreqImageSource_txx
-#define __itkSteerableFilterFreqImageSource_txx
+#ifndef __itkButterworthFilterFreqImageSource_hxx
+#define __itkButterworthFilterFreqImageSource_hxx
 
-#include "itkSteerableFilterFreqImageSource.h"
+#include "itkButterworthFilterFreqImageSource.h"
 #include "itkImageRegionIteratorWithIndex.h"
-#include "itkProgressReporter.h"
-#include "itkObjectFactory.h"
-#include <algorithm>
+
 
 namespace itk
 {
 
   template <class TOutputImage>
-  SteerableFilterFreqImageSource<TOutputImage>::SteerableFilterFreqImageSource()
+  ButterworthFilterFreqImageSource<TOutputImage>::ButterworthFilterFreqImageSource()
   {
     //Initial image is 64 wide in each direction.
     for (unsigned int i=0; i<TOutputImage::GetImageDimension(); i++)
@@ -23,18 +21,16 @@ namespace itk
     }
     m_Direction.SetIdentity();
 
-    //this->ReleaseDataBeforeUpdateFlagOn();
-
 
   }
 
   template <class TOutputImage>
-  SteerableFilterFreqImageSource<TOutputImage>::~SteerableFilterFreqImageSource()
+  ButterworthFilterFreqImageSource<TOutputImage>::~ButterworthFilterFreqImageSource()
   {
   }
 
   template <class TOutputImage>
-  void SteerableFilterFreqImageSource<TOutputImage>::PrintSelf(std::ostream& os, Indent indent) const
+  void ButterworthFilterFreqImageSource<TOutputImage>::PrintSelf(std::ostream& os, Indent indent) const
   {
     Superclass::PrintSelf(os,indent);
 
@@ -43,7 +39,7 @@ namespace itk
 
   //----------------------------------------------------------------------------
   template <typename TOutputImage>
-  void SteerableFilterFreqImageSource<TOutputImage>::GenerateOutputInformation()
+  void ButterworthFilterFreqImageSource<TOutputImage>::GenerateOutputInformation()
   {
     TOutputImage *output;
     typename TOutputImage::IndexType index = {{0}};
@@ -63,72 +59,50 @@ namespace itk
   }
 
   template <typename TOutputImage>
-  void SteerableFilterFreqImageSource<TOutputImage>::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid)
+  void ButterworthFilterFreqImageSource<TOutputImage>::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid)
   {
     //The a pointer to the output image
-
     typename TOutputImage::Pointer outputPtr = this->GetOutput();
-    //outputPtr->SetBufferedRegion( outputRegionForThread );
-    //outputPtr->Allocate();
-
-
     typedef ImageRegionIteratorWithIndex<TOutputImage> OutputIterator;
-    OutputIterator outIt = OutputIterator(outputPtr,outputRegionForThread);
+    OutputIterator outIt = OutputIterator(outputPtr,outputPtr->GetRequestedRegion());
 
     int ndims = TOutputImage::ImageDimension;
 
-    const double pi = 3.1415926;
+    double Value=0;
 
-    double angularSigma;
-    angularSigma = (m_AngularBandwidth/2)/1.1774;
-
-
-    double dangle;
-    double orientationRadius=0;
-    DoubleArrayType dist;
     DoubleArrayType centerPoint;
-
-    double radius = 0;
-    double angularGaussianValue = 0;
-    double dotProduct = 0;
-
     for(int i=0; i < ndims;i++)
     {
-      orientationRadius = orientationRadius + m_Orientation[i]*m_Orientation[i];
       centerPoint[i] = double(m_Size[i])/2.0;
     }
-    orientationRadius = sqrt(orientationRadius);
 
+    double radius = 0;
+    DoubleArrayType dist;
     typename TOutputImage::IndexType index;
     for (outIt.GoToBegin(); !outIt.IsAtEnd(); ++outIt)
     {
       index = outIt.GetIndex();
+
       radius = 0;
-      dotProduct = 0;
+      Value=0;
 
       for( int i=0; i< TOutputImage::ImageDimension; i++)
       {
-        dist[i] = (double(index[i])-centerPoint[i])/double(m_Size[i]);
-        dotProduct = dotProduct + m_Orientation[i]*dist[i];
-        radius = radius + (dist[i]*dist[i]);
+        dist[i] = (centerPoint[i]-double(index[i]))/double(m_Size[i]);
+        radius = radius  + dist[i]*dist[i];
       }
       radius = sqrt(radius);
-      dotProduct = dotProduct/(radius*orientationRadius);
-      dangle = acos(dotProduct);
+      Value=radius/m_Cutoff;
+      Value=pow(Value,2*m_Order);
+      Value = 1/(1+Value);
 
-
-      angularGaussianValue = exp(-((dangle * dangle)/(2*angularSigma*angularSigma)));
-      if(radius==0)
-      {
-        angularGaussianValue=1.0;
-      }
       // Set the pixel value to the function value
-      outIt.Set( (typename TOutputImage::PixelType) angularGaussianValue);
+      outIt.Set( (typename TOutputImage::PixelType) Value);
     }
   }
 
   template<typename TOutputImage>
-  void SteerableFilterFreqImageSource<TOutputImage>::SetSpacing(const float* spacing)
+  void ButterworthFilterFreqImageSource<TOutputImage>::SetSpacing(const float* spacing)
   {
     unsigned int i;
     for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -149,7 +123,7 @@ namespace itk
   }
 
   template<typename TOutputImage>
-  void SteerableFilterFreqImageSource<TOutputImage>::SetSpacing(const double* spacing)
+  void ButterworthFilterFreqImageSource<TOutputImage>::SetSpacing(const double* spacing)
   {
     unsigned int i;
     for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -170,7 +144,7 @@ namespace itk
   }
 
   template<typename TOutputImage>
-  void SteerableFilterFreqImageSource<TOutputImage>::SetOrigin(const float* origin)
+  void ButterworthFilterFreqImageSource<TOutputImage>::SetOrigin(const float* origin)
   {
     unsigned int i;
     for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -191,7 +165,7 @@ namespace itk
   }
 
   template<typename TOutputImage>
-  void SteerableFilterFreqImageSource<TOutputImage>::SetOrigin(const double* origin)
+  void ButterworthFilterFreqImageSource<TOutputImage>::SetOrigin(const double* origin)
   {
     unsigned int i;
     for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -212,7 +186,7 @@ namespace itk
   }
 
   template<typename TOutputImage>
-  void SteerableFilterFreqImageSource<TOutputImage>::SetSize(const SizeValueType * size)
+  void ButterworthFilterFreqImageSource<TOutputImage>::SetSize(const SizeValueType * size)
   {
     unsigned int i;
     for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -233,7 +207,7 @@ namespace itk
   }
 
   template<typename TOutputImage>
-  void SteerableFilterFreqImageSource<TOutputImage>::SetSize(const SizeType size )
+  void ButterworthFilterFreqImageSource<TOutputImage>::SetSize(const SizeType size )
   {
     unsigned int i;
     for (i=0; i<TOutputImage::ImageDimension; i++)
