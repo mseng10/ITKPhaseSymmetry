@@ -75,10 +75,6 @@ void LogGaborFreqImageSource<TOutputImage>::ThreadedGenerateData(const OutputIma
 
   int ndims = TOutputImage::ImageDimension;
 
-  const double pi = 3.1415926;
-  double expParameterFullTerm=0;
-  double angularGaussianValue=0;
-
   DoubleArrayType centerPoint;
   for(int i=0; i < ndims;i++)
   {
@@ -86,7 +82,6 @@ void LogGaborFreqImageSource<TOutputImage>::ThreadedGenerateData(const OutputIma
   }
 
   double radius = 0;
-  double cfradius = 0;
   double sigma = 0;
   double logGaborValue=0;
 
