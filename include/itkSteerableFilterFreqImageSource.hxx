@@ -12,7 +12,8 @@ namespace itk
 {
 
 template <class TOutputImage>
-SteerableFilterFreqImageSource<TOutputImage>::SteerableFilterFreqImageSource()
+SteerableFilterFreqImageSource<TOutputImage>
+::SteerableFilterFreqImageSource()
 {
   //Initial image is 64 wide in each direction.
   for (unsigned int i=0; i<TOutputImage::GetImageDimension(); i++)
@@ -24,26 +25,27 @@ SteerableFilterFreqImageSource<TOutputImage>::SteerableFilterFreqImageSource()
   m_Direction.SetIdentity();
 
   //this->ReleaseDataBeforeUpdateFlagOn();
-
-
 }
 
+
 template <class TOutputImage>
-SteerableFilterFreqImageSource<TOutputImage>::~SteerableFilterFreqImageSource()
+SteerableFilterFreqImageSource<TOutputImage>
+::~SteerableFilterFreqImageSource()
 {
 }
 
+
 template <class TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>::PrintSelf(std::ostream& os, Indent indent) const
+void SteerableFilterFreqImageSource<TOutputImage>
+::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);
-
-
 }
 
-//----------------------------------------------------------------------------
+
 template <typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>::GenerateOutputInformation()
+void SteerableFilterFreqImageSource<TOutputImage>
+::GenerateOutputInformation()
 {
   TOutputImage *output;
   typename TOutputImage::IndexType index = {{0}};
@@ -62,8 +64,10 @@ void SteerableFilterFreqImageSource<TOutputImage>::GenerateOutputInformation()
   output->SetDirection(m_Direction);
 }
 
+
 template <typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid)
+void SteerableFilterFreqImageSource<TOutputImage>
+::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid)
 {
   //The a pointer to the output image
 
@@ -127,8 +131,10 @@ void SteerableFilterFreqImageSource<TOutputImage>::ThreadedGenerateData(const Ou
   }
 }
 
+
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>::SetSpacing(const float* spacing)
+void SteerableFilterFreqImageSource<TOutputImage>
+::SetSpacing(const float* spacing)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -148,8 +154,10 @@ void SteerableFilterFreqImageSource<TOutputImage>::SetSpacing(const float* spaci
   }
 }
 
+
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>::SetSpacing(const double* spacing)
+void SteerableFilterFreqImageSource<TOutputImage>
+::SetSpacing(const double* spacing)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -169,8 +177,10 @@ void SteerableFilterFreqImageSource<TOutputImage>::SetSpacing(const double* spac
   }
 }
 
+
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>::SetOrigin(const float* origin)
+void SteerableFilterFreqImageSource<TOutputImage>
+::SetOrigin(const float* origin)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -190,8 +200,10 @@ void SteerableFilterFreqImageSource<TOutputImage>::SetOrigin(const float* origin
   }
 }
 
+
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>::SetOrigin(const double* origin)
+void SteerableFilterFreqImageSource<TOutputImage>
+::SetOrigin(const double* origin)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -211,8 +223,10 @@ void SteerableFilterFreqImageSource<TOutputImage>::SetOrigin(const double* origi
   }
 }
 
+
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>::SetSize(const SizeValueType * size)
+void SteerableFilterFreqImageSource<TOutputImage>
+::SetSize(const SizeValueType * size)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -232,8 +246,10 @@ void SteerableFilterFreqImageSource<TOutputImage>::SetSize(const SizeValueType *
   }
 }
 
+
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>::SetSize(const SizeType size )
+void SteerableFilterFreqImageSource<TOutputImage>
+::SetSize(const SizeType size )
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)

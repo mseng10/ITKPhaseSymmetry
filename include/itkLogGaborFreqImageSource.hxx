@@ -67,7 +67,7 @@ void LogGaborFreqImageSource<TOutputImage>
 
 template <typename TOutputImage>
 void LogGaborFreqImageSource<TOutputImage>
-::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid)
+::ThreadedGenerateData( const OutputImageRegionType& outputRegionForThread, ThreadIdType itkNotUsed( threadId ) )
 {
   //The a pointer to the output image
   typename TOutputImage::Pointer outputPtr = this->GetOutput();
