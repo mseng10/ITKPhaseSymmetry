@@ -10,7 +10,8 @@ namespace itk
 {
 
 template <class TOutputImage>
-LogGaborFreqImageSource<TOutputImage>::LogGaborFreqImageSource()
+LogGaborFreqImageSource<TOutputImage>
+::LogGaborFreqImageSource()
 {
   //Initial image is 64 wide in each direction.
   for (unsigned int i=0; i<TOutputImage::GetImageDimension(); i++)
@@ -28,20 +29,23 @@ LogGaborFreqImageSource<TOutputImage>::LogGaborFreqImageSource()
 
 
 template <class TOutputImage>
-LogGaborFreqImageSource<TOutputImage>::~LogGaborFreqImageSource()
+LogGaborFreqImageSource<TOutputImage>
+::~LogGaborFreqImageSource()
 {
 }
 
 
 template <class TOutputImage>
-void LogGaborFreqImageSource<TOutputImage>::PrintSelf(std::ostream& os, Indent indent) const
+void LogGaborFreqImageSource<TOutputImage>
+::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);
 }
 
 
 template <typename TOutputImage>
-void LogGaborFreqImageSource<TOutputImage>::GenerateOutputInformation()
+void LogGaborFreqImageSource<TOutputImage>
+::GenerateOutputInformation()
 {
   TOutputImage *output;
   typename TOutputImage::IndexType index = {{0}};
@@ -62,7 +66,8 @@ void LogGaborFreqImageSource<TOutputImage>::GenerateOutputInformation()
 
 
 template <typename TOutputImage>
-void LogGaborFreqImageSource<TOutputImage>::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid)
+void LogGaborFreqImageSource<TOutputImage>
+::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid)
 {
   //The a pointer to the output image
   typename TOutputImage::Pointer outputPtr = this->GetOutput();
@@ -110,8 +115,10 @@ void LogGaborFreqImageSource<TOutputImage>::ThreadedGenerateData(const OutputIma
   }
 }
 
+
 template<typename TOutputImage>
-void LogGaborFreqImageSource<TOutputImage>::SetSpacing(const float* spacing)
+void LogGaborFreqImageSource<TOutputImage>
+::SetSpacing(const float* spacing)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -131,8 +138,10 @@ void LogGaborFreqImageSource<TOutputImage>::SetSpacing(const float* spacing)
   }
 }
 
+
 template<typename TOutputImage>
-void LogGaborFreqImageSource<TOutputImage>::SetSpacing(const double* spacing)
+void LogGaborFreqImageSource<TOutputImage>
+::SetSpacing(const double* spacing)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -152,8 +161,10 @@ void LogGaborFreqImageSource<TOutputImage>::SetSpacing(const double* spacing)
   }
 }
 
+
 template<typename TOutputImage>
-void LogGaborFreqImageSource<TOutputImage>::SetOrigin(const float* origin)
+void LogGaborFreqImageSource<TOutputImage>
+::SetOrigin(const float* origin)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -173,8 +184,10 @@ void LogGaborFreqImageSource<TOutputImage>::SetOrigin(const float* origin)
   }
 }
 
+
 template<typename TOutputImage>
-void LogGaborFreqImageSource<TOutputImage>::SetOrigin(const double* origin)
+void LogGaborFreqImageSource<TOutputImage>
+::SetOrigin(const double* origin)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -194,8 +207,10 @@ void LogGaborFreqImageSource<TOutputImage>::SetOrigin(const double* origin)
   }
 }
 
+
 template<typename TOutputImage>
-void LogGaborFreqImageSource<TOutputImage>::SetSize(const SizeValueType * size)
+void LogGaborFreqImageSource<TOutputImage>
+::SetSize(const SizeValueType * size)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -215,8 +230,10 @@ void LogGaborFreqImageSource<TOutputImage>::SetSize(const SizeValueType * size)
   }
 }
 
+
 template<typename TOutputImage>
-void LogGaborFreqImageSource<TOutputImage>::SetSize(const SizeType size )
+void LogGaborFreqImageSource<TOutputImage>
+::SetSize(const SizeType size )
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
