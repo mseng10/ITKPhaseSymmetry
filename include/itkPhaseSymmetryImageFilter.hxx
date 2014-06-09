@@ -9,7 +9,8 @@ namespace itk
 {
 
 template <class TInputImage, class TOutputImage>
-PhaseSymmetryImageFilter<TInputImage,TOutputImage>::PhaseSymmetryImageFilter()
+PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+::PhaseSymmetryImageFilter()
 {
   m_MultiplyImageFilter = MultiplyImageFilterType::New();
   m_DivideImageFilter = DivideImageFilterType::New();
@@ -73,7 +74,8 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>::PhaseSymmetryImageFilter()
 
 
 template <class TInputImage, class TOutputImage>
-void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::Initialize( void )
+void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+::Initialize( void )
 {
   typename TInputImage::SizeType  inputSize;
   typename TInputImage::IndexType inputIndex;
@@ -170,7 +172,8 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::Initialize( void )
 
 
 template <class TInputImage, class TOutputImage>
-void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
+void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+::GenerateData( void )
 {
   typename TInputImage::SizeType  inputSize;
   typename TInputImage::IndexType inputIndex;
@@ -360,7 +363,8 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateData( void )
 
 
 template <class TInputImage, class TOutputImage>
-void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateInputRequestedRegion()
+void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+::GenerateInputRequestedRegion()
 {
   itkDebugMacro("GenerateInputRequestedRegion Start");
   Superclass::GenerateInputRequestedRegion();
@@ -401,7 +405,8 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateInputRequestedR
 * GenerateData Performs the accumulation
 */
 template <class TInputImage, class TOutputImage>
-void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateOutputInformation( void )
+void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+::GenerateOutputInformation( void )
 {
   typename TOutputImage::RegionType outputRegion;
   typename TInputImage::IndexType inputIndex;
@@ -451,7 +456,8 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::GenerateOutputInformati
 
 
 template <class TInputImage, class TOutputImage>
-void PhaseSymmetryImageFilter<TInputImage,TOutputImage>::PrintSelf(std::ostream& os, Indent indent) const
+void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);
 
