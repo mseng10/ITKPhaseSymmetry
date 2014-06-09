@@ -67,7 +67,7 @@ void SteerableFilterFreqImageSource<TOutputImage>
 
 template <typename TOutputImage>
 void SteerableFilterFreqImageSource<TOutputImage>
-::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid)
+::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType itkNotUsed(threadId))
 {
   //The a pointer to the output image
 
@@ -80,8 +80,6 @@ void SteerableFilterFreqImageSource<TOutputImage>
   OutputIterator outIt = OutputIterator(outputPtr,outputRegionForThread);
 
   int ndims = TOutputImage::ImageDimension;
-
-  const double pi = 3.1415926;
 
   double angularSigma;
   angularSigma = (m_AngularBandwidth/2)/1.1774;
