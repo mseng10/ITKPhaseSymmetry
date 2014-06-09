@@ -10,7 +10,8 @@ namespace itk
 {
 
 template <class TOutputImage>
-ButterworthFilterFreqImageSource<TOutputImage>::ButterworthFilterFreqImageSource()
+ButterworthFilterFreqImageSource<TOutputImage>
+::ButterworthFilterFreqImageSource()
 {
   //Initial image is 64 wide in each direction.
   for (unsigned int i=0; i<TOutputImage::GetImageDimension(); i++)
@@ -24,22 +25,25 @@ ButterworthFilterFreqImageSource<TOutputImage>::ButterworthFilterFreqImageSource
 
 }
 
+
 template <class TOutputImage>
-ButterworthFilterFreqImageSource<TOutputImage>::~ButterworthFilterFreqImageSource()
+ButterworthFilterFreqImageSource<TOutputImage>
+::~ButterworthFilterFreqImageSource()
 {
 }
 
+
 template <class TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>::PrintSelf(std::ostream& os, Indent indent) const
+void ButterworthFilterFreqImageSource<TOutputImage>
+::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);
-
-
 }
 
-//----------------------------------------------------------------------------
+
 template <typename TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>::GenerateOutputInformation()
+void ButterworthFilterFreqImageSource<TOutputImage>
+::GenerateOutputInformation()
 {
   TOutputImage *output;
   typename TOutputImage::IndexType index = {{0}};
@@ -58,8 +62,10 @@ void ButterworthFilterFreqImageSource<TOutputImage>::GenerateOutputInformation()
   output->SetDirection(m_Direction);
 }
 
+
 template <typename TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid)
+void ButterworthFilterFreqImageSource<TOutputImage>
+::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid)
 {
   //The a pointer to the output image
   typename TOutputImage::Pointer outputPtr = this->GetOutput();
@@ -101,8 +107,10 @@ void ButterworthFilterFreqImageSource<TOutputImage>::ThreadedGenerateData(const 
   }
 }
 
+
 template<typename TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>::SetSpacing(const float* spacing)
+void ButterworthFilterFreqImageSource<TOutputImage>
+::SetSpacing(const float* spacing)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -122,8 +130,10 @@ void ButterworthFilterFreqImageSource<TOutputImage>::SetSpacing(const float* spa
   }
 }
 
+
 template<typename TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>::SetSpacing(const double* spacing)
+void ButterworthFilterFreqImageSource<TOutputImage>
+::SetSpacing(const double* spacing)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -143,8 +153,10 @@ void ButterworthFilterFreqImageSource<TOutputImage>::SetSpacing(const double* sp
   }
 }
 
+
 template<typename TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>::SetOrigin(const float* origin)
+void ButterworthFilterFreqImageSource<TOutputImage>
+::SetOrigin(const float* origin)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -164,8 +176,10 @@ void ButterworthFilterFreqImageSource<TOutputImage>::SetOrigin(const float* orig
   }
 }
 
+
 template<typename TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>::SetOrigin(const double* origin)
+void ButterworthFilterFreqImageSource<TOutputImage>
+::SetOrigin(const double* origin)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -185,8 +199,10 @@ void ButterworthFilterFreqImageSource<TOutputImage>::SetOrigin(const double* ori
   }
 }
 
+
 template<typename TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>::SetSize(const SizeValueType * size)
+void ButterworthFilterFreqImageSource<TOutputImage>
+::SetSize(const SizeValueType * size)
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
@@ -206,8 +222,10 @@ void ButterworthFilterFreqImageSource<TOutputImage>::SetSize(const SizeValueType
   }
 }
 
+
 template<typename TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>::SetSize(const SizeType size )
+void ButterworthFilterFreqImageSource<TOutputImage>
+::SetSize(const SizeType size )
 {
   unsigned int i;
   for (i=0; i<TOutputImage::ImageDimension; i++)
