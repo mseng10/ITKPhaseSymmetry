@@ -64,12 +64,13 @@ int PhaseSymmetryFilter( int argc, char * argv[] )
     }
   phaseSymmetryFilter->SetWavelengths( wavelengthsArray2D );
 
-  Array2DType orientationsArray2D( scales, Dimension );
-  for( unsigned int ii = 0; ii < scales; ++ii )
+  const unsigned int orientationDirections = orientations.size() / Dimension;
+  Array2DType orientationsArray2D( orientationDirections, Dimension );
+  for( unsigned int ii = 0; ii < orientationDirections; ++ii )
     {
     for( unsigned int jj = 0; jj < Dimension; ++jj )
       {
-      orientationsArray2D( ii, jj ) = wavelengths[ii * Dimension + jj];
+      orientationsArray2D( ii, jj ) = orientations[ii * Dimension + jj];
       }
     }
   phaseSymmetryFilter->SetOrientations( orientationsArray2D );
