@@ -12,6 +12,7 @@ itk_module(PhaseSymmetry
     ITKImageIntensity
   TEST_DEPENDS
     ITKTestKernel
+  EXCLUDE_FROM_DEFAULT
   DESCRIPTION
     "${DOCUMENTATION}"
   )
