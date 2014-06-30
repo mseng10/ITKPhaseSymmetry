@@ -17,13 +17,82 @@
  *=========================================================================*/
 
 #include "itkImageFileReader.h"
-
+#include "itkPhaseSymmetryImageFilter.h"
+#include "itkImageFileWriter.h"
 #include "PhaseSymmetryFilterCLP.h"
 
 template< unsigned int VDimension >
 int PhaseSymmetryFilter( int argc, char * argv[] )
 {
   PARSE_ARGS;
+
+  typedef float PixelType;
+  const unsigned int Dimension = VDimension;
+  typedef itk::Image< PixelType, Dimension > ImageType;
+
+  typedef itk::ImageFileReader< ImageType > ReaderType;
+  typename ReaderType::Pointer reader = ReaderType::New();
+  reader->SetFileName( inputImage );
+  try
+    {
+    reader->Update();
+    }
+  catch ( itk::ExceptionObject & excp )
+    {
+    std::cerr << excp << std::endl;
+    return EXIT_FAILURE;
+    }
+
+  typename ImageType::Pointer readImage = reader->GetOutput();
+  // TODO: necessary?
+  readImage->DisconnectPipeline();
+
+  typedef itk::PhaseSymmetryImageFilter< ImageType, ImageType > PhaseSymmetryFilterType;
+  typename PhaseSymmetryFilterType::Pointer phaseSymmetryFilter = PhaseSymmetryFilterType::New();
+  phaseSymmetryFilter->SetInput( readImage );
+
+  typedef itk::Array2D< double > Array2DType;
+  Array2DType wavelengthsArray2D( wavelengths.size() / 2, Dimension );
+  for( unsigned int ii = 0; ii < wavelengths.size(); ++ii )
+    {
+    for( unsigned int jj = 0; jj < Dimension; ++jj )
+      {
+      wavelengthsArray2D( ii, jj ) = wavelengths[ii * Dimension + jj];
+      }
+    }
+  phaseSymmetryFilter->SetWavelengths( wavelengthsArray2D );
+
+  Array2DType orientationsArray2D( orientations.size() / 2, Dimension );
+  for( unsigned int ii = 0; ii < orientations.size(); ++ii )
+    {
+    for( unsigned int jj = 0; jj < Dimension; ++jj )
+      {
+      orientationsArray2D( ii, jj ) = wavelengths[ii * Dimension + jj];
+      }
+    }
+  phaseSymmetryFilter->SetOrientations( orientationsArray2D );
+
+  phaseSymmetryFilter->SetSigma( sigma );
+  phaseSymmetryFilter->SetAngleBandwidth( angularBandwidth );
+  phaseSymmetryFilter->SetPolarity( polarity );
+  phaseSymmetryFilter->SetT( noiseThreshold );
+
+  phaseSymmetryFilter->Initialize();
+
+  typedef itk::ImageFileWriter< ImageType > WriterType;
+  typename WriterType::Pointer writer = WriterType::New();
+  writer->SetInput( phaseSymmetryFilter->GetOutput() );
+  writer->SetFileName( outputImage );
+  try
+    {
+    writer->Update();
+    }
+  catch ( itk::ExceptionObject & excp )
+    {
+    std::cerr << excp << std::endl;
+    return EXIT_FAILURE;
+    }
+
   return EXIT_SUCCESS;
 }
 
