@@ -8,7 +8,13 @@ endif(COMMAND CMAKE_POLICY)
 project( PhaseSymmetryImageFilter)
 
 # Find ITK.
-find_package(ITK REQUIRED)
+find_package(ITK REQUIRED
+  MODULE
+  COMPONENTS PhaseSymmetry
+    ITKIOMeta
+    ITKIOTIFF
+    ITKIOPNG
+  )
 include(${ITK_USE_FILE})
 
 add_executable( PhaseSymmetryImageFilter2D main2.cxx)
