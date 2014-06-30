@@ -20,9 +20,33 @@
 
 #include "PhaseSymmetryFilterCLP.h"
 
+template< unsigned int VDimension >
+int PhaseSymmetryFilter( int argc, char * argv[] )
+{
+  PARSE_ARGS;
+  return EXIT_SUCCESS;
+}
+
 int main( int argc, char * argv[] )
 {
   PARSE_ARGS;
+
+  itk::ImageIOBase::Pointer imageIO = itk::ImageIOFactory::CreateImageIO(
+    inputImage.c_str(), itk::ImageIOFactory::ReadMode );
+  imageIO->SetFileName( inputImage );
+  imageIO->ReadImageInformation();
+
+  const unsigned int dimension = imageIO->GetNumberOfDimensions();
+  switch( dimension )
+    {
+  case 2:
+    return PhaseSymmetryFilter< 2 >( argc, argv );
+  case 3:
+    return PhaseSymmetryFilter< 3 >( argc, argv );
+  default:
+    std::cerr << "Error: Unsupported image dimension." << std::endl;
+    return EXIT_FAILURE;
+    }
 
   return EXIT_SUCCESS;
 }
