@@ -52,8 +52,10 @@ int PhaseSymmetryFilter( int argc, char * argv[] )
   phaseSymmetryFilter->SetInput( readImage );
 
   typedef itk::Array2D< double > Array2DType;
-  Array2DType wavelengthsArray2D( wavelengths.size() / 2, Dimension );
-  for( unsigned int ii = 0; ii < wavelengths.size(); ++ii )
+  const unsigned int scales = wavelengths.size() / Dimension;
+  // TODO: assert mod is zero and orientations have the same size.
+  Array2DType wavelengthsArray2D( scales, Dimension );
+  for( unsigned int ii = 0; ii < scales; ++ii )
     {
     for( unsigned int jj = 0; jj < Dimension; ++jj )
       {
@@ -62,8 +64,8 @@ int PhaseSymmetryFilter( int argc, char * argv[] )
     }
   phaseSymmetryFilter->SetWavelengths( wavelengthsArray2D );
 
-  Array2DType orientationsArray2D( orientations.size() / 2, Dimension );
-  for( unsigned int ii = 0; ii < orientations.size(); ++ii )
+  Array2DType orientationsArray2D( scales, Dimension );
+  for( unsigned int ii = 0; ii < scales; ++ii )
     {
     for( unsigned int jj = 0; jj < Dimension; ++jj )
       {
