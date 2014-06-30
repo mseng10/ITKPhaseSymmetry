@@ -105,6 +105,11 @@ int main( int argc, char * argv[] )
 
   itk::ImageIOBase::Pointer imageIO = itk::ImageIOFactory::CreateImageIO(
     inputImage.c_str(), itk::ImageIOFactory::ReadMode );
+  if( imageIO.IsNull() )
+    {
+    std::cerr << "Could create ImageIO for file: " << inputImage << std::endl;
+    return EXIT_FAILURE;
+    }
   imageIO->SetFileName( inputImage );
   imageIO->ReadImageInformation();
 
