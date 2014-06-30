@@ -17,9 +17,16 @@ find_package(ITK REQUIRED
   )
 include(${ITK_USE_FILE})
 
+find_package( SlicerExecutionModel REQUIRED )
+include( ${SlicerExecutionModel_USE_FILE} )
+
+SEMMacroBuildCLI(
+  NAME PhaseSymmetryFilter
+  TARGET_LIBRARIES ${ITK_LIBRARIES}
+  )
+
 add_executable( PhaseSymmetryImageFilter2D main2.cxx)
 target_link_libraries( PhaseSymmetryImageFilter2D ${ITK_LIBRARIES} )
 
 add_executable( PhaseSymmetryImageFilter3D main3.cxx)
 target_link_libraries( PhaseSymmetryImageFilter3D ${ITK_LIBRARIES} )
-
