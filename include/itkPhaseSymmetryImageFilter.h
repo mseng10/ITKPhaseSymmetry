@@ -23,7 +23,7 @@ See Peter Kovesi's site for details on the filter
 #include "itkLogGaborFreqImageSource.h"
 #include "itkSteerableFilterFreqImageSource.h"
 #include "itkButterworthFilterFreqImageSource.h"
-#include "itkRealAndImaginaryToComplexImageFilter.h"
+#include "itkComposeImageFilter.h"
 #include "itkMagnitudeAndPhaseToComplexImageFilter.h"
 #include "itkImageAdaptor.h"
 #include "itkForwardFFTImageFilter.h"
@@ -33,7 +33,6 @@ See Peter Kovesi's site for details on the filter
 #include "itkComplexToImaginaryImageFilter.h"
 #include "itkComplexToImaginaryImageFilter.h"
 #include "itkComplexToModulusImageFilter.h"
-#include "itkRealAndImaginaryToComplexImageFilter.h"
 #include "itkShiftScaleImageFilter.h"
 #include "itkAbsImageFilter.h"
 
@@ -143,16 +142,16 @@ protected:
   typedef SteerableFilterFreqImageSource< FloatImageType >   SteerableFiltersFreqImageSourceType;
   typedef ButterworthFilterFreqImageSource< FloatImageType > ButterworthKernelFreqImageSourceType;
 
-  typedef ShiftScaleImageFilter< FloatImageType, FloatImageType >                                                     ShiftScaleImageFilterType;
-  typedef ComplexToRealImageFilter< ComplexImageType, FloatImageType >                                                ComplexToRealFilterType;
-  typedef ComplexToImaginaryImageFilter< ComplexImageType, FloatImageType >                                           ComplexToImaginaryFilterType;
-  typedef ComplexToModulusImageFilter< ComplexImageType, FloatImageType >                                             ComplexToModulusFilterType;
-  typedef ComplexToPhaseImageFilter< ComplexImageType, FloatImageType >                                               ComplexToPhaseFilterType;
-  typedef RealAndImaginaryToComplexImageFilter< ImagePixelType, ImagePixelType, ImagePixelType, InputImageDimension > RealAndImaginaryToComplexFilterType;
-  typedef MagnitudeAndPhaseToComplexImageFilter< InputImageType, InputImageType, ComplexImageType >                   MagnitudeAndPhaseToComplexFilterType;
-  typedef FFTShiftImageFilter< ComplexImageType, ComplexImageType >                                                   ComplexFFTShiftImageFilterType;
-  typedef FFTShiftImageFilter< FloatImageType, FloatImageType >                                                       DoubleFFTShiftImageFilterType;
-  typedef AbsImageFilter< FloatImageType, FloatImageType >                                                            AbsImageFilterType;
+  typedef ShiftScaleImageFilter< FloatImageType, FloatImageType >                                   ShiftScaleImageFilterType;
+  typedef ComplexToRealImageFilter< ComplexImageType, FloatImageType >                              ComplexToRealFilterType;
+  typedef ComplexToImaginaryImageFilter< ComplexImageType, FloatImageType >                         ComplexToImaginaryFilterType;
+  typedef ComplexToModulusImageFilter< ComplexImageType, FloatImageType >                           ComplexToModulusFilterType;
+  typedef ComplexToPhaseImageFilter< ComplexImageType, FloatImageType >                             ComplexToPhaseFilterType;
+  typedef ComposeImageFilter< FloatImageType, ComplexImageType >                                    RealAndImaginaryToComplexFilterType;
+  typedef MagnitudeAndPhaseToComplexImageFilter< InputImageType, InputImageType, ComplexImageType > MagnitudeAndPhaseToComplexFilterType;
+  typedef FFTShiftImageFilter< ComplexImageType, ComplexImageType >                                 ComplexFFTShiftImageFilterType;
+  typedef FFTShiftImageFilter< FloatImageType, FloatImageType >                                     DoubleFFTShiftImageFilterType;
+  typedef AbsImageFilter< FloatImageType, FloatImageType >                                          AbsImageFilterType;
 
 private:
   PhaseSymmetryImageFilter(const Self&); //purposely not implemented
