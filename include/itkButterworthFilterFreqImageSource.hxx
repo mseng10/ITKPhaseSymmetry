@@ -64,13 +64,11 @@ void ButterworthFilterFreqImageSource<TOutputImage>
 {
   TOutputImage *output;
   typename TOutputImage::IndexType index = {{0}};
-  typename TOutputImage::SizeType size = {{0}};
-  size.SetSize( m_Size );
 
   output = this->GetOutput(0);
 
   typename TOutputImage::RegionType largestPossibleRegion;
-  largestPossibleRegion.SetSize( size );
+  largestPossibleRegion.SetSize( m_Size );
   largestPossibleRegion.SetIndex( index );
   output->SetLargestPossibleRegion( largestPossibleRegion );
 
@@ -106,17 +104,17 @@ void ButterworthFilterFreqImageSource<TOutputImage>
     index = outIt.GetIndex();
 
     radius = 0;
-    Value=0;
+    Value = 0;
 
     for( int i=0; i< TOutputImage::ImageDimension; i++)
     {
-      dist[i] = (centerPoint[i]-double(index[i]))/double(m_Size[i]);
+      dist[i] = (centerPoint[i] - double(index[i])) / double(m_Size[i]);
       radius = radius  + dist[i]*dist[i];
     }
     radius = sqrt(radius);
-    Value=radius/m_Cutoff;
-    Value=pow(Value,2*m_Order);
-    Value = 1/(1+Value);
+    Value = radius / m_Cutoff;
+    Value = pow(Value, 2 * m_Order);
+    Value = 1 / ( 1 + Value );
 
     // Set the pixel value to the function value
     outIt.Set( (typename TOutputImage::PixelType) Value);
@@ -126,139 +124,49 @@ void ButterworthFilterFreqImageSource<TOutputImage>
 
 template<typename TOutputImage>
 void ButterworthFilterFreqImageSource<TOutputImage>
-::SetSpacing(const float* spacing)
+::SetSpacing( const SpacingType & spacing )
 {
-  unsigned int i;
-  for (i=0; i<TOutputImage::ImageDimension; i++)
-  {
-    if ( (double)spacing[i] != m_Spacing[i] )
+  if( m_Spacing != spacing )
     {
-      break;
-    }
-  }
-  if ( i < TOutputImage::ImageDimension )
-  {
-    for (i=0; i<TOutputImage::ImageDimension; i++)
-    {
-      m_Spacing[i] = spacing[i];
-    }
+    this->m_Spacing = spacing;
     this->Modified();
-  }
+    }
 }
 
 
 template<typename TOutputImage>
 void ButterworthFilterFreqImageSource<TOutputImage>
-::SetSpacing(const double* spacing)
+::SetOrigin( const PointType & origin )
 {
-  unsigned int i;
-  for (i=0; i<TOutputImage::ImageDimension; i++)
-  {
-    if ( spacing[i] != m_Spacing[i] )
+  if( m_Origin != origin )
     {
-      break;
-    }
-  }
-  if ( i < TOutputImage::ImageDimension )
-  {
-    for (i=0; i<TOutputImage::ImageDimension; i++)
-    {
-      m_Spacing[i] = spacing[i];
-    }
+    this->m_Origin = origin;
     this->Modified();
-  }
+    }
 }
 
 
 template<typename TOutputImage>
 void ButterworthFilterFreqImageSource<TOutputImage>
-::SetOrigin(const float* origin)
+::SetSize( const SizeType & size )
 {
-  unsigned int i;
-  for (i=0; i<TOutputImage::ImageDimension; i++)
-  {
-    if ( (double)origin[i] != m_Origin[i] )
+  if( m_Size != size )
     {
-      break;
-    }
-  }
-  if ( i < TOutputImage::ImageDimension )
-  {
-    for (i=0; i<TOutputImage::ImageDimension; i++)
-    {
-      m_Origin[i] = origin[i];
-    }
+    this->m_Size = size;
     this->Modified();
-  }
+    }
 }
 
 
 template<typename TOutputImage>
 void ButterworthFilterFreqImageSource<TOutputImage>
-::SetOrigin(const double* origin)
+::SetDirection( const DirectionType & direction )
 {
-  unsigned int i;
-  for (i=0; i<TOutputImage::ImageDimension; i++)
-  {
-    if ( origin[i] != m_Origin[i] )
+  if( m_Direction != direction )
     {
-      break;
-    }
-  }
-  if ( i < TOutputImage::ImageDimension )
-  {
-    for (i=0; i<TOutputImage::ImageDimension; i++)
-    {
-      m_Origin[i] = origin[i];
-    }
+    this->m_Direction = direction;
     this->Modified();
-  }
-}
-
-
-template<typename TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>
-::SetSize(const SizeValueType * size)
-{
-  unsigned int i;
-  for (i=0; i<TOutputImage::ImageDimension; i++)
-  {
-    if ( size[i] != m_Size[i] )
-    {
-      break;
     }
-  }
-  if ( i < TOutputImage::ImageDimension )
-  {
-    for (i=0; i<TOutputImage::ImageDimension; i++)
-    {
-      m_Size[i] = size[i];
-    }
-    this->Modified();
-  }
-}
-
-
-template<typename TOutputImage>
-void ButterworthFilterFreqImageSource<TOutputImage>
-::SetSize(const SizeType size )
-{
-  unsigned int i;
-  for (i=0; i<TOutputImage::ImageDimension; i++)
-  {
-    if ( size[i] != m_Size[i] )
-    {
-      break;
-    }
-  }
-  if ( i < TOutputImage::ImageDimension )
-  {
-    for (i=0; i<TOutputImage::ImageDimension; i++)
-    {
-      m_Size[i] = size[i];
-    }
-    this->Modified();
-  }
 }
 
 } // end namespace itk
