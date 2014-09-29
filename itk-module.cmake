@@ -10,6 +10,7 @@ itk_module(PhaseSymmetry
     ITKCommon
     ITKFFT
     ITKImageIntensity
+    ITKImageSources
   TEST_DEPENDS
     ITKTestKernel
   EXCLUDE_FROM_DEFAULT
