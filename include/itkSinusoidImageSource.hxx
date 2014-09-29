@@ -29,7 +29,7 @@ namespace itk
 template< typename TOutputImage >
 SinusoidImageSource< TOutputImage >
 ::SinusoidImageSource():
-  m_PhaseShift( 0.0 )
+  m_phaseOffset( 0.0 )
 {
   m_Frequency.Fill( 1.0 );
 }
@@ -53,7 +53,7 @@ SinusoidImageSource< TOutputImage >
     }
   os << "]" << std::endl;
 
-  os << indent << "Sinusoid phase shift: " << m_PhaseShift << std::endl;
+  os << indent << "Sinusoid phase shift: " << m_phaseOffset << std::endl;
 }
 
 
@@ -69,8 +69,8 @@ SinusoidImageSource< TOutputImage >
     }
   this->SetFrequency( frequency );
 
-  const double phaseShift = parameters[ArrayType::Length];
-  this->SetPhaseShift( phaseShift );
+  const double phaseOffset = parameters[ArrayType::Length];
+  this->SetphaseOffset( phaseOffset );
 }
 
 
@@ -84,7 +84,7 @@ SinusoidImageSource< TOutputImage >
     {
     parameters[ii] = m_Frequency[ii];
     }
-  parameters[ArrayType::Length] = m_PhaseShift;
+  parameters[ArrayType::Length] = m_phaseOffset;
 
   return parameters;
 }
@@ -115,7 +115,7 @@ SinusoidImageSource< TOutputImage >
   typename FunctionType::Pointer sinusoid = FunctionType::New();
 
   sinusoid->SetFrequency( m_Frequency );
-  sinusoid->SetPhaseShift( m_PhaseShift );
+  sinusoid->SetphaseOffset( m_phaseOffset );
 
   // Create an iterator that will walk the output region
   typedef ImageRegionIterator< TOutputImage > OutputIterator;

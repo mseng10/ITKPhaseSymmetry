@@ -25,7 +25,7 @@ int itkSinusoidImageSourceTest(int argc, char* argv[] )
 {
   if( argc < 2 )
     {
-    std::cerr << "Usage: " << argv[0] << " OutputImage [XFrequency] [YFrequency] [ZFrequency] [PhaseShift]" << std::endl;
+    std::cerr << "Usage: " << argv[0] << " OutputImage [XFrequency] [YFrequency] [ZFrequency] [phaseOffset]" << std::endl;
     return EXIT_FAILURE;
     }
   const char * outputImageFileName = argv[1];
@@ -44,10 +44,10 @@ int itkSinusoidImageSourceTest(int argc, char* argv[] )
     {
     zFrequency = atof( argv[4] );
     }
-  double phaseShift = 0.2;
+  double phaseOffset = 0.2;
   if( argc > 5 )
     {
-    phaseShift = atof( argv[5] );
+    phaseOffset = atof( argv[5] );
     }
 
   // This can be changed!
@@ -75,7 +75,7 @@ int itkSinusoidImageSourceTest(int argc, char* argv[] )
   source->SetOrigin( origin );
   source->SetSpacing( spacing );
   source->SetFrequency( frequency );
-  source->SetPhaseShift( 0.3 );
+  source->SetphaseOffset( 0.3 );
 
   // Test the get macros as well (booorrring...)
   source->GetSize();
@@ -83,7 +83,7 @@ int itkSinusoidImageSourceTest(int argc, char* argv[] )
   source->GetOrigin();
   source->GetDirection();
   source->GetFrequency();
-  source->GetPhaseShift();
+  source->GetphaseOffset();
 
   // Test the get/set parameters
   SinusoidSourceType::ParametersType params = source->GetParameters();
@@ -109,7 +109,7 @@ int itkSinusoidImageSourceTest(int argc, char* argv[] )
   params[0] = xFrequency;
   params[1] = yFrequency;
   params[2] = zFrequency;
-  params[3] = phaseShift;
+  params[3] = phaseOffset;
   source->SetParameters( params );
 
   if ( source->GetFrequency()[0] != params[0] ||
@@ -123,10 +123,10 @@ int itkSinusoidImageSourceTest(int argc, char* argv[] )
     return EXIT_FAILURE;
     }
 
-  if ( source->GetPhaseShift() != params[3] )
+  if ( source->GetphaseOffset() != params[3] )
     {
-    std::cerr << "PhaseShift disagrees with parameters array." << std::endl;
-    std::cerr << "PhaseShift: " << source->GetPhaseShift() << ", parameters: "
+    std::cerr << "phaseOffset disagrees with parameters array." << std::endl;
+    std::cerr << "phaseOffset: " << source->GetphaseOffset() << ", parameters: "
               << params[3] << std::endl;
     return EXIT_FAILURE;
     }
