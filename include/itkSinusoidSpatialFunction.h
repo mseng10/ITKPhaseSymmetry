@@ -90,6 +90,7 @@ private:
 
   /** The phase shift. */
   double m_PhaseShift;
+
 };
 } // end namespace itk
 

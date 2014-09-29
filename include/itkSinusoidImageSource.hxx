@@ -123,18 +123,18 @@ SinusoidImageSource< TOutputImage >
   OutputIterator outIt = OutputIterator( outputPtr,
                                          outputPtr->GetRequestedRegion() );
 
-
   ProgressReporter progress( this, 0,
                              outputPtr->GetRequestedRegion()
                              .GetNumberOfPixels() );
   // Walk the output image, evaluating the spatial function at each pixel
+  outIt.GoToBegin();
   while( !outIt.IsAtEnd() )
     {
     typename TOutputImage::IndexType index = outIt.GetIndex();
     // The position at which the function is evaluated
     typename FunctionType::InputType evalPoint;
     outputPtr->TransformIndexToPhysicalPoint( index, evalPoint );
-    const double value = sinusoid->Evaluate(evalPoint);
+    const double value = sinusoid->Evaluate( evalPoint );
 
     // Set the pixel value to the function value
     outIt.Set( static_cast< typename TOutputImage::PixelType >( value ));
