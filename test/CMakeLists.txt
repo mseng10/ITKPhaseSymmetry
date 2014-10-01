@@ -17,7 +17,12 @@ itk_add_test( NAME itkPhaseSymmetryImageFilterTest
 
 itk_add_test( NAME itkButterworthFilterFreqImageSourceTest
   COMMAND PhaseSymmetryTestDriver itkButterworthFilterFreqImageSourceTest
-    ${ITK_TEST_OUTPUT_DIR}/itkButterworthFilterFreqImageSourceTest.mha )
+    DATA{Input/SinusoidImage.mha}
+    ${ITK_TEST_OUTPUT_DIR}/itkButterworthFilterFreqImageSourceTestFilter.mha
+    ${ITK_TEST_OUTPUT_DIR}/itkButterworthFilterFreqImageSourceTestOutput.mha
+    ${ITK_TEST_OUTPUT_DIR}/itkButterworthFilterFreqImageSourceTestInputFFT.mha
+    ${ITK_TEST_OUTPUT_DIR}/itkButterworthFilterFreqImageSourceTestOutputFFT.mha
+    )
 
 itk_add_test( NAME itkLogGaborFreqImageSourceTest
   COMMAND PhaseSymmetryTestDriver itkLogGaborFreqImageSourceTest )
@@ -31,4 +36,4 @@ itk_add_test( NAME itkSinusoidImageSourceTest
     ${ITK_TEST_OUTPUT_DIR}/itkSinusoidImageSourceTest.mha
   itkSinusoidImageSourceTest
     ${ITK_TEST_OUTPUT_DIR}/itkSinusoidImageSourceTest.mha
-    0.02 0.1 0.2 0.2)
+    0.02 0.1 0.2 0.2 )
