@@ -104,7 +104,7 @@ protected:
 
   typedef FixedArray< double, ImageDimension > DoubleArrayType;
 
-  virtual void PrintSelf(std::ostream& os, Indent indent) const;
+  virtual void PrintSelf(std::ostream& os, Indent indent) const ITK_OVERRIDE;
   virtual void ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType tid) ITK_OVERRIDE;
   virtual void GenerateOutputInformation() ITK_OVERRIDE;
 
