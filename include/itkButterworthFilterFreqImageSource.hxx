@@ -28,7 +28,9 @@ namespace itk
 
 template <class TOutputImage>
 ButterworthFilterFreqImageSource<TOutputImage>
-::ButterworthFilterFreqImageSource()
+::ButterworthFilterFreqImageSource():
+  m_Cutoff( 0.4 ),
+  m_Order( 4 )
 {
   //Initial image is 64 wide in each direction.
   for (unsigned int i=0; i<TOutputImage::GetImageDimension(); i++)
@@ -38,8 +40,6 @@ ButterworthFilterFreqImageSource<TOutputImage>
     m_Origin[i] = 0.0;
   }
   m_Direction.SetIdentity();
-
-
 }
 
 
@@ -56,6 +56,9 @@ ButterworthFilterFreqImageSource<TOutputImage>
 ::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);
+
+  os << indent << "Cutoff: " << this->GetCutoff() << std::endl;
+  os << indent << "Order:  " << this->GetOrder() << std::endl;
 }
 
 
