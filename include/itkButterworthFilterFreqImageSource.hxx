@@ -47,7 +47,7 @@ void
 ButterworthFilterFreqImageSource<TOutputImage>
 ::PrintSelf(std::ostream& os, Indent indent) const
 {
-  Superclass::PrintSelf(os,indent);
+  Superclass::PrintSelf(os, indent);
 
   os << indent << "Cutoff: " << this->GetCutoff() << std::endl;
   os << indent << "Order:  " << this->GetOrder() << std::endl;
@@ -65,11 +65,11 @@ ButterworthFilterFreqImageSource<TOutputImage>
   typename OutputImageType::PointType centerPoint;
   for( unsigned int ii = 0; ii < ImageDimension; ++ii )
     {
-    centerPoint[ii] = double(size[ii])/2.0;
+    centerPoint[ii] = double( size[ii] ) / 2.0;
     }
 
-  typedef ImageRegionIteratorWithIndex<TOutputImage> OutputIterator;
-  OutputIterator outIt = OutputIterator(outputPtr, outputRegionForThread);
+  typedef ImageRegionIteratorWithIndex< OutputImageType > OutputIteratorType;
+  OutputIteratorType outIt( outputPtr, outputRegionForThread );
   for( outIt.GoToBegin(); !outIt.IsAtEnd(); ++outIt )
     {
     const typename TOutputImage::IndexType index = outIt.GetIndex();
@@ -92,7 +92,6 @@ ButterworthFilterFreqImageSource<TOutputImage>
     value = std::pow(value, 2 * m_Order);
     value = 1. / ( 1. + value );
 
-    // Set the pixel value to the function value
     outIt.Set( static_cast< typename TOutputImage::PixelType >( value ));
     }
 }
