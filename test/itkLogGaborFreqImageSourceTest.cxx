@@ -76,6 +76,12 @@ int itkLogGaborFreqImageSourceTest( int argc, char * argv[] )
   logGaborSource->SetSpacing( inputImage->GetSpacing() );
   logGaborSource->SetDirection( inputImage->GetDirection() );
   logGaborSource->SetOrigin( inputImage->GetOrigin() );
+  logGaborSource->SetSigma( 0.7 );
+  LogGaborSourceType::ArrayType wavelengths;
+  wavelengths[0] = 9.0;
+  wavelengths[1] = 12.0;
+  wavelengths[2] = 7.0;
+  logGaborSource->SetWavelengths( wavelengths );
   std::cout << logGaborSource << std::endl;
 
   typedef itk::MultiplyImageFilter< ComplexToRealType, ImageType, ImageType > MultiplyFilterType;
