@@ -44,6 +44,13 @@ public:
   typedef typename TOutputImage::PointType     PointType;
   typedef typename TOutputImage::DirectionType DirectionType;
 
+  /** Run-time type information (and related methods). */
+  itkTypeMacro( LogGaborFreqImageSource, GenerateImageSource );
+
+  /** Method for creation through the object factory. */
+  itkNewMacro( Self );
+
+
   typedef std::vector< std::vector< double > > RangeType;
 
   /** Dimensionality of the output image */
@@ -54,12 +61,6 @@ public:
 
   // Type used to store the range for each axis
 
-
-  /** Run-time type information (and related methods). */
-  itkTypeMacro( LogGaborFreqImageSource, GenerateImageSource );
-
-  /** Method for creation through the object factory. */
-  itkNewMacro( Self );
 
   //itkSetMacro(Ranges, RangeType);
 
@@ -76,8 +77,8 @@ public:
 protected:
   LogGaborFreqImageSource();
   virtual ~LogGaborFreqImageSource();
-  virtual void PrintSelf(std::ostream& os, Indent indent) const;
-  virtual void ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType threadId);
+  virtual void PrintSelf(std::ostream& os, Indent indent) const ITK_OVERRIDE;
+  virtual void ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType threadId) ITK_OVERRIDE;
 
 private:
   LogGaborFreqImageSource( const LogGaborFreqImageSource& ); //purposely not implemented
