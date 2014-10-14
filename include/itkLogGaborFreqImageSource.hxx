@@ -26,11 +26,11 @@ namespace itk
 
 template< typename TOutputImage >
 LogGaborFreqImageSource< TOutputImage >
-::LogGaborFreqImageSource()
+::LogGaborFreqImageSource():
+  m_Sigma( 1.0 )
 {
   // Gaussian parameters, defined so that the gaussian
   // is centered in the default image
-  m_Sigma = 1.0;
   m_Wavelengths.Fill(2.0);
 }
 
@@ -48,6 +48,8 @@ LogGaborFreqImageSource< TOutputImage >
 ::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);
+  os << indent << "Sigma: " << m_Sigma << std::endl;
+  os << indent << "Wavelengths: " << m_Wavelengths << std::endl;
 }
 
 
@@ -65,7 +67,7 @@ LogGaborFreqImageSource< TOutputImage >
 
   int ndims = TOutputImage::ImageDimension;
 
-  DoubleArrayType centerPoint;
+  ArrayType centerPoint;
   for(int i=0; i < ndims;i++)
   {
     centerPoint[i] = double(this->GetSize()[i])/2.0;
@@ -75,7 +77,7 @@ LogGaborFreqImageSource< TOutputImage >
   double sigma = 0;
   double logGaborValue=0;
 
-  DoubleArrayType dist;
+  ArrayType dist;
   typename TOutputImage::IndexType index;
   for (outIt.GoToBegin(); !outIt.IsAtEnd(); ++outIt)
   {
