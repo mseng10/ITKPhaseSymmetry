@@ -27,7 +27,7 @@
 namespace itk
 {
 
-template <class TOutputImage>
+template <typename TOutputImage>
 SteerableFilterFreqImageSource<TOutputImage>
 ::SteerableFilterFreqImageSource()
 {
@@ -44,14 +44,14 @@ SteerableFilterFreqImageSource<TOutputImage>
 }
 
 
-template <class TOutputImage>
+template <typename TOutputImage>
 SteerableFilterFreqImageSource<TOutputImage>
 ::~SteerableFilterFreqImageSource()
 {
 }
 
 
-template <class TOutputImage>
+template <typename TOutputImage>
 void SteerableFilterFreqImageSource<TOutputImage>
 ::PrintSelf(std::ostream& os, Indent indent) const
 {
