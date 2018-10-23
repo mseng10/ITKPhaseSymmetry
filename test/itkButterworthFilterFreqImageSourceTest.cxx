@@ -40,16 +40,16 @@ int itkButterworthFilterFreqImageSourceTest( int argc, char * argv[] )
 
   const unsigned int Dimension = 3;
 
-  typedef float                                     PixelType;
-  typedef itk::Image< PixelType, Dimension >        ImageType;
-  typedef std::complex< PixelType >                 ComplexPixelType;
-  typedef itk::Image< ComplexPixelType, Dimension > ComplexImageType;
+  using PixelType = float;
+  using ImageType = itk::Image< PixelType, Dimension >;
+  using ComplexPixelType = std::complex< PixelType >;
+  using ComplexImageType = itk::Image< ComplexPixelType, Dimension >;
 
-  typedef itk::ImageFileReader< ImageType > ReaderType;
+  using ReaderType = itk::ImageFileReader< ImageType >;
   ReaderType::Pointer reader = ReaderType::New();
   reader->SetFileName( inputImageFileName );
 
-  typedef itk::ForwardFFTImageFilter< ImageType, ComplexImageType > FFTFilterType;
+  using FFTFilterType = itk::ForwardFFTImageFilter< ImageType, ComplexImageType >;
   FFTFilterType::Pointer fftFilter = FFTFilterType::New();
   fftFilter->SetInput( reader->GetOutput() );
 
@@ -64,11 +64,11 @@ int itkButterworthFilterFreqImageSourceTest( int argc, char * argv[] )
     }
 
 
-  typedef itk::ComplexToRealImageAdaptor< ComplexImageType, PixelType > ComplexToRealType;
+  using ComplexToRealType = itk::ComplexToRealImageAdaptor< ComplexImageType, PixelType >;
   ComplexToRealType::Pointer complexToReal = ComplexToRealType::New();
   complexToReal->SetImage( fftFilter->GetOutput() );
 
-  typedef itk::ButterworthFilterFreqImageSource< ImageType > ButterworthSourceType;
+  using ButterworthSourceType = itk::ButterworthFilterFreqImageSource< ImageType >;
   ButterworthSourceType::Pointer butterworthSource = ButterworthSourceType::New();
   ImageType::ConstPointer inputImage = reader->GetOutput();
   butterworthSource->SetSize( inputImage->GetLargestPossibleRegion().GetSize() );
@@ -79,25 +79,25 @@ int itkButterworthFilterFreqImageSourceTest( int argc, char * argv[] )
   butterworthSource->SetOrder( 5 );
   std::cout << butterworthSource << std::endl;
 
-  typedef itk::MultiplyImageFilter< ComplexToRealType, ImageType, ImageType > MultiplyFilterType;
+  using MultiplyFilterType = itk::MultiplyImageFilter< ComplexToRealType, ImageType, ImageType >;
   MultiplyFilterType::Pointer multiplyFilter = MultiplyFilterType::New();
   multiplyFilter->SetInput1( complexToReal );
   multiplyFilter->SetInput2( butterworthSource->GetOutput() );
 
-  typedef itk::ComplexToImaginaryImageFilter< ComplexImageType, ImageType > ComplexToImaginaryFilterType;
+  using ComplexToImaginaryFilterType = itk::ComplexToImaginaryImageFilter< ComplexImageType, ImageType >;
   ComplexToImaginaryFilterType::Pointer complexToImaginaryFilter = ComplexToImaginaryFilterType::New();
   complexToImaginaryFilter->SetInput( fftFilter->GetOutput() );
 
-  typedef itk::ComposeImageFilter< ImageType, ComplexImageType > ComposeFilterType;
+  using ComposeFilterType = itk::ComposeImageFilter< ImageType, ComplexImageType >;
   ComposeFilterType::Pointer composeFilter = ComposeFilterType::New();
   composeFilter->SetInput( 0, multiplyFilter->GetOutput() );
   composeFilter->SetInput( 1, complexToImaginaryFilter->GetOutput() );
 
-  typedef itk::InverseFFTImageFilter< ComplexImageType, ImageType > InverseFFTFilterType;
+  using InverseFFTFilterType = itk::InverseFFTImageFilter< ComplexImageType, ImageType >;
   InverseFFTFilterType::Pointer inverseFFTImageFilter = InverseFFTFilterType::New();
   inverseFFTImageFilter->SetInput( composeFilter->GetOutput() );
 
-  typedef itk::ImageFileWriter< ImageType > WriterType;
+  using WriterType = itk::ImageFileWriter< ImageType >;
   WriterType::Pointer writer = WriterType::New();
   writer->SetInput( butterworthSource->GetOutput() );
   writer->SetFileName( filterImageFileName );
@@ -123,7 +123,7 @@ int itkButterworthFilterFreqImageSourceTest( int argc, char * argv[] )
     return EXIT_FAILURE;
     }
 
-  typedef itk::ImageFileWriter< ComplexImageType > ComplexWriterType;
+  using ComplexWriterType = itk::ImageFileWriter< ComplexImageType >;
   ComplexWriterType::Pointer complexWriter = ComplexWriterType::New();
   complexWriter->SetInput( fftFilter->GetOutput() );
   complexWriter->SetFileName( inputFFTImageFileName );

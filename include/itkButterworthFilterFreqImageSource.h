@@ -32,11 +32,11 @@ class ButterworthFilterFreqImageSource:
   public GenerateImageSource< TOutputImage >
 {
 public:
-  /** Standard class typedefs. */
-  typedef ButterworthFilterFreqImageSource    Self;
-  typedef GenerateImageSource< TOutputImage > Superclass;
-  typedef SmartPointer< Self >                Pointer;
-  typedef SmartPointer< const Self >          ConstPointer;
+  /** Standard class type alias. */
+  using Self = ButterworthFilterFreqImageSource;
+  using Superclass = GenerateImageSource< TOutputImage >;
+  using Pointer = SmartPointer< Self >;
+  using ConstPointer = SmartPointer< const Self >;
 
   /** Run-time type information (and related methods). */
   itkTypeMacro( ButterworthFilterFreqImageSource, GenerateImageSource );
@@ -47,11 +47,11 @@ public:
   /** Dimensionality of the output image. */
   itkStaticConstMacro( ImageDimension, unsigned int, TOutputImage::ImageDimension );
 
-  typedef TOutputImage                         OutputImageType;
-  typedef typename TOutputImage::SpacingType   SpacingType;
-  typedef typename TOutputImage::PointType     PointType;
-  typedef typename TOutputImage::DirectionType DirectionType;
-  typedef typename TOutputImage::SizeType      SizeType;
+  using OutputImageType = TOutputImage;
+  using SpacingType = typename TOutputImage::SpacingType;
+  using PointType = typename TOutputImage::PointType;
+  using DirectionType = typename TOutputImage::DirectionType;
+  using SizeType = typename TOutputImage::SizeType;
 
   /** Set/Get the cutoff frequency. Should be in the range [0, 0.5], where 0.5
    * corresponds to the Nyquist frequency. */
@@ -67,7 +67,7 @@ protected:
   virtual ~ButterworthFilterFreqImageSource();
 
   /** Typedef to describe the output image region type. */
-  typedef typename TOutputImage::RegionType OutputImageRegionType;
+  using OutputImageRegionType = typename TOutputImage::RegionType;
 
   virtual void PrintSelf(std::ostream& os, Indent indent) const ITK_OVERRIDE;
   virtual void ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType threadId) ITK_OVERRIDE;

@@ -92,7 +92,7 @@ void SteerableFilterFreqImageSource<TOutputImage>
   //outputPtr->Allocate();
 
 
-  typedef ImageRegionIteratorWithIndex<TOutputImage> OutputIterator;
+  using OutputIterator = ImageRegionIteratorWithIndex<TOutputImage>;
   OutputIterator outIt = OutputIterator(outputPtr,outputRegionForThread);
 
   int ndims = TOutputImage::ImageDimension;
