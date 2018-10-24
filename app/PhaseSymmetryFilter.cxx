@@ -26,11 +26,11 @@ int PhaseSymmetryFilter( int argc, char * argv[] )
 {
   PARSE_ARGS;
 
-  typedef float PixelType;
+  using PixelType = float;
   const unsigned int Dimension = VDimension;
-  typedef itk::Image< PixelType, Dimension > ImageType;
+  using ImageType = itk::Image< PixelType, Dimension >;
 
-  typedef itk::ImageFileReader< ImageType > ReaderType;
+  using ReaderType = itk::ImageFileReader< ImageType >;
   typename ReaderType::Pointer reader = ReaderType::New();
   reader->SetFileName( inputImage );
   try
@@ -47,11 +47,11 @@ int PhaseSymmetryFilter( int argc, char * argv[] )
   // TODO: necessary?
   readImage->DisconnectPipeline();
 
-  typedef itk::PhaseSymmetryImageFilter< ImageType, ImageType > PhaseSymmetryFilterType;
+  using PhaseSymmetryFilterType = itk::PhaseSymmetryImageFilter< ImageType, ImageType >;
   typename PhaseSymmetryFilterType::Pointer phaseSymmetryFilter = PhaseSymmetryFilterType::New();
   phaseSymmetryFilter->SetInput( readImage );
 
-  typedef itk::Array2D< double > Array2DType;
+  using Array2DType = itk::Array2D< double >;
   const unsigned int scales = wavelengths.size() / Dimension;
   // TODO: assert mod is zero and orientations have the same size.
   Array2DType wavelengthsArray2D( scales, Dimension );
@@ -82,7 +82,7 @@ int PhaseSymmetryFilter( int argc, char * argv[] )
 
   phaseSymmetryFilter->Initialize();
 
-  typedef itk::ImageFileWriter< ImageType > WriterType;
+  using WriterType = itk::ImageFileWriter< ImageType >;
   typename WriterType::Pointer writer = WriterType::New();
   writer->SetInput( phaseSymmetryFilter->GetOutput() );
   writer->SetFileName( outputImage );

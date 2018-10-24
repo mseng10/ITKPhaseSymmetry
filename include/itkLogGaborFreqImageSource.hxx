@@ -68,7 +68,7 @@ LogGaborFreqImageSource< TOutputImage >
     centerPoint[ii] = double( size[ii] ) / 2.0;
     }
 
-  typedef ImageRegionIteratorWithIndex< OutputImageType > OutputIteratorType;
+  using OutputIteratorType = ImageRegionIteratorWithIndex< OutputImageType >;
   OutputIteratorType outIt( outputPtr, outputRegionForThread );
 
   double sigma = vcl_log(m_Sigma);

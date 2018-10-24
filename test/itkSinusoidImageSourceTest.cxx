@@ -52,13 +52,13 @@ int itkSinusoidImageSourceTest(int argc, char* argv[] )
 
   // This can be changed!
   const unsigned int    Dimension = 3;
-  typedef float          PixelType;
+  using PixelType = float;
 
   // Image typedef
-  typedef itk::Image< PixelType, Dimension > ImageType;
+  using ImageType = itk::Image< PixelType, Dimension >;
 
   // Create a gaussian image source
-  typedef itk::SinusoidImageSource< ImageType > SinusoidSourceType;
+  using SinusoidSourceType = itk::SinusoidImageSource< ImageType >;
   SinusoidSourceType::Pointer source = SinusoidSourceType::New();
   FilterWatcher watcher(source, "source");
 
@@ -141,15 +141,15 @@ int itkSinusoidImageSourceTest(int argc, char* argv[] )
   std::cout << source << std::endl;
   std::cout << image << std::endl;
 
-  typedef itk::ImageFileWriter< ImageType > WriterType;
+  using WriterType = itk::ImageFileWriter< ImageType >;
   WriterType::Pointer writer = WriterType::New();
   writer->SetFileName( outputImageFileName );
   writer->SetInput( source->GetOutput() );
   TRY_EXPECT_NO_EXCEPTION( writer->Update() );
 
   // Instantiate 1D case.
-  typedef itk::Image< PixelType, 1 >              Image1DType;
-  typedef itk::SinusoidImageSource< Image1DType > SinusoidSource1DType;
+  using Image1DType = itk::Image< PixelType, 1 >;
+  using SinusoidSource1DType = itk::SinusoidImageSource< Image1DType >;
   SinusoidSource1DType::Pointer source1D = SinusoidSource1DType::New();
 
   return EXIT_SUCCESS;

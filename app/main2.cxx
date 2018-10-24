@@ -252,14 +252,14 @@ int main(int argc, char* argv[])
     ss.str("");
     }
 
-  typedef float ImagePixelType;
+  using ImagePixelType = float;
   int ndims = 2;
-  typedef itk::Image< ImagePixelType, 2 > ImageType;
-  typedef itk::PhaseSymmetryImageFilter< ImageType, ImageType > PSFilterType;
-  typedef itk::ImageFileReader< ImageType > ReaderType;
-  typedef itk::ImageFileWriter< ImageType > WriterType;
+  using ImageType = itk::Image< ImagePixelType, 2 >;
+  using PSFilterType = itk::PhaseSymmetryImageFilter< ImageType, ImageType >;
+  using ReaderType = itk::ImageFileReader< ImageType >;
+  using WriterType = itk::ImageFileWriter< ImageType >;
 
-  typedef itk::Array2D<double> DoubleMatrix;
+  using DoubleMatrix = itk::Array2D<double>;
 
   ImageType::Pointer inImg = ImageType::New();
   ReaderType::Pointer reader  = ReaderType::New();
@@ -308,16 +308,16 @@ int main(int argc, char* argv[])
     }
 
   double sigma=0;
-  sigma = atof( sigmaS.c_str() ) ;
+  sigma = atof( sigmaS.c_str() );
 
   double anglebandwidth = 0;
-  anglebandwidth = atof( angular_bandwidthS.c_str() ) ;
+  anglebandwidth = atof( angular_bandwidthS.c_str() );
 
   int polarity = 0;
   polarity =int( atof( polarityS.c_str() ) );
 
   double noiseT = 0;
-  noiseT = atof( ntS.c_str() ) ;
+  noiseT = atof( ntS.c_str() );
 
   reader->SetFileName(infile.c_str());
   try
