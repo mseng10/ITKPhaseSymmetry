@@ -321,7 +321,7 @@ int main(int argc, char* argv[])
   {
     for(int j=0; j < 3; j++)
     {
-      wavelengths(i,j) = atof(wavelengthsVS[idx].c_str());
+      wavelengths(i,j) = std::stod(wavelengthsVS[idx].c_str());
       idx++;
     }
   }
@@ -332,26 +332,26 @@ int main(int argc, char* argv[])
   {
     for(int j=0; j < 3; j++)
     {
-      orientations(i,j) = atof(orientationsVS[idx].c_str());
+      orientations(i,j) = std::stod(orientationsVS[idx].c_str());
       idx++;
     }
   }
   
 
   double sigma=0;
-  sigma = atof( sigmaS.c_str() );
+  sigma = std::stod( sigmaS.c_str() );
 
 
   double anglebandwidth=0;
-  anglebandwidth = atof( angular_bandwidthS.c_str() );
+  anglebandwidth = std::stod( angular_bandwidthS.c_str() );
 
 
   int polarity=0;
-  polarity =int( atof( polarityS.c_str() ) );
+  polarity =int( std::stod( polarityS.c_str() ) );
 
 
   double noiseT=0;
-  noiseT = atof( ntS.c_str() );
+  noiseT = std::stod( ntS.c_str() );
 
   reader->SetFileName(infile.c_str());
   try
