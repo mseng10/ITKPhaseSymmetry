@@ -46,7 +46,7 @@ setup(
         "Operating System :: MacOS"
         ],
     license='Apache',
-    keywords='ITK Phase-symmetry Multi-scale Fourier-domain',
+    keywords='ITK InsightToolkit Phase-symmetry Multi-scale Fourier-domain',
     url=r'https://github.com/InsightSoftwareConsortium/ITKPhaseSymmetry',
     install_requires=[
         r'itk'
