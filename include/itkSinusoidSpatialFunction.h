@@ -45,6 +45,8 @@ class SinusoidSpatialFunction:
   public SpatialFunction< TOutput, VImageDimension, TInput >
 {
 public:
+  ITK_DISALLOW_COPY_AND_ASSIGN(SinusoidSpatialFunction);
+
   /** Standard class type alias. */
   using Self = SinusoidSpatialFunction;
   using Superclass = SpatialFunction< TOutput, VImageDimension, TInput >;
@@ -82,8 +84,6 @@ protected:
   void PrintSelf(std::ostream & os, Indent indent) const;
 
 private:
-  SinusoidSpatialFunction(const Self &); //purposely not implemented
-  void operator=(const Self &);          //purposely not implemented
 
   /** The spatial frequency in each direction. */
   ArrayType m_Frequency;

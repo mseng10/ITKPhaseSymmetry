@@ -42,6 +42,8 @@ class SinusoidImageSource :
     public ParametricImageSource< TOutputImage >
 {
 public:
+  ITK_DISALLOW_COPY_AND_ASSIGN(SinusoidImageSource);
+
   /** Standard class type alias. */
   using Self = SinusoidImageSource;
   using Superclass = ParametricImageSource< TOutputImage >;
@@ -98,8 +100,6 @@ protected:
   virtual void GenerateData() ITK_OVERRIDE;
 
 private:
-  SinusoidImageSource(const SinusoidImageSource &); //purposely not implemented
-  void operator=(const SinusoidImageSource &);      //purposely not implemented
 
   /** Parameters for the Sinusoid. */
 
