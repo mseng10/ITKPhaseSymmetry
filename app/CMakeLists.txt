@@ -1,5 +1,5 @@
 # This is the root ITK CMakeLists file.
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.10.2)
 if(COMMAND CMAKE_POLICY)
   CMAKE_POLICY(SET CMP0003 NEW)
 endif(COMMAND CMAKE_POLICY)
