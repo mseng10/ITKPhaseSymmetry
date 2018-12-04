@@ -1,14 +1,14 @@
 ITKPhaseSymmetry
 ================
 
-.. |CircleCI| image:: https://circleci.com/gh/InsightSoftwareConsortium/ITKPhaseSymmetry.svg?style=shield
-    :target: https://circleci.com/gh/InsightSoftwareConsortium/ITKPhaseSymmetry
+.. |CircleCI| image:: https://circleci.com/gh/KitwareMedical/ITKPhaseSymmetry.svg?style=shield
+    :target: https://circleci.com/gh/KitwareMedical/ITKPhaseSymmetry
 
-.. |TravisCI| image:: https://travis-ci.org/InsightSoftwareConsortium/ITKPhaseSymmetry.svg?branch=master
-    :target: https://travis-ci.org/InsightSoftwareConsortium/ITKPhaseSymmetry
+.. |TravisCI| image:: https://travis-ci.org/KitwareMedical/ITKPhaseSymmetry.svg?branch=master
+    :target: https://travis-ci.org/KitwareMedical/ITKPhaseSymmetry
 
 .. |AppVeyor| image:: https://img.shields.io/appveyor/ci/itkrobot/itkphasesymmetry.svg
-    :target: https://ci.appveyor.com/project/itkrobot/itkphasesymmetry
+    :target: https://ci.appveyor.com/project/thewtex/itkphasesymmetry
 
 =========== =========== ===========
    Linux      macOS       Windows
