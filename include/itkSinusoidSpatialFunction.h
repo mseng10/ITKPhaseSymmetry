@@ -72,7 +72,7 @@ public:
   using ArrayType = FixedArray< double, VImageDimension >;
 
   /** Evaluate the function at a given position. */
-  OutputType Evaluate(const TInput & position) const;
+  OutputType Evaluate(const TInput & position) const override;
 
   /** Set/Get the sinusoid phase shift in radians. */
   itkSetMacro(phaseOffset, double);
@@ -84,7 +84,7 @@ public:
 protected:
   SinusoidSpatialFunction();
   virtual ~SinusoidSpatialFunction();
-  void PrintSelf(std::ostream & os, Indent indent) const;
+  void PrintSelf(std::ostream & os, Indent indent) const override;
 
 private:
 
