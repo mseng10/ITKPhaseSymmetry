@@ -16,8 +16,8 @@
  *
  *=========================================================================*/
 
-#ifndef __itkButterworthFilterFreqImageSource_hxx
-#define __itkButterworthFilterFreqImageSource_hxx
+#ifndef itkButterworthFilterFreqImageSource_hxx
+#define itkButterworthFilterFreqImageSource_hxx
 
 #include "itkButterworthFilterFreqImageSource.h"
 #include "itkImageRegionIteratorWithIndex.h"
@@ -57,7 +57,7 @@ ButterworthFilterFreqImageSource<TOutputImage>
 template <typename TOutputImage>
 void
 ButterworthFilterFreqImageSource<TOutputImage>
-::ThreadedGenerateData( const OutputImageRegionType& outputRegionForThread, ThreadIdType itkNotUsed(threadId) )
+::DynamicThreadedGenerateData( const OutputImageRegionType& outputRegionForThread )
 {
   OutputImageType * outputPtr = this->GetOutput();
   const SizeType size = this->GetSize();

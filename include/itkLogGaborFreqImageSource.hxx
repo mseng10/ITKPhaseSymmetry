@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef __itkLogGaborFreqImageSource_hxx
-#define __itkLogGaborFreqImageSource_hxx
+#ifndef itkLogGaborFreqImageSource_hxx
+#define itkLogGaborFreqImageSource_hxx
 
 #include "itkLogGaborFreqImageSource.h"
 #include "itkImageRegionIteratorWithIndex.h"
@@ -57,7 +57,7 @@ LogGaborFreqImageSource< TOutputImage >
 template< typename TOutputImage >
 void
 LogGaborFreqImageSource< TOutputImage >
-::ThreadedGenerateData( const OutputImageRegionType& outputRegionForThread, ThreadIdType itkNotUsed( threadId ) )
+::DynamicThreadedGenerateData( const OutputImageRegionType& outputRegionForThread )
 {
   OutputImageType * outputPtr = this->GetOutput();
   const SizeType size = this->GetSize();

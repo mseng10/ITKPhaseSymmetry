@@ -15,8 +15,8 @@
  *  limitations under the License.
  *
  *=========================================================================*/
-#ifndef __itkSteerableFilterFreqImageSource_hxx
-#define __itkSteerableFilterFreqImageSource_hxx
+#ifndef itkSteerableFilterFreqImageSource_hxx
+#define itkSteerableFilterFreqImageSource_hxx
 
 #include "itkSteerableFilterFreqImageSource.h"
 #include "itkImageRegionIteratorWithIndex.h"
@@ -52,7 +52,8 @@ SteerableFilterFreqImageSource<TOutputImage>
 
 
 template <typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>
+void
+SteerableFilterFreqImageSource<TOutputImage>
 ::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);
@@ -60,7 +61,8 @@ void SteerableFilterFreqImageSource<TOutputImage>
 
 
 template <typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>
+void
+SteerableFilterFreqImageSource<TOutputImage>
 ::GenerateOutputInformation()
 {
   TOutputImage *output;
@@ -82,8 +84,9 @@ void SteerableFilterFreqImageSource<TOutputImage>
 
 
 template <typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>
-::ThreadedGenerateData(const OutputImageRegionType& outputRegionForThread, ThreadIdType itkNotUsed(threadId))
+void
+SteerableFilterFreqImageSource<TOutputImage>
+::DynamicThreadedGenerateData(const OutputImageRegionType& outputRegionForThread)
 {
   //The a pointer to the output image
 
@@ -147,7 +150,8 @@ void SteerableFilterFreqImageSource<TOutputImage>
 
 
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>
+void
+SteerableFilterFreqImageSource<TOutputImage>
 ::SetSpacing(const float* spacing)
 {
   unsigned int i;
@@ -170,7 +174,8 @@ void SteerableFilterFreqImageSource<TOutputImage>
 
 
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>
+void
+SteerableFilterFreqImageSource<TOutputImage>
 ::SetSpacing(const double* spacing)
 {
   unsigned int i;
@@ -193,7 +198,8 @@ void SteerableFilterFreqImageSource<TOutputImage>
 
 
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>
+void
+SteerableFilterFreqImageSource<TOutputImage>
 ::SetOrigin(const float* origin)
 {
   unsigned int i;
@@ -216,7 +222,8 @@ void SteerableFilterFreqImageSource<TOutputImage>
 
 
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>
+void
+SteerableFilterFreqImageSource<TOutputImage>
 ::SetOrigin(const double* origin)
 {
   unsigned int i;
@@ -239,7 +246,8 @@ void SteerableFilterFreqImageSource<TOutputImage>
 
 
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>
+void
+SteerableFilterFreqImageSource<TOutputImage>
 ::SetSize(const SizeValueType * size)
 {
   unsigned int i;
@@ -262,7 +270,8 @@ void SteerableFilterFreqImageSource<TOutputImage>
 
 
 template<typename TOutputImage>
-void SteerableFilterFreqImageSource<TOutputImage>
+void
+SteerableFilterFreqImageSource<TOutputImage>
 ::SetSize(const SizeType size )
 {
   unsigned int i;
