@@ -18,7 +18,7 @@ setup(
     author_email='hatt@wisc.edu',
     packages=['itk'],
     package_dir={'itk': 'itk'},
-    download_url=r'https://github.com/InsightSoftwareConsortium/ITKPhaseSymmetry',
+    download_url=r'https://github.com/KitwareMedical/ITKPhaseSymmetry',
     description=r'ITK classes for computing phase symmetry using multi-scale steerable filters',
     long_description='ITKPhaseSymmetry provides multi-scale steerable filters'
                      'for computing phase symmetry (PS) in the image Fourier'
@@ -47,8 +47,8 @@ setup(
         ],
     license='Apache',
     keywords='ITK InsightToolkit Phase-symmetry Multi-scale Fourier-domain',
-    url=r'https://github.com/InsightSoftwareConsortium/ITKPhaseSymmetry',
+    url=r'https://github.com/KitwareMedical/ITKPhaseSymmetry',
     install_requires=[
-        r'itk'
+        r'itk>=5.0b01'
     ]
     )
