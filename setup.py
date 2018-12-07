@@ -12,7 +12,7 @@ except ImportError:
     sys.exit(1)
 
 setup(
-    name='itk-parabolicmorphology',
+    name='itk-phasesymmetry',
     version='1.0.0',
     author='Charles Hatt',
     author_email='hatt@wisc.edu',
