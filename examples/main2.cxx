@@ -338,7 +338,7 @@ int main(int argc, char* argv[])
   psfilter->SetSigma(sigma);
   psfilter->SetAngleBandwidth(anglebandwidth);
   psfilter->SetPolarity(polarity);
-  psfilter->SetT(noiseT);
+  psfilter->SetNoiseThreshold(noiseT);
   psfilter->Initialize();
 
   try

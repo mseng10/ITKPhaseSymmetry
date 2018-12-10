@@ -78,7 +78,7 @@ int PhaseSymmetryFilter( int argc, char * argv[] )
   phaseSymmetryFilter->SetSigma( sigma );
   phaseSymmetryFilter->SetAngleBandwidth( angularBandwidth );
   phaseSymmetryFilter->SetPolarity( polarity );
-  phaseSymmetryFilter->SetT( noiseThreshold );
+  phaseSymmetryFilter->SetNoiseThreshold( noiseThreshold );
 
   phaseSymmetryFilter->Initialize();
 
