@@ -84,10 +84,10 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
   }
 
   //Defaults
-  m_AngleBandwidth=3.14159265;
-  m_Sigma=0.55;
-  m_NoiseThreshold=10.0;
-  m_Polarity=0;
+  m_AngleBandwidth = 3.14159265;
+  m_Sigma = 0.55;
+  m_NoiseThreshold = 10.0;
+  m_Polarity = 0;
 }
 
 
