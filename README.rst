@@ -36,6 +36,14 @@ For more information, see the `Insight Journal article <http://hdl.handle.net/10
   http://www.insight-journal.org/browse/publication/846
 
 
+Installation
+------------
+
+Install the binary Python package with::
+
+  python -m pip install --upgrade pip
+  python -m pip install itk-phasesymmetry
+
 License
 -------
 

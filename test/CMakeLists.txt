@@ -11,7 +11,11 @@ set( PhaseSymmetryTests
 CreateTestDriver( PhaseSymmetry "${PhaseSymmetry-Test_LIBRARIES}" "${PhaseSymmetryTests}" )
 
 itk_add_test( NAME itkPhaseSymmetryImageFilterTest
-  COMMAND PhaseSymmetryTestDriver itkPhaseSymmetryImageFilterTest
+  COMMAND PhaseSymmetryTestDriver
+  --compare
+    ${ITK_TEST_OUTPUT_DIR}/itkPhaseSymmetryImageFilterTest.mha
+    DATA{Baseline/itkPhaseSymmetryImageFilterTest.mha}
+  itkPhaseSymmetryImageFilterTest
     DATA{Input/HeartUltrasound.mha}
     ${ITK_TEST_OUTPUT_DIR}/itkPhaseSymmetryImageFilterTest.mha )
 
