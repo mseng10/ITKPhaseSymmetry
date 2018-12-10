@@ -57,7 +57,7 @@ def run(input_image_file, output_image_file,
 
     phase_symmetry_filter.SetSigma(sigma)
     phase_symmetry_filter.SetPolarity(polarity)
-    phase_symmetry_filter.SetT(noise_threshold)
+    phase_symmetry_filter.SetNoiseThreshold(noise_threshold)
 
     phase_symmetry_filter.Initialize()
 
