@@ -7,7 +7,7 @@ ITKPhaseSymmetry
 .. |TravisCI| image:: https://travis-ci.org/KitwareMedical/ITKPhaseSymmetry.svg?branch=master
     :target: https://travis-ci.org/KitwareMedical/ITKPhaseSymmetry
 
-.. |AppVeyor| image:: https://img.shields.io/appveyor/ci/itkrobot/itkphasesymmetry.svg
+.. |AppVeyor| image:: https://img.shields.io/appveyor/ci/thewtex/itkphasesymmetry.svg
     :target: https://ci.appveyor.com/project/thewtex/itkphasesymmetry
 
 =========== =========== ===========

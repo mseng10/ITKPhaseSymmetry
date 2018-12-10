@@ -27,10 +27,12 @@ def run(input_image_file, output_image_file,
         polarity=0,
         noise_threshold=10.0):
     input_image = itk.imread(input_image_file, itk.ctype('float'))
+    boundary_condition = itk.PeriodicBoundaryCondition[type(input_image)]()
+    padded = itk.fft_pad_image_filter(input_image, boundary_condition=boundary_condition)
 
     dimension = input_image.GetImageDimension()
 
-    phase_symmetry_filter = itk.PhaseSymmetryImageFilter.New(input_image)
+    phase_symmetry_filter = itk.PhaseSymmetryImageFilter.New(padded)
 
     if wavelengths:
         scales = len(wavelengths) / dimension
@@ -55,7 +57,7 @@ def run(input_image_file, output_image_file,
 
     phase_symmetry_filter.SetSigma(sigma)
     phase_symmetry_filter.SetPolarity(polarity)
-    phase_symmetry_filter.SetT(noise_threshold)
+    phase_symmetry_filter.SetNoiseThreshold(noise_threshold)
 
     phase_symmetry_filter.Initialize()
 

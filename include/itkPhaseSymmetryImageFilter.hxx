@@ -92,8 +92,9 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
 
 
 template <typename TInputImage, typename TOutputImage>
-void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
-::Initialize( void )
+void
+PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+::Initialize()
 {
   typename TInputImage::SizeType  inputSize;
   typename TInputImage::IndexType inputIndex;
@@ -188,8 +189,9 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
 
 
 template <typename TInputImage, typename TOutputImage>
-void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
-::GenerateData( void )
+void
+PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+::GenerateData()
 {
   typename TInputImage::SizeType  inputSize;
   typename TInputImage::IndexType inputIndex;
@@ -376,7 +378,8 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
 
 
 template <typename TInputImage, typename TOutputImage>
-void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+void
+PhaseSymmetryImageFilter<TInputImage,TOutputImage>
 ::GenerateInputRequestedRegion()
 {
   itkDebugMacro("GenerateInputRequestedRegion Start");
@@ -408,19 +411,16 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
     InputImagePointer input = const_cast< TInputImage *> ( this->GetInput() );
     input->SetRequestedRegion (RequestedRegion);
   }
-
-
-  itkDebugMacro("GenerateInputRequestedRegion End");
 }
 
 
-/**
-* GenerateData Performs the accumulation
-*/
 template <typename TInputImage, typename TOutputImage>
-void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
-::GenerateOutputInformation( void )
+void
+PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+::GenerateOutputInformation()
 {
+  Superclass::GenerateOutputInformation();
+
   typename TOutputImage::RegionType outputRegion;
   typename TInputImage::IndexType inputIndex;
   typename TInputImage::SizeType  inputSize;
@@ -469,7 +469,8 @@ void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
 
 
 template <typename TInputImage, typename TOutputImage>
-void PhaseSymmetryImageFilter<TInputImage,TOutputImage>
+void
+PhaseSymmetryImageFilter<TInputImage,TOutputImage>
 ::PrintSelf(std::ostream& os, Indent indent) const
 {
   Superclass::PrintSelf(os,indent);
