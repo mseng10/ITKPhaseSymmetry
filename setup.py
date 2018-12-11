@@ -13,7 +13,7 @@ except ImportError:
 
 setup(
     name='itk-phasesymmetry',
-    version='1.0.0',
+    version='1.0.1',
     author='Charles Hatt',
     author_email='hatt@wisc.edu',
     packages=['itk'],
