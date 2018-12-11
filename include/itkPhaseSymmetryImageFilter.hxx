@@ -192,6 +192,9 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
       fftShiftFilter->Update();
       tempStack.push_back(fftShiftFilter->GetOutput());
       tempStack[o]->DisconnectPipeline();
+      typename FloatImageType::RegionType region = tempStack[o]->GetBufferedRegion();
+      region.SetIndex(inputIndex);
+      tempStack[o]->SetRegions(region);
       }
     m_FilterBank.push_back(tempStack);
     }
