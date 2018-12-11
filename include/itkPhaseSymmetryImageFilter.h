@@ -47,6 +47,7 @@
 #include "itkComplexToModulusImageFilter.h"
 #include "itkShiftScaleImageFilter.h"
 #include "itkAbsImageFilter.h"
+#include "itkFlipImageFilter.h"
 
 #include <vector>
 #include <complex>
@@ -174,6 +175,7 @@ protected:
   using ComplexFFTShiftImageFilterType = FFTShiftImageFilter< ComplexImageType, ComplexImageType >;
   using DoubleFFTShiftImageFilterType = FFTShiftImageFilter< FloatImageType, FloatImageType >;
   using AbsImageFilterType = AbsImageFilter< FloatImageType, FloatImageType >;
+  using FlipImageFilterType = FlipImageFilter< FloatImageType >;
 
 private:
 
@@ -206,6 +208,8 @@ private:
   typename AbsImageFilterType::Pointer                   m_AbsImageFilter;
   typename AbsImageFilterType::Pointer                   m_AbsImageFilter2;
   typename MagnitudeAndPhaseToComplexFilterType::Pointer m_MP2CFilter;
+
+  typename FlipImageFilterType::Pointer                   m_FlipFilter;
 
   typename FloatImageType::Pointer m_PhaseSymmetry;
 
