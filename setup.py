@@ -19,12 +19,12 @@ setup(
     packages=['itk'],
     package_dir={'itk': 'itk'},
     download_url=r'https://github.com/KitwareMedical/ITKPhaseSymmetry',
-    description=r'ITK classes for computing phase symmetry using multi-scale steerable filters',
-    long_description='ITKPhaseSymmetry provides multi-scale steerable filters'
-                     'for computing phase symmetry (PS) in the image Fourier'
+    description=r'ITK classes for computing phase symmetry using multi-scale steerable filters ',
+    long_description='ITKPhaseSymmetry provides multi-scale steerable filters '
+                     'for computing phase symmetry (PS) in the image Fourier '
                      'transform domain.\n'
                      'Please refer to:\n'
-                     'C. Hatt, “Multi-scale Steerable Phase-Symmetry Filters for ITK.”,'
+                     'C. Hatt, “Multi-scale Steerable Phase-Symmetry Filters for ITK.”, '
                      'Insight Journal, July-December 2011, http://hdl.handle.net/10380/3330.',
     classifiers=[
         "License :: OSI Approved :: Apache Software License",
