@@ -134,7 +134,6 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
   ButterworthFilterKernel->SetOrder(10.0);
 
   ArrayType wv;
-  ArrayType sig;
   ArrayType orientation;
 
   FloatImageStack tempStack;
