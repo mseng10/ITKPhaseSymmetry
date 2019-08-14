@@ -1,21 +1,17 @@
 ITKPhaseSymmetry
 ================
 
-.. |CircleCI| image:: https://circleci.com/gh/KitwareMedical/ITKPhaseSymmetry.svg?style=shield
-    :target: https://circleci.com/gh/KitwareMedical/ITKPhaseSymmetry
+.. image:: https://dev.azure.com/ITKPhaseSymmetry/ITKPhaseSymmetry/_apis/build/status/KitwareMedical.ITKPhaseSymmetry?branchName=master
+    :target: https://dev.azure.com/ITKPhaseSymmetry/ITKPhaseSymmetry/_build/latest?definitionId=1&branchName=master
+    :alt: Build status
 
-.. |TravisCI| image:: https://travis-ci.org/KitwareMedical/ITKPhaseSymmetry.svg?branch=master
-    :target: https://travis-ci.org/KitwareMedical/ITKPhaseSymmetry
+.. image:: https://img.shields.io/pypi/v/itk-phasesymmetry.svg
+    :target: https://pypi.python.org/pypi/itk-phasesymmetry
+    :alt: PyPI
 
-.. |AppVeyor| image:: https://img.shields.io/appveyor/ci/thewtex/itkphasesymmetry.svg
-    :target: https://ci.appveyor.com/project/thewtex/itkphasesymmetry
-
-=========== =========== ===========
-   Linux      macOS       Windows
-=========== =========== ===========
-|CircleCI|  |TravisCI|  |AppVeyor|
-=========== =========== ===========
-
+.. image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
+    :target: https://github.com/KitwareMedical/ITKPhaseSymmetry/blob/master/LICENSE)
+    :alt: License
 
 Overview
 --------
@@ -41,8 +37,21 @@ Installation
 
 Install the binary Python package with::
 
-  python -m pip install --upgrade pip
-  python -m pip install itk-phasesymmetry
+  pip install itk-phasesymmetry
+
+To build the C++ module, either enable the CMake option in ITK's
+build configuration::
+
+  Module_PhaseSymmetry:BOOL=ON
+
+Or, build the module as a separate project against an ITK build tree::
+
+  git clone https://github.com/KitwareMedical/ITKPhaseSymmetry
+  mkdir ITKPhaseSymmetry-bulid
+  cd ITKPhaseSymmetry-build
+  cmake -DITK_DIR=/path/to/ITK-build ../ITKPhaseSymmetry
+  cmake --build .
+
 
 License
 -------
