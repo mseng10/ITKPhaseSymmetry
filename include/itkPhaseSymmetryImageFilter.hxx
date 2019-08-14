@@ -48,8 +48,6 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
   m_AbsImageFilter2 = AbsImageFilterType::New();
   m_MP2CFilter = MagnitudeAndPhaseToComplexFilterType::New();
 
-  m_FlipFilter = FlipImageFilterType::New();
-
   m_FFTFilter  = FFTFilterType::New();
   m_IFFTFilter = IFFTFilterType::New();
 
@@ -58,11 +56,6 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
 
   m_NegateFilter2->SetScale(-1.0);
   m_NegateFilter2->SetShift(0.0);
-
-  typename FlipImageFilterType::FlipAxesArrayType flipAxesArray;
-  flipAxesArray.Fill( true );
-  m_FlipFilter->SetFlipAxes( flipAxesArray );
-  m_FlipFilter->FlipAboutOriginOff();
 
   //Create 2 initialze wavelengths
   m_Wavelengths.SetSize(2, InputImageDimension);
@@ -384,15 +377,13 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
   m_MaxImageFilter->SetInput1(totalEnergy);
   m_MaxImageFilter->SetInput2(m_ShiftScaleFilter->GetOutput());
 
-  //Divide total energy by total amplitude over all scles and orientations
+  //Divide total energy by total amplitude over all scales and orientations
   m_DivideImageFilter->SetInput1(m_MaxImageFilter->GetOutput());
   m_DivideImageFilter->SetInput2(totalAmplitude);
 
-  m_FlipFilter->SetInput( m_DivideImageFilter->GetOutput() );
-
-  m_FlipFilter->GraftOutput( this->GetOutput() );
-  m_FlipFilter->Update();
-  m_PhaseSymmetry = m_FlipFilter->GetOutput();
+  m_DivideImageFilter->GraftOutput( this->GetOutput() );
+  m_DivideImageFilter->Update();
+  m_PhaseSymmetry = m_DivideImageFilter->GetOutput();
   this->GraftOutput( m_PhaseSymmetry );
 }
 
