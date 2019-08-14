@@ -106,7 +106,7 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
 
   inputIndex = input->GetLargestPossibleRegion().GetIndex();
   inputSize = input->GetLargestPossibleRegion().GetSize();
-  int ndims = int(TInputImage::ImageDimension);
+  constexpr unsigned int ndims = TInputImage::ImageDimension;
 
   m_ShiftScaleFilter->SetInput(input);
   m_ShiftScaleFilter->SetScale(0.0);
@@ -134,7 +134,6 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
   ButterworthFilterKernel->SetOrder(10.0);
 
   ArrayType wv;
-  ArrayType sig;
   ArrayType orientation;
 
   FloatImageStack tempStack;
@@ -144,7 +143,7 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
   //Create log gabor kernels
   for( unsigned int w=0; w < m_Wavelengths.rows(); w++)
     {
-    for(int i=0; i < ndims;i++)
+    for( unsigned int i=0; i < ndims; ++i )
       {
       wv[i]=m_Wavelengths.get(w,i);
       }
@@ -160,7 +159,7 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
   //Create directionality kernels
   for( unsigned int o=0; o < m_Orientations.rows(); o++)
     {
-    for( int d=0; d<ndims; d++)
+    for( unsigned int d=0; d<ndims; ++d )
       {
       orientation[d] = m_Orientations.get(o,d);
       }
@@ -177,7 +176,7 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
   for( unsigned int w=0; w < m_Wavelengths.rows(); w++)
     {
     tempStack.clear();
-    for( int o=0; o<m_Orientations.rows(); o++)
+    for( unsigned int o=0; o<m_Orientations.rows(); o++)
       {
       m_MultiplyImageFilter->SetInput1(lgStack[w]);
       m_MultiplyImageFilter->SetInput2(sfStack[o]);
@@ -225,7 +224,7 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
 
   inputIndex = input->GetLargestPossibleRegion().GetIndex();
   inputSize = input->GetLargestPossibleRegion().GetSize();
-  int ndims = int(TInputImage::ImageDimension);
+  constexpr unsigned int ndims = TInputImage::ImageDimension;
 
   typename ComplexImageType::Pointer finput = ComplexImageType::New();
   typename ComplexImageType::Pointer bpinput = ComplexImageType::New();
@@ -240,10 +239,10 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
   //Get the pixel count.  We need to divide the IFFT output by this because using the inverse FFT for
   //complex to complex doesn't seem to work.   So instead, we use the forward transform and divide by pixelNum
   double pxlCount = 1.0;
-  for(int i=0; i < ndims; i++)
-  {
+  for( unsigned int i=0; i < ndims; ++i )
+    {
     pxlCount = pxlCount*double(inputSize[i]);
-  }
+    }
 
 
   typename FloatImageType::Pointer EnergyThisOrient = FloatImageType::New();
@@ -263,7 +262,7 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
   totalEnergy = m_ShiftScaleFilter->GetOutput();
   totalEnergy->DisconnectPipeline();
 
-  for( int o = 0; o < m_Orientations.rows(); ++o )
+  for( unsigned int o = 0; o < m_Orientations.rows(); ++o )
     {
     //Reset the energy value
     m_ShiftScaleFilter->SetScale( 0.0 );
@@ -272,7 +271,7 @@ PhaseSymmetryImageFilter<TInputImage,TOutputImage>
     EnergyThisOrient = m_ShiftScaleFilter->GetOutput();
     EnergyThisOrient->DisconnectPipeline();
 
-    for( int w = 0; w < m_Wavelengths.rows(); ++w )
+    for( unsigned int w = 0; w < m_Wavelengths.rows(); ++w )
       {
       //Multiply filters by the input image in fourier domain
       m_C2MFilter->SetInput(finput);
