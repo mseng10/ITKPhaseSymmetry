@@ -23,3 +23,6 @@ target_link_libraries( PhaseSymmetryImageFilter2D ${ITK_LIBRARIES} )
 
 add_executable( PhaseSymmetryImageFilter3D main3.cxx)
 target_link_libraries( PhaseSymmetryImageFilter3D ${ITK_LIBRARIES} )
+
+add_executable( PhaseSymmetryFilter PhaseSymmetryFilter.cxx)
+target_link_libraries( PhaseSymmetryFilter ${ITK_LIBRARIES} )
