@@ -24,58 +24,53 @@
 
 namespace itk
 {
-template< typename TOutput, unsigned int VImageDimension, typename TInput >
-SinusoidSpatialFunction< TOutput, VImageDimension, TInput >
-::SinusoidSpatialFunction():
-  m_PhaseOffset( 0.0 )
+template <typename TOutput, unsigned int VImageDimension, typename TInput>
+SinusoidSpatialFunction<TOutput, VImageDimension, TInput>::SinusoidSpatialFunction()
+  : m_PhaseOffset(0.0)
 {
-  m_Frequency.Fill( 1.0 );
+  m_Frequency.Fill(1.0);
 }
 
 
-template< typename TOutput, unsigned int VImageDimension, typename TInput >
-SinusoidSpatialFunction< TOutput, VImageDimension, TInput >
-::~SinusoidSpatialFunction()
-{
-}
+template <typename TOutput, unsigned int VImageDimension, typename TInput>
+SinusoidSpatialFunction<TOutput, VImageDimension, TInput>::~SinusoidSpatialFunction()
+{}
 
 
-template< typename TOutput, unsigned int VImageDimension, typename TInput >
-typename SinusoidSpatialFunction< TOutput, VImageDimension, TInput >::OutputType
-SinusoidSpatialFunction< TOutput, VImageDimension, TInput >
-::Evaluate(const TInput & position) const
+template <typename TOutput, unsigned int VImageDimension, typename TInput>
+typename SinusoidSpatialFunction<TOutput, VImageDimension, TInput>::OutputType
+SinusoidSpatialFunction<TOutput, VImageDimension, TInput>::Evaluate(const TInput & position) const
 {
 
   double frequencyTerm = 0.0;
-  for( unsigned int ii = 0; ii < VImageDimension; ++ii )
-    {
+  for (unsigned int ii = 0; ii < VImageDimension; ++ii)
+  {
     frequencyTerm += this->m_Frequency[ii] * position[ii];
-    }
+  }
   frequencyTerm *= 2.0 * vnl_math::pi;
   frequencyTerm += this->m_PhaseOffset;
   const double value = std::cos(frequencyTerm);
-  return static_cast< TOutput >( value );
+  return static_cast<TOutput>(value);
 
   return (TOutput)value;
 }
 
 
-template< typename TOutput, unsigned int VImageDimension, typename TInput >
+template <typename TOutput, unsigned int VImageDimension, typename TInput>
 void
-SinusoidSpatialFunction< TOutput, VImageDimension, TInput >
-::PrintSelf(std::ostream & os, Indent indent) const
+SinusoidSpatialFunction<TOutput, VImageDimension, TInput>::PrintSelf(std::ostream & os, Indent indent) const
 {
   Superclass::PrintSelf(os, indent);
 
   os << indent << "Sinusoid frequency: [";
-  for ( unsigned int ii = 0; ii < VImageDimension; ++ii )
-    {
+  for (unsigned int ii = 0; ii < VImageDimension; ++ii)
+  {
     os << this->m_Frequency[ii];
-    if( ii != VImageDimension - 1 )
-      {
+    if (ii != VImageDimension - 1)
+    {
       os << ", ";
-      }
     }
+  }
   os << "]" << std::endl;
 }
 

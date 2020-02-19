@@ -24,10 +24,9 @@
 namespace itk
 {
 
-template< typename TOutputImage >
-LogGaborFreqImageSource< TOutputImage >
-::LogGaborFreqImageSource():
-  m_Sigma( 1.0 )
+template <typename TOutputImage>
+LogGaborFreqImageSource<TOutputImage>::LogGaborFreqImageSource()
+  : m_Sigma(1.0)
 {
   // Gaussian parameters, defined so that the gaussian
   // is centered in the default image
@@ -35,17 +34,14 @@ LogGaborFreqImageSource< TOutputImage >
 }
 
 
-template< typename TOutputImage >
-LogGaborFreqImageSource< TOutputImage >
-::~LogGaborFreqImageSource()
-{
-}
+template <typename TOutputImage>
+LogGaborFreqImageSource<TOutputImage>::~LogGaborFreqImageSource()
+{}
 
 
-template< typename TOutputImage >
+template <typename TOutputImage>
 void
-LogGaborFreqImageSource< TOutputImage >
-::PrintSelf(std::ostream& os, Indent indent) const
+LogGaborFreqImageSource<TOutputImage>::PrintSelf(std::ostream & os, Indent indent) const
 {
   Superclass::PrintSelf(os, indent);
 
@@ -54,55 +50,54 @@ LogGaborFreqImageSource< TOutputImage >
 }
 
 
-template< typename TOutputImage >
+template <typename TOutputImage>
 void
-LogGaborFreqImageSource< TOutputImage >
-::DynamicThreadedGenerateData( const OutputImageRegionType& outputRegionForThread )
+LogGaborFreqImageSource<TOutputImage>::DynamicThreadedGenerateData(const OutputImageRegionType & outputRegionForThread)
 {
   OutputImageType * outputPtr = this->GetOutput();
-  const SizeType size = this->GetSize();
+  const SizeType    size = this->GetSize();
 
   PointType centerPoint;
-  for( unsigned int ii = 0; ii < ImageDimension; ++ii )
-    {
-    centerPoint[ii] = double( size[ii] ) / 2.0;
-    }
+  for (unsigned int ii = 0; ii < ImageDimension; ++ii)
+  {
+    centerPoint[ii] = double(size[ii]) / 2.0;
+  }
 
-  using OutputIteratorType = ImageRegionIteratorWithIndex< OutputImageType >;
-  OutputIteratorType outIt( outputPtr, outputRegionForThread );
+  using OutputIteratorType = ImageRegionIteratorWithIndex<OutputImageType>;
+  OutputIteratorType outIt(outputPtr, outputRegionForThread);
 
   double sigma = std::log(m_Sigma);
   sigma *= sigma;
   sigma *= 2;
 
-  for( outIt.GoToBegin(); !outIt.IsAtEnd(); ++outIt )
-    {
+  for (outIt.GoToBegin(); !outIt.IsAtEnd(); ++outIt)
+  {
     const typename OutputImageType::IndexType index = outIt.GetIndex();
-    //std::cout << "index: " << index << std::endl;
+    // std::cout << "index: " << index << std::endl;
 
     double radius = 0.0;
-    for( unsigned int ii = 0; ii < ImageDimension; ++ii )
-      {
+    for (unsigned int ii = 0; ii < ImageDimension; ++ii)
+    {
       const double dist = (centerPoint[ii] - double(index[ii])) / double(size[ii]);
       // %todo: is this correct for odd numbers?
-      //const SizeValueType halfLength = size[ii] / 2;
-      //const double dist = (index[ii] % halfLength) / double(halfLength);
+      // const SizeValueType halfLength = size[ii] / 2;
+      // const double dist = (index[ii] % halfLength) / double(halfLength);
       radius += dist * dist * m_Wavelengths[ii] * m_Wavelengths[ii];
-      }
-    if( radius == 0.0 )
-      {
-      outIt.Set( static_cast< typename TOutputImage::PixelType >( 0.0 ) );
+    }
+    if (radius == 0.0)
+    {
+      outIt.Set(static_cast<typename TOutputImage::PixelType>(0.0));
       continue;
-      }
+    }
     radius = std::sqrt(radius);
-    //std::cout << "radius: " << radius << std::endl;
+    // std::cout << "radius: " << radius << std::endl;
 
     radius = std::log(radius);
     radius *= radius;
 
-    double logGaborValue = std::exp( -radius / sigma );
-    outIt.Set( static_cast< typename TOutputImage::PixelType >( logGaborValue ) );
-    }
+    double logGaborValue = std::exp(-radius / sigma);
+    outIt.Set(static_cast<typename TOutputImage::PixelType>(logGaborValue));
+  }
 }
 
 } // end namespace itk

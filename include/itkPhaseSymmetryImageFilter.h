@@ -63,14 +63,14 @@ namespace itk
  * \ingroup PhaseSymmetry
  */
 template <typename TInputImage, typename TOutputImage>
-class PhaseSymmetryImageFilter : public ImageToImageFilter<TInputImage,TOutputImage>
+class PhaseSymmetryImageFilter : public ImageToImageFilter<TInputImage, TOutputImage>
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(PhaseSymmetryImageFilter);
 
   /** Standard class type alias. */
   using Self = PhaseSymmetryImageFilter;
-  using Superclass = ImageToImageFilter<TInputImage,TOutputImage>;
+  using Superclass = ImageToImageFilter<TInputImage, TOutputImage>;
   using Pointer = SmartPointer<Self>;
   using ConstPointer = SmartPointer<const Self>;
 
@@ -96,87 +96,91 @@ public:
 
   using ComplexPixelComponentType = OutputImagePixelType;
   using ImagePixelType = OutputImagePixelType;
-  using ComplexPixelType = std::complex< ComplexPixelComponentType >;
+  using ComplexPixelType = std::complex<ComplexPixelComponentType>;
 
-  using ArrayType = FixedArray< double, InputImageDimension >;
-  using DimMinusOneDoubleArrayType = FixedArray< double, InputImageDimension-1 >;
-  using MatrixType = Array2D< double >;
+  using ArrayType = FixedArray<double, InputImageDimension>;
+  using DimMinusOneDoubleArrayType = FixedArray<double, InputImageDimension - 1>;
+  using MatrixType = Array2D<double>;
 
-  using FloatImageType = Image< ImagePixelType, InputImageDimension >;
+  using FloatImageType = Image<ImagePixelType, InputImageDimension>;
 
-  itkSetMacro( Wavelengths, MatrixType );
-  itkSetMacro( Orientations, MatrixType );
-  itkSetMacro( AngleBandwidth, double );
-  itkSetMacro( Sigma, double);
-  itkSetMacro( NoiseThreshold, double );
-  itkSetMacro( Polarity, int );
+  itkSetMacro(Wavelengths, MatrixType);
+  itkSetMacro(Orientations, MatrixType);
+  itkSetMacro(AngleBandwidth, double);
+  itkSetMacro(Sigma, double);
+  itkSetMacro(NoiseThreshold, double);
+  itkSetMacro(Polarity, int);
 
 
-  void Initialize();
+  void
+  Initialize();
   /** Input and output images must be the same dimension, or the output's
   dimension must be one less than that of the input. */
 #ifdef ITK_USE_CONCEPT_CHECKING
   /** Begin concept checking */
-  itkConceptMacro(ImageDimensionCheck,
-    (Concept::SameDimension<InputImageDimension, OutputImageDimension>));
+  itkConceptMacro(ImageDimensionCheck, (Concept::SameDimension<InputImageDimension, OutputImageDimension>));
   /** End concept checking */
 #endif
 
 
 protected:
   PhaseSymmetryImageFilter();
-  virtual ~PhaseSymmetryImageFilter() {};
-  void PrintSelf(std::ostream& os, Indent indent) const override;
+  virtual ~PhaseSymmetryImageFilter(){};
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
 
   /** Apply changes to the output image information. */
-  void GenerateOutputInformation() override;
+  void
+  GenerateOutputInformation() override;
 
   /** Apply changes to the input image requested region. */
-  void GenerateInputRequestedRegion() override;
+  void
+  GenerateInputRequestedRegion() override;
 
-  void GenerateData() override;
+  void
+  GenerateData() override;
 
-  static const int   FFT_FORWARD = -1;
-  static const int   FFT_BACKWARD = 1;
+  static const int FFT_FORWARD = -1;
+  static const int FFT_BACKWARD = 1;
 
-  using FFTFilterType = ForwardFFTImageFilter< InputImageType >;
+  using FFTFilterType = ForwardFFTImageFilter<InputImageType>;
   using ComplexImageType = typename FFTFilterType::OutputImageType;
-  using IFFTFilterType = ComplexToComplexFFTImageFilter< ComplexImageType >;
+  using IFFTFilterType = ComplexToComplexFFTImageFilter<ComplexImageType>;
 
 
-  using FloatImageStack = std::vector< typename FloatImageType::Pointer >;
-  using FloatImageBank = std::vector< FloatImageStack >;
+  using FloatImageStack = std::vector<typename FloatImageType::Pointer>;
+  using FloatImageBank = std::vector<FloatImageStack>;
 
-  using MultiplyImageFilterType = MultiplyImageFilter< FloatImageType, FloatImageType >;
-  using ComplexMultiplyImageFilterType = MultiplyImageFilter< ComplexImageType, ComplexImageType >;
-  using DivideImageFilterType = DivideImageFilter< FloatImageType, FloatImageType, FloatImageType >;
-  using AddImageFilterType = AddImageFilter< FloatImageType, FloatImageType >;
-  using SqrtImageFilterType = SqrtImageFilter< FloatImageType, FloatImageType >;
-  using SquareImageFilterType = SquareImageFilter< FloatImageType, FloatImageType >;
-  using MaxImageFilterType = MaximumImageFilter< FloatImageType, FloatImageType >;
-  using ExpImageFilterType = ExpImageFilter< FloatImageType, FloatImageType >;
-  using BoundedReciprocalImageFilterType = BoundedReciprocalImageFilter< FloatImageType, FloatImageType >;
-  using Atan2ImageFilterType = Atan2ImageFilter< FloatImageType, FloatImageType, FloatImageType >;
-  using AcosImageFilterType = AcosImageFilter< FloatImageType, FloatImageType >;
+  using MultiplyImageFilterType = MultiplyImageFilter<FloatImageType, FloatImageType>;
+  using ComplexMultiplyImageFilterType = MultiplyImageFilter<ComplexImageType, ComplexImageType>;
+  using DivideImageFilterType = DivideImageFilter<FloatImageType, FloatImageType, FloatImageType>;
+  using AddImageFilterType = AddImageFilter<FloatImageType, FloatImageType>;
+  using SqrtImageFilterType = SqrtImageFilter<FloatImageType, FloatImageType>;
+  using SquareImageFilterType = SquareImageFilter<FloatImageType, FloatImageType>;
+  using MaxImageFilterType = MaximumImageFilter<FloatImageType, FloatImageType>;
+  using ExpImageFilterType = ExpImageFilter<FloatImageType, FloatImageType>;
+  using BoundedReciprocalImageFilterType = BoundedReciprocalImageFilter<FloatImageType, FloatImageType>;
+  using Atan2ImageFilterType = Atan2ImageFilter<FloatImageType, FloatImageType, FloatImageType>;
+  using AcosImageFilterType = AcosImageFilter<FloatImageType, FloatImageType>;
 
 
-  using LogGaborFreqImageSourceType = LogGaborFreqImageSource< FloatImageType >;
-  using SteerableFiltersFreqImageSourceType = SteerableFilterFreqImageSource< FloatImageType >;
-  using ButterworthKernelFreqImageSourceType = ButterworthFilterFreqImageSource< FloatImageType >;
+  using LogGaborFreqImageSourceType = LogGaborFreqImageSource<FloatImageType>;
+  using SteerableFiltersFreqImageSourceType = SteerableFilterFreqImageSource<FloatImageType>;
+  using ButterworthKernelFreqImageSourceType = ButterworthFilterFreqImageSource<FloatImageType>;
 
-  using ShiftScaleImageFilterType = ShiftScaleImageFilter< FloatImageType, FloatImageType >;
-  using ComplexToRealFilterType = ComplexToRealImageFilter< ComplexImageType, FloatImageType >;
-  using ComplexToImaginaryFilterType = ComplexToImaginaryImageFilter< ComplexImageType, FloatImageType >;
-  using ComplexToModulusFilterType = ComplexToModulusImageFilter< ComplexImageType, FloatImageType >;
-  using ComplexToPhaseFilterType = ComplexToPhaseImageFilter< ComplexImageType, FloatImageType >;
-  using RealAndImaginaryToComplexFilterType = ComposeImageFilter< FloatImageType, ComplexImageType >;
-  using MagnitudeAndPhaseToComplexFilterType = MagnitudeAndPhaseToComplexImageFilter< InputImageType, InputImageType, ComplexImageType >;
-  using ComplexFFTShiftImageFilterType = FFTShiftImageFilter< ComplexImageType, ComplexImageType >;
-  using DoubleFFTShiftImageFilterType = FFTShiftImageFilter< FloatImageType, FloatImageType >;
-  using AbsImageFilterType = AbsImageFilter< FloatImageType, FloatImageType >;
+  using ShiftScaleImageFilterType = ShiftScaleImageFilter<FloatImageType, FloatImageType>;
+  using ComplexToRealFilterType = ComplexToRealImageFilter<ComplexImageType, FloatImageType>;
+  using ComplexToImaginaryFilterType = ComplexToImaginaryImageFilter<ComplexImageType, FloatImageType>;
+  using ComplexToModulusFilterType = ComplexToModulusImageFilter<ComplexImageType, FloatImageType>;
+  using ComplexToPhaseFilterType = ComplexToPhaseImageFilter<ComplexImageType, FloatImageType>;
+  using RealAndImaginaryToComplexFilterType = ComposeImageFilter<FloatImageType, ComplexImageType>;
+  using MagnitudeAndPhaseToComplexFilterType =
+    MagnitudeAndPhaseToComplexImageFilter<InputImageType, InputImageType, ComplexImageType>;
+  using ComplexFFTShiftImageFilterType = FFTShiftImageFilter<ComplexImageType, ComplexImageType>;
+  using DoubleFFTShiftImageFilterType = FFTShiftImageFilter<FloatImageType, FloatImageType>;
+  using AbsImageFilterType = AbsImageFilter<FloatImageType, FloatImageType>;
 
 private:
-
   MatrixType m_Wavelengths;
   MatrixType m_Orientations;
 
@@ -215,7 +219,7 @@ private:
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkPhaseSymmetryImageFilter.hxx"
+#  include "itkPhaseSymmetryImageFilter.hxx"
 #endif
 
 #endif

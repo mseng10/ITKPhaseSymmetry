@@ -27,27 +27,26 @@ namespace itk
  *
  * \ingroup PhaseSymmetry
  */
-template< typename TOutputImage >
-class ButterworthFilterFreqImageSource:
-  public GenerateImageSource< TOutputImage >
+template <typename TOutputImage>
+class ButterworthFilterFreqImageSource : public GenerateImageSource<TOutputImage>
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(ButterworthFilterFreqImageSource);
 
   /** Standard class type alias. */
   using Self = ButterworthFilterFreqImageSource;
-  using Superclass = GenerateImageSource< TOutputImage >;
-  using Pointer = SmartPointer< Self >;
-  using ConstPointer = SmartPointer< const Self >;
+  using Superclass = GenerateImageSource<TOutputImage>;
+  using Pointer = SmartPointer<Self>;
+  using ConstPointer = SmartPointer<const Self>;
 
   /** Run-time type information (and related methods). */
-  itkTypeMacro( ButterworthFilterFreqImageSource, GenerateImageSource );
+  itkTypeMacro(ButterworthFilterFreqImageSource, GenerateImageSource);
 
   /** Method for creation through the object factory. */
-  itkNewMacro( Self );
+  itkNewMacro(Self);
 
   /** Dimensionality of the output image. */
-  itkStaticConstMacro( ImageDimension, unsigned int, TOutputImage::ImageDimension );
+  itkStaticConstMacro(ImageDimension, unsigned int, TOutputImage::ImageDimension);
 
   using OutputImageType = TOutputImage;
   using SpacingType = typename TOutputImage::SpacingType;
@@ -57,12 +56,12 @@ public:
 
   /** Set/Get the cutoff frequency. Should be in the range [0, 0.5], where 0.5
    * corresponds to the Nyquist frequency. */
-  itkSetClampMacro( Cutoff, double, 0.0, 0.5 );
-  itkGetConstMacro( Cutoff, double );
+  itkSetClampMacro(Cutoff, double, 0.0, 0.5);
+  itkGetConstMacro(Cutoff, double);
 
   /** Set/Get the filter order */
-  itkSetMacro( Order, double );
-  itkGetConstMacro( Order, double );
+  itkSetMacro(Order, double);
+  itkGetConstMacro(Order, double);
 
 protected:
   ButterworthFilterFreqImageSource();
@@ -71,11 +70,12 @@ protected:
   /** Typedef to describe the output image region type. */
   using OutputImageRegionType = typename TOutputImage::RegionType;
 
-  void PrintSelf(std::ostream& os, Indent indent) const override;
-  void DynamicThreadedGenerateData(const OutputImageRegionType& outputRegionForThread) override;
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
+  void
+  DynamicThreadedGenerateData(const OutputImageRegionType & outputRegionForThread) override;
 
 private:
-
   double m_Cutoff;
   double m_Order;
 };
@@ -83,7 +83,7 @@ private:
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkButterworthFilterFreqImageSource.hxx"
+#  include "itkButterworthFilterFreqImageSource.hxx"
 #endif
 
 #endif

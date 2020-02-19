@@ -18,7 +18,8 @@
 
 #include "itkImageFileReader.h"
 
-int itkSteerableFilterFreqImageSourceTest( int , char * [] )
+int
+itkSteerableFilterFreqImageSourceTest(int, char *[])
 {
   return EXIT_SUCCESS;
 }
