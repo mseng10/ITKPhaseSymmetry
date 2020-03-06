@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,18 +27,17 @@ namespace itk
  *
  * \ingroup PhaseSymmetry
  */
-template< typename TOutputImage >
-class LogGaborFreqImageSource:
-  public GenerateImageSource< TOutputImage >
+template <typename TOutputImage>
+class LogGaborFreqImageSource : public GenerateImageSource<TOutputImage>
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(LogGaborFreqImageSource);
 
   /** Standard class type alias. */
   using Self = LogGaborFreqImageSource;
-  using Superclass = GenerateImageSource< TOutputImage >;
-  using Pointer = SmartPointer< Self >;
-  using ConstPointer = SmartPointer< const Self >;
+  using Superclass = GenerateImageSource<TOutputImage>;
+  using Pointer = SmartPointer<Self>;
+  using ConstPointer = SmartPointer<const Self>;
 
   /** Dimensionality of the output image */
   itkStaticConstMacro(ImageDimension, unsigned int, TOutputImage::ImageDimension);
@@ -50,13 +49,13 @@ public:
   using PointType = typename TOutputImage::PointType;
   using DirectionType = typename TOutputImage::DirectionType;
 
-  using ArrayType = FixedArray< double, ImageDimension >;
+  using ArrayType = FixedArray<double, ImageDimension>;
 
   /** Run-time type information (and related methods). */
-  itkTypeMacro( LogGaborFreqImageSource, GenerateImageSource );
+  itkTypeMacro(LogGaborFreqImageSource, GenerateImageSource);
 
   /** Method for creation through the object factory. */
-  itkNewMacro( Self );
+  itkNewMacro(Self);
 
   /** Set/Get the Gaussian width parameter. */
   itkSetMacro(Sigma, double);
@@ -68,13 +67,15 @@ public:
 
 protected:
   LogGaborFreqImageSource();
-  virtual ~LogGaborFreqImageSource();
-  void PrintSelf(std::ostream& os, Indent indent) const override;
-  void DynamicThreadedGenerateData(const OutputImageRegionType& outputRegionForThread) override;
+  ~LogGaborFreqImageSource() override;
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
+  void
+  DynamicThreadedGenerateData(const OutputImageRegionType & outputRegionForThread) override;
 
 private:
-  //Ratio of k/wo in each direction
-  double m_Sigma;
+  // Ratio of k/wo in each direction
+  double m_Sigma{ 1.0 };
 
   // The wavelengths in each direction
   ArrayType m_Wavelengths;
@@ -83,7 +84,7 @@ private:
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkLogGaborFreqImageSource.hxx"
+#  include "itkLogGaborFreqImageSource.hxx"
 #endif
 
 #endif

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -26,122 +26,113 @@
 namespace itk
 {
 
-template< typename TOutputImage >
-SinusoidImageSource< TOutputImage >
-::SinusoidImageSource():
-  m_PhaseOffset( 0.0 )
+template <typename TOutputImage>
+SinusoidImageSource<TOutputImage>::SinusoidImageSource()
+
 {
-  m_Frequency.Fill( 1.0 );
+  m_Frequency.Fill(1.0);
 }
 
 
-template< typename TOutputImage >
+template <typename TOutputImage>
 void
-SinusoidImageSource< TOutputImage >
-::PrintSelf(std::ostream & os, Indent indent) const
+SinusoidImageSource<TOutputImage>::PrintSelf(std::ostream & os, Indent indent) const
 {
   Superclass::PrintSelf(os, indent);
 
   os << indent << "Sinusoid frequency: [";
-  for ( unsigned int ii = 0; ii < ImageDimension; ++ii )
-    {
+  for (unsigned int ii = 0; ii < ImageDimension; ++ii)
+  {
     os << this->m_Frequency[ii];
-    if( ii != ImageDimension - 1 )
-      {
+    if (ii != ImageDimension - 1)
+    {
       os << ", ";
-      }
     }
+  }
   os << "]" << std::endl;
 
   os << indent << "Sinusoid phase shift: " << m_PhaseOffset << std::endl;
 }
 
 
-template< typename TOutputImage >
+template <typename TOutputImage>
 void
-SinusoidImageSource< TOutputImage >
-::SetParameters(const ParametersType & parameters)
+SinusoidImageSource<TOutputImage>::SetParameters(const ParametersType & parameters)
 {
   ArrayType frequency;
-  for ( unsigned int ii = 0; ii < ArrayType::Length; ++ii )
-    {
+  for (unsigned int ii = 0; ii < ArrayType::Length; ++ii)
+  {
     frequency[ii] = parameters[ii];
-    }
-  this->SetFrequency( frequency );
+  }
+  this->SetFrequency(frequency);
 
   const double phaseOffset = parameters[ArrayType::Length];
-  this->SetPhaseOffset( phaseOffset );
+  this->SetPhaseOffset(phaseOffset);
 }
 
 
-template< typename TOutputImage >
-typename SinusoidImageSource< TOutputImage >::ParametersType
-SinusoidImageSource< TOutputImage >
-::GetParameters() const
+template <typename TOutputImage>
+typename SinusoidImageSource<TOutputImage>::ParametersType
+SinusoidImageSource<TOutputImage>::GetParameters() const
 {
-  ParametersType parameters( ArrayType::Length + 1 );
-  for ( unsigned int ii = 0; ii < ArrayType::Length; ++ii )
-    {
+  ParametersType parameters(ArrayType::Length + 1);
+  for (unsigned int ii = 0; ii < ArrayType::Length; ++ii)
+  {
     parameters[ii] = m_Frequency[ii];
-    }
+  }
   parameters[ArrayType::Length] = m_PhaseOffset;
 
   return parameters;
 }
 
 
-template< typename TOutputImage >
+template <typename TOutputImage>
 unsigned int
-SinusoidImageSource< TOutputImage >
-::GetNumberOfParameters() const
+SinusoidImageSource<TOutputImage>::GetNumberOfParameters() const
 {
   return ArrayType::Length + 1;
 }
 
 
-template< typename TOutputImage >
+template <typename TOutputImage>
 void
-SinusoidImageSource< TOutputImage >
-::GenerateData()
+SinusoidImageSource<TOutputImage>::GenerateData()
 {
   TOutputImage * outputPtr = this->GetOutput();
 
   // allocate the output buffer
-  outputPtr->SetBufferedRegion( outputPtr->GetRequestedRegion() );
+  outputPtr->SetBufferedRegion(outputPtr->GetRequestedRegion());
   outputPtr->Allocate();
 
   // Create and initialize a new gaussian function
-  using FunctionType = SinusoidSpatialFunction< double, ImageDimension >;
+  using FunctionType = SinusoidSpatialFunction<double, ImageDimension>;
   typename FunctionType::Pointer sinusoid = FunctionType::New();
 
-  sinusoid->SetFrequency( m_Frequency );
-  sinusoid->SetPhaseOffset( m_PhaseOffset );
+  sinusoid->SetFrequency(m_Frequency);
+  sinusoid->SetPhaseOffset(m_PhaseOffset);
 
   // Create an iterator that will walk the output region
-  using OutputIterator = ImageRegionIterator< TOutputImage >;
+  using OutputIterator = ImageRegionIterator<TOutputImage>;
   const typename OutputImageType::RegionType requestedRegion = outputPtr->GetRequestedRegion();
-  OutputIterator outIt = OutputIterator( outputPtr,
-                                         outputPtr->GetRequestedRegion() );
+  OutputIterator                             outIt = OutputIterator(outputPtr, outputPtr->GetRequestedRegion());
 
-  ProgressReporter progress( this, 0,
-                             outputPtr->GetRequestedRegion()
-                             .GetNumberOfPixels() );
+  ProgressReporter progress(this, 0, outputPtr->GetRequestedRegion().GetNumberOfPixels());
   // Walk the output image, evaluating the spatial function at each pixel
   outIt.GoToBegin();
-  while( !outIt.IsAtEnd() )
-    {
+  while (!outIt.IsAtEnd())
+  {
     typename TOutputImage::IndexType index = outIt.GetIndex();
     // The position at which the function is evaluated
     typename FunctionType::InputType evalPoint;
-    outputPtr->TransformIndexToPhysicalPoint( index, evalPoint );
-    const double value = sinusoid->Evaluate( evalPoint );
+    outputPtr->TransformIndexToPhysicalPoint(index, evalPoint);
+    const double value = sinusoid->Evaluate(evalPoint);
 
     // Set the pixel value to the function value
-    outIt.Set( static_cast< typename TOutputImage::PixelType >( value ));
+    outIt.Set(static_cast<typename TOutputImage::PixelType>(value));
     progress.CompletedPixel();
 
     ++outIt;
-    }
+  }
 }
 
 } // end namespace itk

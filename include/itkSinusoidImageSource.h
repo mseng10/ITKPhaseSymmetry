@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -37,18 +37,17 @@ namespace itk
  * \ingroup DataSources
  * \ingroup PhaseSymmetry
  */
-template< typename TOutputImage >
-class SinusoidImageSource :
-    public ParametricImageSource< TOutputImage >
+template <typename TOutputImage>
+class SinusoidImageSource : public ParametricImageSource<TOutputImage>
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(SinusoidImageSource);
 
   /** Standard class type alias. */
   using Self = SinusoidImageSource;
-  using Superclass = ParametricImageSource< TOutputImage >;
-  using Pointer = SmartPointer< Self >;
-  using ConstPointer = SmartPointer< const Self >;
+  using Superclass = ParametricImageSource<TOutputImage>;
+  using Pointer = SmartPointer<Self>;
+  using ConstPointer = SmartPointer<const Self>;
 
   /** Typedef for the output image type. */
   using OutputImageType = TOutputImage;
@@ -57,7 +56,7 @@ public:
   itkStaticConstMacro(ImageDimension, unsigned int, TOutputImage::ImageDimension);
 
   /** Type used to store Sinusoid parameters. */
-  using ArrayType = FixedArray< double, ImageDimension >;
+  using ArrayType = FixedArray<double, ImageDimension>;
 
   /** Size type matches that used for images */
   using SizeType = typename TOutputImage::SizeType;
@@ -84,42 +83,46 @@ public:
    * templated over an N-dimensional output image type, the first N
    * values in the parameter array are the Frequency parameters in each
    * dimension, and the last value is the phaseOffset. */
-  void SetParameters(const ParametersType & parameters) override;
-  ParametersType GetParameters() const override;
+  void
+  SetParameters(const ParametersType & parameters) override;
+  ParametersType
+  GetParameters() const override;
 
   /** Get the number of parameters for this image source. When this
    * source is templated over an N-dimensional output image type, the
    * number of parameters is 2*N+1. */
-  unsigned int GetNumberOfParameters() const override;
+  unsigned int
+  GetNumberOfParameters() const override;
 
 protected:
   SinusoidImageSource();
   // ~SinusoidImageSource(); default implementation ok
-  void PrintSelf(std::ostream & os, Indent indent) const override;
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
 
-  void GenerateData() override;
+  void
+  GenerateData() override;
 
 private:
-
   /** Parameters for the Sinusoid. */
 
   /** The spatial frequency in each direction. */
   ArrayType m_Frequency;
 
   /** The phase shift. */
-  double    m_PhaseOffset;
+  double m_PhaseOffset{ 0.0 };
 
 #ifdef ITK_USE_CONCEPT_CHECKING
   /** Really only want to use a floating point pixel because the domain of the
    * output will be [-1, 1] */
-  itkConceptMacro( FloatPixelType, ( Concept::IsFloatingPoint< typename OutputImageType::PixelType > ) );
+  itkConceptMacro(FloatPixelType, (Concept::IsFloatingPoint<typename OutputImageType::PixelType>));
 #endif
 };
 
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkSinusoidImageSource.hxx"
+#  include "itkSinusoidImageSource.hxx"
 #endif
 
 #endif

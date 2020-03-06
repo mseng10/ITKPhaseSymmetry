@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -41,20 +41,19 @@ namespace itk
  * \ingroup PhaseSymmetry
  */
 
-template< typename TOutput = double,
+template <typename TOutput = double,
           unsigned int VImageDimension = 3,
-          typename TInput = Point< SpacePrecisionType, VImageDimension > >
-class SinusoidSpatialFunction:
-  public SpatialFunction< TOutput, VImageDimension, TInput >
+          typename TInput = Point<SpacePrecisionType, VImageDimension>>
+class SinusoidSpatialFunction : public SpatialFunction<TOutput, VImageDimension, TInput>
 {
 public:
   ITK_DISALLOW_COPY_AND_ASSIGN(SinusoidSpatialFunction);
 
   /** Standard class type alias. */
   using Self = SinusoidSpatialFunction;
-  using Superclass = SpatialFunction< TOutput, VImageDimension, TInput >;
-  using Pointer = SmartPointer< Self >;
-  using ConstPointer = SmartPointer< const Self >;
+  using Superclass = SpatialFunction<TOutput, VImageDimension, TInput>;
+  using Pointer = SmartPointer<Self>;
+  using ConstPointer = SmartPointer<const Self>;
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
@@ -69,10 +68,11 @@ public:
   using OutputType = typename Superclass::OutputType;
 
   /** Type used to store gaussian parameters. */
-  using ArrayType = FixedArray< double, VImageDimension >;
+  using ArrayType = FixedArray<double, VImageDimension>;
 
   /** Evaluate the function at a given position. */
-  OutputType Evaluate(const TInput & position) const override;
+  OutputType
+  Evaluate(const TInput & position) const override;
 
   /** Set/Get the sinusoid phase shift in radians. */
   itkSetMacro(PhaseOffset, double);
@@ -83,22 +83,21 @@ public:
 
 protected:
   SinusoidSpatialFunction();
-  virtual ~SinusoidSpatialFunction();
-  void PrintSelf(std::ostream & os, Indent indent) const override;
+  ~SinusoidSpatialFunction() override;
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
 
 private:
-
   /** The spatial frequency in each direction. */
   ArrayType m_Frequency;
 
   /** The phase shift. */
-  double    m_PhaseOffset;
-
+  double m_PhaseOffset{ 0.0 };
 };
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkSinusoidSpatialFunction.hxx"
+#  include "itkSinusoidSpatialFunction.hxx"
 #endif
 
 #endif

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -25,13 +25,14 @@
 #include "itkComplexToImaginaryImageFilter.h"
 #include "itkInverseFFTImageFilter.h"
 
-int itkButterworthFilterFreqImageSourceTest( int argc, char * argv[] )
+int
+itkButterworthFilterFreqImageSourceTest(int argc, char * argv[])
 {
-  if( argc < 6 )
-    {
+  if (argc < 6)
+  {
     std::cerr << "Usage: " << argv[0] << " InputImage FilterImage OutputImage InputFFT OutputFFT" << std::endl;
     return EXIT_FAILURE;
-    }
+  }
   const char * inputImageFileName = argv[1];
   const char * filterImageFileName = argv[2];
   const char * outputImageFileName = argv[3];
@@ -41,113 +42,113 @@ int itkButterworthFilterFreqImageSourceTest( int argc, char * argv[] )
   const unsigned int Dimension = 3;
 
   using PixelType = float;
-  using ImageType = itk::Image< PixelType, Dimension >;
-  using ComplexPixelType = std::complex< PixelType >;
-  using ComplexImageType = itk::Image< ComplexPixelType, Dimension >;
+  using ImageType = itk::Image<PixelType, Dimension>;
+  using ComplexPixelType = std::complex<PixelType>;
+  using ComplexImageType = itk::Image<ComplexPixelType, Dimension>;
 
-  using ReaderType = itk::ImageFileReader< ImageType >;
+  using ReaderType = itk::ImageFileReader<ImageType>;
   ReaderType::Pointer reader = ReaderType::New();
-  reader->SetFileName( inputImageFileName );
+  reader->SetFileName(inputImageFileName);
 
-  using FFTFilterType = itk::ForwardFFTImageFilter< ImageType, ComplexImageType >;
+  using FFTFilterType = itk::ForwardFFTImageFilter<ImageType, ComplexImageType>;
   FFTFilterType::Pointer fftFilter = FFTFilterType::New();
-  fftFilter->SetInput( reader->GetOutput() );
+  fftFilter->SetInput(reader->GetOutput());
 
   try
-    {
+  {
     fftFilter->Update();
-    }
-  catch( itk::ExceptionObject & error )
-    {
+  }
+  catch (itk::ExceptionObject & error)
+  {
     std::cerr << "Error: " << error << std::endl;
     return EXIT_FAILURE;
-    }
+  }
 
 
-  using ComplexToRealType = itk::ComplexToRealImageAdaptor< ComplexImageType, PixelType >;
+  using ComplexToRealType = itk::ComplexToRealImageAdaptor<ComplexImageType, PixelType>;
   ComplexToRealType::Pointer complexToReal = ComplexToRealType::New();
-  complexToReal->SetImage( fftFilter->GetOutput() );
+  complexToReal->SetImage(fftFilter->GetOutput());
 
-  using ButterworthSourceType = itk::ButterworthFilterFreqImageSource< ImageType >;
+  using ButterworthSourceType = itk::ButterworthFilterFreqImageSource<ImageType>;
   ButterworthSourceType::Pointer butterworthSource = ButterworthSourceType::New();
-  ImageType::ConstPointer inputImage = reader->GetOutput();
-  butterworthSource->SetSize( inputImage->GetLargestPossibleRegion().GetSize() );
-  butterworthSource->SetSpacing( inputImage->GetSpacing() );
-  butterworthSource->SetDirection( inputImage->GetDirection() );
-  butterworthSource->SetOrigin( inputImage->GetOrigin() );
-  butterworthSource->SetCutoff( 0.4 );
-  butterworthSource->SetOrder( 5 );
+  ImageType::ConstPointer        inputImage = reader->GetOutput();
+  butterworthSource->SetSize(inputImage->GetLargestPossibleRegion().GetSize());
+  butterworthSource->SetSpacing(inputImage->GetSpacing());
+  butterworthSource->SetDirection(inputImage->GetDirection());
+  butterworthSource->SetOrigin(inputImage->GetOrigin());
+  butterworthSource->SetCutoff(0.4);
+  butterworthSource->SetOrder(5);
   std::cout << butterworthSource << std::endl;
 
-  using MultiplyFilterType = itk::MultiplyImageFilter< ComplexToRealType, ImageType, ImageType >;
+  using MultiplyFilterType = itk::MultiplyImageFilter<ComplexToRealType, ImageType, ImageType>;
   MultiplyFilterType::Pointer multiplyFilter = MultiplyFilterType::New();
-  multiplyFilter->SetInput1( complexToReal );
-  multiplyFilter->SetInput2( butterworthSource->GetOutput() );
+  multiplyFilter->SetInput1(complexToReal);
+  multiplyFilter->SetInput2(butterworthSource->GetOutput());
 
-  using ComplexToImaginaryFilterType = itk::ComplexToImaginaryImageFilter< ComplexImageType, ImageType >;
+  using ComplexToImaginaryFilterType = itk::ComplexToImaginaryImageFilter<ComplexImageType, ImageType>;
   ComplexToImaginaryFilterType::Pointer complexToImaginaryFilter = ComplexToImaginaryFilterType::New();
-  complexToImaginaryFilter->SetInput( fftFilter->GetOutput() );
+  complexToImaginaryFilter->SetInput(fftFilter->GetOutput());
 
-  using ComposeFilterType = itk::ComposeImageFilter< ImageType, ComplexImageType >;
+  using ComposeFilterType = itk::ComposeImageFilter<ImageType, ComplexImageType>;
   ComposeFilterType::Pointer composeFilter = ComposeFilterType::New();
-  composeFilter->SetInput( 0, multiplyFilter->GetOutput() );
-  composeFilter->SetInput( 1, complexToImaginaryFilter->GetOutput() );
+  composeFilter->SetInput(0, multiplyFilter->GetOutput());
+  composeFilter->SetInput(1, complexToImaginaryFilter->GetOutput());
 
-  using InverseFFTFilterType = itk::InverseFFTImageFilter< ComplexImageType, ImageType >;
+  using InverseFFTFilterType = itk::InverseFFTImageFilter<ComplexImageType, ImageType>;
   InverseFFTFilterType::Pointer inverseFFTImageFilter = InverseFFTFilterType::New();
-  inverseFFTImageFilter->SetInput( composeFilter->GetOutput() );
+  inverseFFTImageFilter->SetInput(composeFilter->GetOutput());
 
-  using WriterType = itk::ImageFileWriter< ImageType >;
+  using WriterType = itk::ImageFileWriter<ImageType>;
   WriterType::Pointer writer = WriterType::New();
-  writer->SetInput( butterworthSource->GetOutput() );
-  writer->SetFileName( filterImageFileName );
+  writer->SetInput(butterworthSource->GetOutput());
+  writer->SetFileName(filterImageFileName);
   try
-    {
+  {
     writer->Update();
-    }
-  catch( itk::ExceptionObject & error )
-    {
+  }
+  catch (itk::ExceptionObject & error)
+  {
     std::cerr << "Error: " << error << std::endl;
     return EXIT_FAILURE;
-    }
+  }
 
-  writer->SetInput( inverseFFTImageFilter->GetOutput() );
-  writer->SetFileName( outputImageFileName );
+  writer->SetInput(inverseFFTImageFilter->GetOutput());
+  writer->SetFileName(outputImageFileName);
   try
-    {
+  {
     writer->Update();
-    }
-  catch( itk::ExceptionObject & error )
-    {
+  }
+  catch (itk::ExceptionObject & error)
+  {
     std::cerr << "Error: " << error << std::endl;
     return EXIT_FAILURE;
-    }
+  }
 
-  using ComplexWriterType = itk::ImageFileWriter< ComplexImageType >;
+  using ComplexWriterType = itk::ImageFileWriter<ComplexImageType>;
   ComplexWriterType::Pointer complexWriter = ComplexWriterType::New();
-  complexWriter->SetInput( fftFilter->GetOutput() );
-  complexWriter->SetFileName( inputFFTImageFileName );
+  complexWriter->SetInput(fftFilter->GetOutput());
+  complexWriter->SetFileName(inputFFTImageFileName);
   try
-    {
+  {
     complexWriter->Update();
-    }
-  catch( itk::ExceptionObject & error )
-    {
+  }
+  catch (itk::ExceptionObject & error)
+  {
     std::cerr << "Error: " << error << std::endl;
     return EXIT_FAILURE;
-    }
+  }
 
-  complexWriter->SetInput( composeFilter->GetOutput() );
-  complexWriter->SetFileName( outputFFTImageFileName );
+  complexWriter->SetInput(composeFilter->GetOutput());
+  complexWriter->SetFileName(outputFFTImageFileName);
   try
-    {
+  {
     complexWriter->Update();
-    }
-  catch( itk::ExceptionObject & error )
-    {
+  }
+  catch (itk::ExceptionObject & error)
+  {
     std::cerr << "Error: " << error << std::endl;
     return EXIT_FAILURE;
-    }
+  }
 
   return EXIT_SUCCESS;
 }

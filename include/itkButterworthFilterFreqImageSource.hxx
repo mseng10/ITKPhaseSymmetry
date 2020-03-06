@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,25 +27,18 @@ namespace itk
 {
 
 template <typename TOutputImage>
-ButterworthFilterFreqImageSource<TOutputImage>
-::ButterworthFilterFreqImageSource():
-  m_Cutoff( 0.4 ),
-  m_Order( 4 )
-{
-}
+ButterworthFilterFreqImageSource<TOutputImage>::ButterworthFilterFreqImageSource()
+
+  = default;
 
 
 template <typename TOutputImage>
-ButterworthFilterFreqImageSource<TOutputImage>
-::~ButterworthFilterFreqImageSource()
-{
-}
+ButterworthFilterFreqImageSource<TOutputImage>::~ButterworthFilterFreqImageSource() = default;
 
 
 template <typename TOutputImage>
 void
-ButterworthFilterFreqImageSource<TOutputImage>
-::PrintSelf(std::ostream& os, Indent indent) const
+ButterworthFilterFreqImageSource<TOutputImage>::PrintSelf(std::ostream & os, Indent indent) const
 {
   Superclass::PrintSelf(os, indent);
 
@@ -56,44 +49,44 @@ ButterworthFilterFreqImageSource<TOutputImage>
 
 template <typename TOutputImage>
 void
-ButterworthFilterFreqImageSource<TOutputImage>
-::DynamicThreadedGenerateData( const OutputImageRegionType& outputRegionForThread )
+ButterworthFilterFreqImageSource<TOutputImage>::DynamicThreadedGenerateData(
+  const OutputImageRegionType & outputRegionForThread)
 {
   OutputImageType * outputPtr = this->GetOutput();
-  const SizeType size = this->GetSize();
+  const SizeType    size = this->GetSize();
 
   typename OutputImageType::PointType centerPoint;
-  for( unsigned int ii = 0; ii < ImageDimension; ++ii )
-    {
-    centerPoint[ii] = double( size[ii] ) / 2.0;
-    }
+  for (unsigned int ii = 0; ii < ImageDimension; ++ii)
+  {
+    centerPoint[ii] = double(size[ii]) / 2.0;
+  }
 
-  using OutputIteratorType = ImageRegionIteratorWithIndex< OutputImageType >;
-  OutputIteratorType outIt( outputPtr, outputRegionForThread );
-  for( outIt.GoToBegin(); !outIt.IsAtEnd(); ++outIt )
-    {
+  using OutputIteratorType = ImageRegionIteratorWithIndex<OutputImageType>;
+  OutputIteratorType outIt(outputPtr, outputRegionForThread);
+  for (outIt.GoToBegin(); !outIt.IsAtEnd(); ++outIt)
+  {
     const typename TOutputImage::IndexType index = outIt.GetIndex();
-    //std::cout << "index: " << index << std::endl;
+    // std::cout << "index: " << index << std::endl;
 
     double radius = 0.0;
-    for( unsigned int ii = 0; ii < ImageDimension; ++ii )
-      {
+    for (unsigned int ii = 0; ii < ImageDimension; ++ii)
+    {
       const double dist = (centerPoint[ii] - double(index[ii])) / double(size[ii]);
       // %todo: is this correct for odd numbers?
-      //const SizeValueType halfLength = size[ii] / 2;
-      //const double dist = (index[ii] % halfLength) / double(halfLength);
+      // const SizeValueType halfLength = size[ii] / 2;
+      // const double dist = (index[ii] % halfLength) / double(halfLength);
       radius += dist * dist;
-      }
+    }
     radius = std::sqrt(radius);
-    //std::cout << "radius: " << radius << std::endl;
+    // std::cout << "radius: " << radius << std::endl;
 
     double value = 0.0;
     value = radius / m_Cutoff;
     value = std::pow(value, 2 * m_Order);
-    value = 1. / ( 1. + value );
+    value = 1. / (1. + value);
 
-    outIt.Set( static_cast< typename TOutputImage::PixelType >( value ));
-    }
+    outIt.Set(static_cast<typename TOutputImage::PixelType>(value));
+  }
 }
 
 } // end namespace itk

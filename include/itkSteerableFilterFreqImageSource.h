@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ public:
    * cosines of the image. */
   using DirectionType = typename TOutputImage::DirectionType;
 
-  using RangeType = std::vector< std::vector< double > >;
+  using RangeType = std::vector<std::vector<double>>;
 
   /** Dimensionality of the output image */
   itkStaticConstMacro(NDimensions, unsigned int, TOutputImage::ImageDimension);
@@ -75,45 +75,51 @@ public:
   using SizeValueType = typename TOutputImage::SizeValueType;
 
   /** Run-time type information (and related methods). */
-  itkTypeMacro(SteerableFilterFreqImageSource,ImageSource);
+  itkTypeMacro(SteerableFilterFreqImageSource, ImageSource);
 
   /** Method for creation through the object factory. */
   itkNewMacro(Self);
 
   /** Specify the size of the output image. */
-  virtual void SetSize( const SizeValueType * values);
+  virtual void
+  SetSize(const SizeValueType * values);
 
   /** Specify the size of the output image. */
-  virtual void SetSize( const SizeType values);
+  virtual void
+  SetSize(const SizeType values);
 
   /** Get the size of the output image. */
-  itkGetVectorMacro(Size,const SizeValueType,NDimensions);
+  itkGetVectorMacro(Size, const SizeValueType, NDimensions);
 
   /** Specify the spacing of the output image. */
   itkSetMacro(Spacing, SpacingType);
-  virtual void SetSpacing( const float* values);
-  virtual void SetSpacing( const double* values);
+  virtual void
+  SetSpacing(const float * values);
+  virtual void
+  SetSpacing(const double * values);
 
   /** Get the spacing of the output image. */
-  itkGetConstReferenceMacro(Spacing,SpacingType);
+  itkGetConstReferenceMacro(Spacing, SpacingType);
 
   /** Specify the origin of the output image. */
   itkSetMacro(Origin, PointType);
-  virtual void SetOrigin( const float* values);
-  virtual void SetOrigin( const double* values);
+  virtual void
+  SetOrigin(const float * values);
+  virtual void
+  SetOrigin(const double * values);
 
   /** Get the origin of the output image. */
-  itkGetConstReferenceMacro(Origin,PointType);
+  itkGetConstReferenceMacro(Origin, PointType);
 
   /** Specify the direction of the output image. */
   itkSetMacro(Direction, DirectionType);
 
   itkGetConstReferenceMacro(Direction, DirectionType);
 
-  //itkSetMacro(Ranges, RangeType);
+  // itkSetMacro(Ranges, RangeType);
 
-  using DimMinusOneDoubleArrayType = FixedArray<double,TOutputImage::ImageDimension-1>;
-  using DoubleArrayType = FixedArray<double,TOutputImage::ImageDimension>;
+  using DimMinusOneDoubleArrayType = FixedArray<double, TOutputImage::ImageDimension - 1>;
+  using DoubleArrayType = FixedArray<double, TOutputImage::ImageDimension>;
 
   itkSetMacro(Orientation, DoubleArrayType);
   itkGetConstReferenceMacro(Orientation, DoubleArrayType);
@@ -123,27 +129,28 @@ public:
 
 protected:
   SteerableFilterFreqImageSource();
-  ~SteerableFilterFreqImageSource();
-  void PrintSelf(std::ostream& os, Indent indent) const override;
-  void DynamicThreadedGenerateData(const OutputImageRegionType& outputRegionForThread) override;
-  void GenerateOutputInformation() override;
+  ~SteerableFilterFreqImageSource() override;
+  void
+  PrintSelf(std::ostream & os, Indent indent) const override;
+  void
+  DynamicThreadedGenerateData(const OutputImageRegionType & outputRegionForThread) override;
+  void
+  GenerateOutputInformation() override;
 
 private:
-
-  SizeValueType  m_Size[NDimensions];    //size of the output image
-  SpacingType    m_Spacing;   //spacing
-  PointType      m_Origin;    //origin
-  DirectionType  m_Direction; // direction
+  SizeValueType m_Size[NDimensions]; // size of the output image
+  SpacingType   m_Spacing;           // spacing
+  PointType     m_Origin;            // origin
+  DirectionType m_Direction;         // direction
 
   DoubleArrayType m_Orientation;
   double          m_AngularBandwidth;
-
 };
 
 } // end namespace itk
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkSteerableFilterFreqImageSource.hxx"
+#  include "itkSteerableFilterFreqImageSource.hxx"
 #endif
 
 #endif

@@ -1,6 +1,6 @@
 /*=========================================================================
  *
- *  Copyright Insight Software Consortium
+ *  Copyright NumFOCUS
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -29,41 +29,45 @@
 #include <ctime>
 #include <exception>
 
-std::vector<std::string> parse(std::string l, char delim)
+std::vector<std::string>
+parse(std::string l, char delim)
 {
   std::replace(l.begin(), l.end(), delim, ' ');
-  std::istringstream stm(l);
+  std::istringstream       stm(l);
   std::vector<std::string> tokens;
-  for (;;) {
+  for (;;)
+  {
     std::string word;
-    if (!(stm >> word)) break;
+    if (!(stm >> word))
+      break;
     tokens.push_back(word);
   }
   return tokens;
 }
 
-int main(int argc, char* argv[])
+int
+main(int argc, char * argv[])
 {
 
   std::stringstream ss;
-  std::string infile;
-  std::string outfile;
-  std::string wavelengthsS;
-  std::string orientationsS;
-  std::string sigmaS;
-  std::string angular_bandwidthS;
-  std::string polarityS;
-  std::string ntS;
+  std::string       infile;
+  std::string       outfile;
+  std::string       wavelengthsS;
+  std::string       orientationsS;
+  std::string       sigmaS;
+  std::string       angular_bandwidthS;
+  std::string       polarityS;
+  std::string       ntS;
 
   double pi = 3.1416;
-/*
+  /*
+    if (argc < 3)
+    {
+      std::cerr << "Usage: PhaseSymmetryFilter3D infile outfile wavelengths orientations sigma angular_bandwidth
+    polarity noise_threshhold" << std::endl; std::cerr << "Example: PhaseSymmetryFilter3D i.mhd o.mhd
+    3,3,3,6,6,6,12,12,12 1,0,0,0,1,0,0,0,1 0.55 3.14 0 10.0" << std::endl; return EXIT_FAILURE;
+    }*/
   if (argc < 3)
-  {
-    std::cerr << "Usage: PhaseSymmetryFilter3D infile outfile wavelengths orientations sigma angular_bandwidth polarity noise_threshhold" << std::endl;
-    std::cerr << "Example: PhaseSymmetryFilter3D i.mhd o.mhd 3,3,3,6,6,6,12,12,12 1,0,0,0,1,0,0,0,1 0.55 3.14 0 10.0" << std::endl;
-    return EXIT_FAILURE;
-  }*/
-  if(argc < 3)
   {
     ss << "C:\\data\\test3D.mhd";
     infile = ss.str();
@@ -90,7 +94,7 @@ int main(int argc, char* argv[])
     ntS = ss.str();
     ss.str("");
   }
-  else if(argc < 4)
+  else if (argc < 4)
   {
     ss << argv[1];
     infile = ss.str();
@@ -117,7 +121,7 @@ int main(int argc, char* argv[])
     ntS = ss.str();
     ss.str("");
   }
-  else if(argc < 5)
+  else if (argc < 5)
   {
     ss << argv[1];
     infile = ss.str();
@@ -144,7 +148,7 @@ int main(int argc, char* argv[])
     ntS = ss.str();
     ss.str("");
   }
-  else if(argc < 6)
+  else if (argc < 6)
   {
     ss << argv[1];
     infile = ss.str();
@@ -171,7 +175,7 @@ int main(int argc, char* argv[])
     ntS = ss.str();
     ss.str("");
   }
-  else if(argc < 7)
+  else if (argc < 7)
   {
     ss << argv[1];
     infile = ss.str();
@@ -198,7 +202,7 @@ int main(int argc, char* argv[])
     ntS = ss.str();
     ss.str("");
   }
-  else if(argc < 8)
+  else if (argc < 8)
   {
     ss << argv[1];
     infile = ss.str();
@@ -225,7 +229,7 @@ int main(int argc, char* argv[])
     ntS = ss.str();
     ss.str("");
   }
-  else if(argc < 9)
+  else if (argc < 9)
   {
     ss << argv[1];
     infile = ss.str();
@@ -283,88 +287,90 @@ int main(int argc, char* argv[])
 
   using ImagePixelType = float;
   int ndims = 3;
-  using ImageType = itk::Image< ImagePixelType, 3 >;
-  using PSFilterType = itk::PhaseSymmetryImageFilter< ImageType, ImageType >;
-  using ReaderType = itk::ImageFileReader< ImageType >;
-  using WriterType = itk::ImageFileWriter< ImageType >;
+  using ImageType = itk::Image<ImagePixelType, 3>;
+  using PSFilterType = itk::PhaseSymmetryImageFilter<ImageType, ImageType>;
+  using ReaderType = itk::ImageFileReader<ImageType>;
+  using WriterType = itk::ImageFileWriter<ImageType>;
 
   using DoubleMatrix = itk::Array2D<double>;
 
-  ImageType::Pointer inImg = ImageType::New();
-  ReaderType::Pointer reader  = ReaderType::New();
-  WriterType::Pointer writer= WriterType::New();
+  ImageType::Pointer    inImg = ImageType::New();
+  ReaderType::Pointer   reader = ReaderType::New();
+  WriterType::Pointer   writer = WriterType::New();
   PSFilterType::Pointer psfilter = PSFilterType::New();
 
 
-  //3 wavelengths, 3 dimensions
-  std::vector<std::string> wavelengthsVS = parse(wavelengthsS,',');
-  if(wavelengthsVS.size()%3!=0)
+  // 3 wavelengths, 3 dimensions
+  std::vector<std::string> wavelengthsVS = parse(wavelengthsS, ',');
+  if (wavelengthsVS.size() % 3 != 0)
   {
-    std::cerr << "wavelengths must be a comma seperated string of numbers with number of elements divisible by 3" << std::endl;
+    std::cerr << "wavelengths must be a comma seperated string of numbers with number of elements divisible by 3"
+              << std::endl;
     return EXIT_FAILURE;
   }
 
-  std::vector<std::string> orientationsVS = parse(orientationsS,',');
-  if(orientationsVS.size()%3!=0)
+  std::vector<std::string> orientationsVS = parse(orientationsS, ',');
+  if (orientationsVS.size() % 3 != 0)
   {
-    std::cerr << "orientations must be a comma seperated string of numbers with number of elements divisible by 3" << std::endl;
+    std::cerr << "orientations must be a comma seperated string of numbers with number of elements divisible by 3"
+              << std::endl;
     return EXIT_FAILURE;
   }
 
-  int wvCount = int(double(wavelengthsVS.size())/3.0);
-  DoubleMatrix wavelengths(wvCount,3);
-  int orCount = int(double(orientationsVS.size())/3.0);
-  DoubleMatrix orientations(orCount,3);
+  int          wvCount = int(double(wavelengthsVS.size()) / 3.0);
+  DoubleMatrix wavelengths(wvCount, 3);
+  int          orCount = int(double(orientationsVS.size()) / 3.0);
+  DoubleMatrix orientations(orCount, 3);
 
-  int idx=0;
-  for(int i=0; i < wvCount; i++)
+  int idx = 0;
+  for (int i = 0; i < wvCount; i++)
   {
-    for(int j=0; j < 3; j++)
+    for (int j = 0; j < 3; j++)
     {
-      wavelengths(i,j) = std::stod(wavelengthsVS[idx].c_str());
+      wavelengths(i, j) = std::stod(wavelengthsVS[idx].c_str());
       idx++;
     }
   }
 
 
-  idx=0;
-  for(int i=0; i < orCount; i++)
+  idx = 0;
+  for (int i = 0; i < orCount; i++)
   {
-    for(int j=0; j < 3; j++)
+    for (int j = 0; j < 3; j++)
     {
-      orientations(i,j) = std::stod(orientationsVS[idx].c_str());
+      orientations(i, j) = std::stod(orientationsVS[idx].c_str());
       idx++;
     }
   }
 
 
-  double sigma=0;
-  sigma = std::stod( sigmaS.c_str() );
+  double sigma = 0;
+  sigma = std::stod(sigmaS.c_str());
 
 
-  double anglebandwidth=0;
-  anglebandwidth = std::stod( angular_bandwidthS.c_str() );
+  double anglebandwidth = 0;
+  anglebandwidth = std::stod(angular_bandwidthS.c_str());
 
 
-  int polarity=0;
-  polarity =int( std::stod( polarityS.c_str() ) );
+  int polarity = 0;
+  polarity = int(std::stod(polarityS.c_str()));
 
 
-  double noiseT=0;
-  noiseT = std::stod( ntS.c_str() );
+  double noiseT = 0;
+  noiseT = std::stod(ntS.c_str());
 
   reader->SetFileName(infile.c_str());
   try
-    {
+  {
     reader->Update();
     inImg = reader->GetOutput();
     inImg->DisconnectPipeline();
-    }
-  catch ( itk::ExceptionObject & excp )
-    {
+  }
+  catch (itk::ExceptionObject & excp)
+  {
     std::cerr << excp << std::endl;
     return EXIT_FAILURE;
-    }
+  }
 
   psfilter->SetInput(inImg);
   psfilter->SetWavelengths(wavelengths);
@@ -376,16 +382,16 @@ int main(int argc, char* argv[])
   psfilter->Initialize();
 
   try
-    {
+  {
     writer->SetFileName(outfile.c_str());
     writer->SetInput(psfilter->GetOutput());
     writer->Update();
-    }
-  catch ( itk::ExceptionObject & excp )
-    {
+  }
+  catch (itk::ExceptionObject & excp)
+  {
     std::cerr << excp << std::endl;
     return EXIT_FAILURE;
-    }
+  }
 
 
   return EXIT_SUCCESS;
