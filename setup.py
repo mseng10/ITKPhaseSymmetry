@@ -13,7 +13,7 @@ except ImportError:
 
 setup(
     name='itk-phasesymmetry',
-    version='1.0.3',
+    version='1.0.4',
     author='Charles Hatt',
     author_email='hatt@wisc.edu',
     packages=['itk'],
@@ -49,6 +49,6 @@ setup(
     keywords='ITK InsightToolkit Phase-symmetry Multi-scale Fourier-domain',
     url=r'https://github.com/KitwareMedical/ITKPhaseSymmetry',
     install_requires=[
-        r'itk>=5.1.1'
+        r'itk>=5.1.1.post1'
     ]
     )
