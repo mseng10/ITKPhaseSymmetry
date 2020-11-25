@@ -3,10 +3,6 @@ ITKPhaseSymmetry
 
 .. image:: https://github.com/KitwareMedical/ITKPhaseSymmetry/workflows/Build,%20test,%20package/badge.svg
 
-.. image:: https://dev.azure.com/ITKPhaseSymmetry/ITKPhaseSymmetry/_apis/build/status/KitwareMedical.ITKPhaseSymmetry?branchName=master
-    :target: https://dev.azure.com/ITKPhaseSymmetry/ITKPhaseSymmetry/_build/latest?definitionId=1&branchName=master
-    :alt: Build status
-
 .. image:: https://img.shields.io/pypi/v/itk-phasesymmetry.svg
     :target: https://pypi.python.org/pypi/itk-phasesymmetry
     :alt: PyPI
